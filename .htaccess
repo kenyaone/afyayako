@@ -1,5 +1,8 @@
-Options -MultiViews
+Options -MultiViews -Indexes
 RewriteEngine On
+
+# Disable directory listing
+DirectoryIndex index.html
 
 # ── Security: block sensitive files from web access ──────────────────────────
 <FilesMatch "(?i)(^\.env|\.(env|sql|patch|log|sh|bak|ini|conf|lock|sqlite|sqlite3)$)">
