@@ -23,6 +23,9 @@ RewriteRule "(^|/)\.(?!well-known)" - [F,L]
 # because its target path (api/public/index.php) contains a slash.
 RewriteRule ^[^/]+\.php$ - [F,L]
 
+# Route apply page to apply.html
+RewriteRule ^apply/?$ apply.html [L]
+
 # Route API requests to Laravel
 RewriteCond %{REQUEST_URI} ^/api/ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
