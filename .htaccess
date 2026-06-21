@@ -26,7 +26,7 @@ RewriteRule ^(admin-|exec-|organize\.php|apply-route\.php) - [L]
 RewriteRule ^[^/]+\.php$ - [F,L]
 
 # Route admin dashboard
-RewriteRule ^admin/?$ admin-applications.php [L]
+RewriteRule ^verify-professionals/?$ admin-applications.php [L]
 
 # Route apply page to apply.html
 RewriteRule ^apply/?$ apply.html [L]
