@@ -1,0 +1,35 @@
+Options -MultiViews
+RewriteEngine On
+
+# ── Security: block sensitive files from web access ──────────────────────────
+# Deny secret / dump / backup file types (.env, .env.*, .sql, .log, etc.)
+<FilesMatch "(?i)(^\.env|\.(env|sql|patch|log|sh|bak|ini|conf|lock|sqlite|sqlite3)$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Deny all dot-files / dot-dirs (.env, .git, .htpasswd, ...) — but keep
+# /.well-known/ reachable so SSL (AutoSSL/Let's Encrypt) renewals still work.
+RewriteRule "(^|/)\.(?!well-known)" - [F,L]
+
+# Forbid direct execution of ad-hoc PHP scripts in the docroot root
+# (setup-db.php, all_users.php, run-migrations.php, ...). The static React
+# app needs no root *.php, and the Laravel API under /api/ is unaffected
+# because its target path (api/public/index.php) contains a slash.
+RewriteRule ^[^/]+\.php$ - [F,L]
+
+# Route API requests to Laravel
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/public/index.php?/$1 [L,QSA]
+
+# Route everything else to React
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]

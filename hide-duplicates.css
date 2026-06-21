@@ -1,0 +1,66 @@
+/**
+ * Hide Duplicate Form Sections - June 20, 2026
+ * Removes original form fields to show only clean injected versions
+ */
+
+/* Hide original specializations section */
+form > div:has(h2:contains("Specializations")),
+form > div:has(label:contains("Specializations")),
+form fieldset:has(legend:contains("Specializations")),
+form > div:has(button:contains("select all that apply")) {
+  display: none !important;
+}
+
+/* Hide original languages section */
+form > div:has(h2:contains("Languages")),
+form > div:has(label:contains("Languages")),
+form > div:has(label:contains("lang,")),
+form fieldset:has(legend:contains("Languages")) {
+  display: none !important;
+}
+
+/* Hide original "select at least one" labels */
+form > div:contains("Select at least one"),
+form > p:contains("Select at least one") {
+  display: none !important;
+}
+
+/* Hide original professional details section if it has the old format */
+form > div:has(> h2):first-child {
+  /* This might contain duplicates */
+}
+
+/* More specific hiding - hide form fields that match original pattern */
+form input[placeholder*="KP-"],
+form textarea:not([id="specializations_other"]):not([id="languages_other"]),
+form select:not([id="specializations"]):not([id="languages"]) {
+  /* Check if this is original field */
+}
+
+/* Hide divs that only contain the old form labels without our IDs */
+form > div:has(label:not([for^="spec-"]):not([for^="lang-"]):not([for="professional_photo"]):not([for="license_document"]):not([for="specializations"]):not([for="languages"])) {
+  /* Potentially hide, but be careful */
+}
+
+/* Alternative: Hide by text content in headings */
+h2:contains("Specializations"),
+h2:contains("Languages") {
+  display: none !important;
+}
+
+/* Hide any flex-wrap divs that contain old button-style checkboxes */
+div.flex.flex-wrap:has(button[type="button"]) {
+  display: none !important;
+}
+
+/* Hide original rate_per_hour if outside payment section */
+#rate_per_hour:not([data-injected="true"]) {
+  /* be careful here */
+}
+
+/* More surgical approach - hide specific form sections by position */
+form > div:nth-child(1):has(h2),
+form > div:nth-child(2):has(h2),
+form > div:nth-child(3):has(h2) {
+  /* might be original sections */
+}

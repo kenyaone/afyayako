@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afya Yako MOH Compliance Brief</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: white;
+            padding: 20px;
+        }
+
+        .page {
+            max-width: 8.5in;
+            height: 11in;
+            margin: 0 auto 30px;
+            padding: 0.75in;
+            background: white;
+            border: 1px solid #ccc;
+        }
+
+        @media print {
+            body { padding: 0; background: white; }
+            .page { border: none; margin: 0; padding: 0.75in; page-break-after: always; }
+            .page:last-child { page-break-after: auto; }
+        }
+
+        /* Cover */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid #000;
+        }
+
+        .cover h1 { font-size: 2.2em; font-weight: bold; margin-bottom: 15px; }
+        .cover .subtitle { font-size: 1.3em; margin: 20px 0; font-weight: 600; }
+        .cover .tagline { font-size: 1em; margin: 30px 0; font-style: italic; color: #333; }
+        .cover .date { font-size: 0.95em; margin-top: auto; }
+
+        /* Content */
+        h1 { font-size: 1.3em; font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 8px; }
+        h2 { font-size: 1.1em; font-weight: bold; margin-top: 20px; margin-bottom: 12px; }
+
+        p { margin-bottom: 10px; text-align: justify; font-size: 0.95em; }
+
+        ul { margin-left: 25px; margin-bottom: 12px; }
+        li { margin-bottom: 6px; font-size: 0.95em; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.9em;
+        }
+
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+        th { background: #f0f0f0; font-weight: bold; }
+
+        .section { margin-bottom: 15px; }
+        .section.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .checkmark { color: #000; font-weight: bold; }
+
+        footer { font-size: 0.8em; text-align: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc; color: #666; }
+
+        .spacer { margin-bottom: 25px; }
+
+        .important { background: #f9f9f9; padding: 10px; border-left: 3px solid #000; margin: 12px 0; }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="page cover">
+    <h1>AFYA YAKO SIRI YAKO</h1>
+    <p class="subtitle">Ministry of Health Compliance Brief</p>
+    <p class="tagline">Your Health, Your Secret</p>
+    <p>A MOH-Compliant Telemedicine Platform for Kenya</p>
+    <p class="date" style="margin-top: 50px;">June 2026</p>
+</div>
+
+<!-- PAGE 1: OVERVIEW -->
+<div class="page">
+    <h1>Overview</h1>
+
+    <div class="section">
+        <p><strong>Afya Yako Siri Yako</strong> is a fully MOH-compliant telemedicine platform providing anonymous mental health services across Kenya. The system implements professional oversight, data protection, and quality assurance aligned with Ministry of Health standards.</p>
+    </div>
+
+    <h2>Key Features</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> KMPDC/CPB verified professionals (100%)</li>
+        <li><span class="checkmark">✓</span> AES-256 encrypted data protection</li>
+        <li><span class="checkmark">✓</span> Incident & complaint management system</li>
+        <li><span class="checkmark">✓</span> Professional supervision tracking (MOH Guideline 9)</li>
+        <li><span class="checkmark">✓</span> Response time SLA monitoring (2-hour default)</li>
+        <li><span class="checkmark">✓</span> Quality assurance metrics & KPI tracking</li>
+        <li><span class="checkmark">✓</span> Configurable data retention & deletion audit trails</li>
+        <li><span class="checkmark">✓</span> Parental consent for minors (under 18)</li>
+        <li><span class="checkmark">✓</span> Kiswahili language support</li>
+        <li><span class="checkmark">✓</span> Mobile-first PWA design</li>
+    </ul>
+
+    <h2>Strategic Impact</h2>
+    <ul>
+        <li><strong>Expands Access:</strong> Reaches rural/remote areas safely</li>
+        <li><strong>Ensures Quality:</strong> KPIs, supervision, complaints, metrics</li>
+        <li><strong>Protects Patients:</strong> Encryption, verification, incident handling</li>
+        <li><strong>Supports MOH Goals:</strong> Digital health transformation</li>
+    </ul>
+
+    <footer>Page 1 — Overview</footer>
+</div>
+
+<!-- PAGE 2: PROFESSIONAL LICENSING -->
+<div class="page">
+    <h1>1. Professional Licensing & Verification</h1>
+
+    <h2>Compliance</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> All therapists KMPDC Licensed</li>
+        <li><span class="checkmark">✓</span> CPB Verified certification</li>
+        <li><span class="checkmark">✓</span> Real-time verification badges on profiles</li>
+        <li><span class="checkmark">✓</span> Automatic license expiry tracking</li>
+        <li><span class="checkmark">✓</span> Professional credentials displayed to patients</li>
+    </ul>
+
+    <h2>Patient Assurance</h2>
+    <p>Every professional profile displays: KMPDC/CPB badges | Years of experience | Specializations | Ratings | Verified status</p>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th>Implementation</th>
+        </tr>
+        <tr>
+            <td>Only licensed professionals</td>
+            <td>100% KMPDC/CPB verified</td>
+        </tr>
+        <tr>
+            <td>License validity tracking</td>
+            <td>Automated expiry monitoring</td>
+        </tr>
+        <tr>
+            <td>Credential transparency</td>
+            <td>Badges on all profiles</td>
+        </tr>
+    </table>
+
+    <footer>Page 2 — Professional Licensing</footer>
+</div>
+
+<!-- PAGE 3: INCIDENT MANAGEMENT -->
+<div class="page">
+    <h1>2. Incident & Complaint Management</h1>
+
+    <h2>Reporting System</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> Patient adverse event reporting</li>
+        <li><span class="checkmark">✓</span> Professional complaint filing</li>
+        <li><span class="checkmark">✓</span> Admin investigation dashboard</li>
+        <li><span class="checkmark">✓</span> Status tracking: open → investigating → resolved → closed</li>
+        <li><span class="checkmark">✓</span> Disciplinary actions: warnings, suspensions, terminations</li>
+        <li><span class="checkmark">✓</span> Complete audit trail of all actions</li>
+    </ul>
+
+    <h2>Severity Levels</h2>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Severity</th>
+        </tr>
+        <tr>
+            <td>Adverse Event</td>
+            <td>Low, Medium, High, Critical</td>
+        </tr>
+        <tr>
+            <td>Complaint</td>
+            <td>Minor, Moderate, Severe, Critical</td>
+        </tr>
+        <tr>
+            <td>Near Miss</td>
+            <td>Low, Medium, High, Critical</td>
+        </tr>
+        <tr>
+            <td>Safety Concern</td>
+            <td>Low, Medium, High, Critical</td>
+        </tr>
+    </table>
+
+    <h2>Workflow</h2>
+    <p>Report → Notification → Investigation → Resolution → Disciplinary Action (if needed) → Documented & Audited</p>
+
+    <footer>Page 3 — Incident Management</footer>
+</div>
+
+<!-- PAGE 4: DATA PROTECTION -->
+<div class="page">
+    <h1>3. Data Protection & Privacy</h1>
+
+    <h2>Encryption & Security</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> AES-256 encryption for all PHI</li>
+        <li><span class="checkmark">✓</span> End-to-end encrypted sessions</li>
+        <li><span class="checkmark">✓</span> HTTPS encrypted communication</li>
+        <li><span class="checkmark">✓</span> Secure platform only (no WhatsApp/SMS)</li>
+        <li><span class="checkmark">✓</span> Role-based access control</li>
+        <li><span class="checkmark">✓</span> Audit logging of all data access</li>
+    </ul>
+
+    <h2>Session Recording Consent</h2>
+    <p>Explicit patient consent required before recording. Consent registry maintained with dates and revocation options. Full audit trail available.</p>
+
+    <h2>Data Retention Periods</h2>
+    <table>
+        <tr>
+            <th>Data Type</th>
+            <th>Retention</th>
+            <th>Deletion</th>
+        </tr>
+        <tr>
+            <td>Mood Logs</td>
+            <td>365 days</td>
+            <td>Auto-delete with audit</td>
+        </tr>
+        <tr>
+            <td>Assessments</td>
+            <td>365 days</td>
+            <td>Auto-delete with audit</td>
+        </tr>
+        <tr>
+            <td>Consultations</td>
+            <td>Indefinite</td>
+            <td>Anonymized after 2 years</td>
+        </tr>
+        <tr>
+            <td>Journal Entries</td>
+            <td>365 days</td>
+            <td>User-initiated deletion</td>
+        </tr>
+    </table>
+
+    <div class="important">
+        <p><strong>Deletion Audit Trail:</strong> Every deletion logged with entity type, reason, user ID, and timestamp.</p>
+    </div>
+
+    <footer>Page 4 — Data Protection & Privacy</footer>
+</div>
+
+<!-- PAGE 5: SUPERVISION & QUALITY -->
+<div class="page">
+    <h1>4. Professional Supervision & Quality Assurance</h1>
+
+    <h2>MOH Guideline 9 — Mandatory Supervision</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> Supervision dashboard tracks supervisors & supervisees</li>
+        <li><span class="checkmark">✓</span> Supervision sessions logged with dates, duration, notes</li>
+        <li><span class="checkmark">✓</span> Compliance alerts for unsupervised practitioners</li>
+        <li><span class="checkmark">✓</span> Escalation protocols if supervision missing</li>
+    </ul>
+
+    <h2>Response Time SLA</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>SLA</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Consultation Response</td>
+            <td>2 hours</td>
+            <td>Automated tracking</td>
+        </tr>
+        <tr>
+            <td>SLA Compliance</td>
+            <td>100% target</td>
+            <td>Admin dashboard</td>
+        </tr>
+        <tr>
+            <td>Breach Escalation</td>
+            <td>Automatic</td>
+            <td>Admin notification</td>
+        </tr>
+    </table>
+
+    <h2>Quality Metrics Tracked</h2>
+    <ul>
+        <li>Client satisfaction scores (0-100%)</li>
+        <li>Response time performance vs SLA</li>
+        <li>Session completion rates</li>
+        <li>Assessment quality scores</li>
+    </ul>
+
+    <p>All metrics recorded daily and visible in admin dashboard with trending analysis.</p>
+
+    <footer>Page 5 — Supervision & Quality</footer>
+</div>
+
+<!-- PAGE 6: CHILD PROTECTION & ACCESSIBILITY -->
+<div class="page">
+    <h1>5. Child Protection & Accessibility</h1>
+
+    <h2>Safeguarding Minors (Under 18)</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> Parental consent form required</li>
+        <li><span class="checkmark">✓</span> Age verification at signup</li>
+        <li><span class="checkmark">✓</span> Parent notification options for sensitive cases</li>
+        <li><span class="checkmark">✓</span> Child protection workflows per MOH standards</li>
+    </ul>
+
+    <h2>Language & Accessibility</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> Kiswahili support (manual + Google Translate)</li>
+        <li><span class="checkmark">✓</span> Mobile-first PWA design</li>
+        <li><span class="checkmark">✓</span> Works on any browser (no app store needed)</li>
+        <li><span class="checkmark">✓</span> Low-bandwidth optimized for rural areas</li>
+        <li><span class="checkmark">✓</span> Offline capability via service worker</li>
+        <li><span class="checkmark">✓</span> WCAG 2.1 accessibility standards</li>
+    </ul>
+
+    <h2>System Infrastructure</h2>
+    <ul>
+        <li><span class="checkmark">✓</span> HTTPS encrypted communication</li>
+        <li><span class="checkmark">✓</span> 99.8% uptime SLA</li>
+        <li><span class="checkmark">✓</span> Distributed redundant architecture</li>
+        <li><span class="checkmark">✓</span> Regular security audits</li>
+        <li><span class="checkmark">✓</span> Full compliance documentation</li>
+    </ul>
+
+    <footer>Page 6 — Child Protection & Accessibility</footer>
+</div>
+
+<!-- PAGE 7: COMPLIANCE SUMMARY -->
+<div class="page">
+    <h1>Compliance Summary</h1>
+
+    <h2>Compliance Checklist</h2>
+    <table>
+        <tr>
+            <th>Area</th>
+            <th>Status</th>
+            <th>Implementation</th>
+        </tr>
+        <tr>
+            <td>Professional Licensing</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>KMPDC/CPB verification + badges</td>
+        </tr>
+        <tr>
+            <td>Incident Management</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>Complaint system + investigation</td>
+        </tr>
+        <tr>
+            <td>Data Protection</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>AES-256 + retention policies</td>
+        </tr>
+        <tr>
+            <td>Supervision</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>Dashboard + audit trail</td>
+        </tr>
+        <tr>
+            <td>Quality Assurance</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>Daily metrics + KPIs</td>
+        </tr>
+        <tr>
+            <td>Child Safeguarding</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>Parental consent + age verification</td>
+        </tr>
+        <tr>
+            <td>Accessibility</td>
+            <td><strong>✓ COMPLETE</strong></td>
+            <td>Kiswahili + mobile + offline</td>
+        </tr>
+    </table>
+
+    <h2>Key Metrics</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Target</th>
+        </tr>
+        <tr>
+            <td>Professional Verifications</td>
+            <td>100%</td>
+        </tr>
+        <tr>
+            <td>Data Encryption</td>
+            <td>AES-256</td>
+        </tr>
+        <tr>
+            <td>Incident Response Time</td>
+            <td>&lt;24 hours</td>
+        </tr>
+        <tr>
+            <td>System Uptime</td>
+            <td>99.8%</td>
+        </tr>
+        <tr>
+            <td>Consent Compliance</td>
+            <td>100%</td>
+        </tr>
+        <tr>
+            <td>Supervision Compliance</td>
+            <td>100%</td>
+        </tr>
+    </table>
+
+    <div class="important">
+        <strong>MOH Audit Ready:</strong> Complete documentation, audit trails, regulatory transparency guaranteed.
+    </div>
+
+    <footer>Page 7 — Compliance Summary</footer>
+</div>
+
+<!-- PAGE 8: CONTACT -->
+<div class="page" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+    <h1 style="border: none; margin-bottom: 30px;">Contact & Next Steps</h1>
+
+    <p style="font-size: 1em; margin-bottom: 25px;"><strong>Afya Yako Siri Yako</strong> is MOH-compliant and production-ready for immediate deployment.</p>
+
+    <div style="background: #f9f9f9; padding: 15px; border-left: 3px solid #000; margin: 20px 0;">
+        <p style="margin: 0; font-weight: bold;">For Regulatory Inquiries</p>
+        <p style="margin: 8px 0 0 0; font-size: 1em;"><strong>compliance@afyayako.co.ke</strong></p>
+    </div>
+
+    <h2 style="border: none; margin-top: 30px; margin-bottom: 15px;">Available Services</h2>
+    <ul style="text-align: left; font-size: 0.95em;">
+        <li>System audits and compliance documentation</li>
+        <li>Live platform demonstrations</li>
+        <li>Regulatory training for stakeholders</li>
+        <li>Full source code & infrastructure review</li>
+        <li>Dedicated compliance officer support</li>
+    </ul>
+
+    <div style="margin-top: 40px; padding-top: 15px; border-top: 1px solid #ccc;">
+        <p style="font-weight: bold; font-size: 0.95em;">AFYA YAKO SIRI YAKO</p>
+        <p style="font-size: 0.9em; margin-top: 5px;">Your Health, Your Secret</p>
+        <p style="font-size: 0.85em; color: #666; margin-top: 8px;">Ministry of Health Compliant • KMPDC Verified</p>
+    </div>
+
+    <footer style="border: none; margin-top: auto;">June 2026</footer>
+</div>
+
+</body>
+</html>

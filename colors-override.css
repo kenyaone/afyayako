@@ -1,0 +1,220 @@
+/* Afya Yako Mental Health Colors Override - June 20, 2026 */
+/* NEW PRIMARY: Teal (#0d9488) - Calming, trust, professional */
+/* NEW ACCENT: Sky Blue (#0ea5e9) - Stability, serenity */
+/* NEW SECONDARY: Lavender (#a78bfa) - Peace, relaxation */
+
+:root {
+  /* Primary colors - Teal (mental health focused) */
+  --color-primary-50: #f0fdf9;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+
+  /* Sky Blue - Stability and serenity */
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #e0f2fe;
+  --color-sky-200: #bae6fd;
+  --color-sky-300: #7dd3fc;
+  --color-sky-400: #38bdf8;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+  --color-sky-700: #0369a1;
+
+  /* Lavender - Peace and relaxation */
+  --color-lavender-50: #f5f3ff;
+  --color-lavender-100: #ede9fe;
+  --color-lavender-300: #c4b5fd;
+  --color-lavender-500: #a78bfa;
+  --color-lavender-600: #9333ea;
+  --color-lavender-700: #7e22ce;
+}
+
+/* Update button styles to use new colors */
+.btn-primary, [class*="btn-primary"] {
+  background: linear-gradient(to right, #0d9488, #0ea5e9) !important;
+}
+
+.btn-primary:hover, [class*="btn-primary"]:hover {
+  background: linear-gradient(to right, #0a6f63, #0284c7) !important;
+}
+
+.btn-accent, [class*="btn-accent"] {
+  background: linear-gradient(to right, #9333ea, #0ea5e9) !important;
+}
+
+/* Update form input focus colors */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  ring: 2px solid #0ea5e9 !important;
+  border-color: transparent !important;
+}
+
+/* Update link colors */
+a {
+  color: #0d9488 !important;
+}
+
+a:hover {
+  color: #0f766e !important;
+}
+
+/* Update accent colors throughout */
+.text-teal-700, .text-primary-700 {
+  color: #0d9488 !important;
+}
+
+.bg-primary-50, .bg-teal-50 {
+  background-color: #f0fdf9 !important;
+}
+
+.bg-primary-600, .bg-teal-600 {
+  background-color: #0d9488 !important;
+}
+
+.border-primary-200, .border-teal-200 {
+  border-color: #99f6e4 !important;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-to-r {
+  background: linear-gradient(to right, #0d9488, #0ea5e9) !important;
+}
+
+/* Card backgrounds */
+.card, [class*="card"] {
+  background: white !important;
+  border-color: #f0fdf9 !important;
+}
+
+/* Success colors stay green for consistency */
+.text-green-600, .bg-green-50 {
+  /* Keep green for success states */
+}
+
+/* Ensure buttons are always visible */
+button, [role="button"] {
+  transition: all 0.3s ease !important;
+}
+
+/* Update form section headers */
+h2, h3 {
+  color: #0f766e !important;
+}
+
+/* Mental health icon colors */
+svg [fill*="#22c55e"],
+svg [fill*="#16a34a"],
+svg [fill*="#15803d"] {
+  fill: #0d9488 !important;
+}
+
+/* Override any inline teal references to new scheme */
+.from-primary-700 {
+  --tw-gradient-from: #0d9488 !important;
+}
+
+.from-teal-600 {
+  --tw-gradient-from: #0d9488 !important;
+}
+
+.to-teal-600 {
+  --tw-gradient-to: #0ea5e9 !important;
+}
+
+/* Focus ring colors */
+.focus\:ring-teal-400 {
+  --tw-ring-color: #0ea5e9 !important;
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-color: #0ea5e9 !important;
+}
+
+/* Text and background color updates */
+.text-primary-600, .text-primary-700 {
+  color: #0d9488 !important;
+}
+
+.text-teal-700 {
+  color: #0d9488 !important;
+}
+
+.hover\:text-primary-700:hover,
+.hover\:text-teal-700:hover {
+  color: #0f766e !important;
+}
+
+/* Border colors for inputs and cards */
+.border-primary-200,
+.border-teal-200 {
+  border-color: #99f6e4 !important;
+}
+
+/* Checkbox and radio colors */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #0d9488 !important;
+}
+
+/* Updated accent color for secondary buttons */
+.accent-teal-600 {
+  accent-color: #0d9488 !important;
+}
+
+/* Special: Info/Success alerts */
+.bg-primary-50, .bg-teal-50 {
+  background-color: #f0fdf9 !important;
+}
+
+.text-primary-800, .text-teal-900 {
+  color: #134e4a !important;
+}
+
+/* Ensure all primary elements use new teal */
+.from-primary-600 {
+  --tw-gradient-from: #0d9488 !important;
+}
+
+.from-primary-500 {
+  --tw-gradient-from: #14b8a6 !important;
+}
+
+.to-sky-500, .to-sky-600 {
+  --tw-gradient-to: #0ea5e9 !important;
+}
+
+/* Mobile/responsive adjustments */
+@media (max-width: 768px) {
+  .btn-primary, [class*="btn-primary"] {
+    background: linear-gradient(to right, #0d9488, #0ea5e9) !important;
+  }
+}
+
+/* Dark mode - maintain readability */
+@media (prefers-color-scheme: dark) {
+  a {
+    color: #5eead4 !important;
+  }
+
+  a:hover {
+    color: #99f6e4 !important;
+  }
+
+  h2, h3 {
+    color: #99f6e4 !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  button {
+    background: #0d9488 !important;
+    color: white !important;
+  }
+}

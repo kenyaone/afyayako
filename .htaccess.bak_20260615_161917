@@ -1,0 +1,13 @@
+Options -MultiViews
+RewriteEngine On
+
+# Route API requests to Laravel
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/public/index.php?/$1 [L,QSA]
+
+# Route everything else to React
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]

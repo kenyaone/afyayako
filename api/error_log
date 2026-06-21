@@ -1,0 +1,86 @@
+[12-Jun-2026 14:32:37 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/api/migrate.php on line 4
+[12-Jun-2026 14:32:37 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/api/migrate.php on line 4
+[12-Jun-2026 14:32:37 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/public_html/api/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/public_html/api/migrate.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/api/migrate.php on line 4
+[12-Jun-2026 14:33:21 UTC] PHP Warning:  require(vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/setup-db.php on line 20
+[12-Jun-2026 14:33:21 UTC] PHP Warning:  require(vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/setup-db.php on line 20
+[12-Jun-2026 14:33:21 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/public_html/setup-db.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/setup-db.php on line 20
+[12-Jun-2026 14:34:22 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function shell_exec() in /home/qnztnquh/public_html/install-deps.php:5
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/install-deps.php on line 5
+[12-Jun-2026 14:44:53 UTC] PHP Warning:  require(vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/setup-db.php on line 20
+[12-Jun-2026 14:44:53 UTC] PHP Warning:  require(vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/setup-db.php on line 20
+[12-Jun-2026 14:44:53 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/public_html/setup-db.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/setup-db.php on line 20
+[12-Jun-2026 14:45:47 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/run-migrations.php on line 26
+[12-Jun-2026 14:45:47 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/run-migrations.php on line 26
+[12-Jun-2026 14:45:47 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/public_html/api/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/public_html/run-migrations.php:26
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/run-migrations.php on line 26
+[12-Jun-2026 14:48:51 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/run-migrations.php on line 26
+[12-Jun-2026 14:48:51 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/run-migrations.php on line 26
+[12-Jun-2026 14:48:51 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/public_html/api/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/public_html/run-migrations.php:26
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/run-migrations.php on line 26
+[12-Jun-2026 14:49:24 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/bootstrap/app.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/run-migrations.php on line 27
+[12-Jun-2026 14:49:24 UTC] PHP Warning:  require(/home/qnztnquh/public_html/api/bootstrap/app.php): Failed to open stream: No such file or directory in /home/qnztnquh/public_html/run-migrations.php on line 27
+[12-Jun-2026 14:49:24 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/public_html/api/bootstrap/app.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/public_html/run-migrations.php:27
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/run-migrations.php on line 27
+[14-Jun-2026 13:14:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function shell_exec() in /home/qnztnquh/public_html/deploy_treatment_plans.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/deploy_treatment_plans.php on line 22
+[14-Jun-2026 13:16:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function shell_exec() in /home/qnztnquh/public_html/seed_sample_counsellors.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/public_html/seed_sample_counsellors.php on line 10
+[14-Jun-2026 14:08:46 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "db" does not exist in /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('db')
+#1 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('db')
+#2 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('db', Array, true)
+#3 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('db', Array)
+#4 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('db', Array)
+#5 /home/qnztnquh/public_html/setup-service-areas.php(12): Illuminate\Foundation\Application->make('db')
+#6 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [db] does not exist. in /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('db')
+#1 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('db', Array, true)
+#2 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('db', Array)
+#3 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('db', Array)
+#4 /home/qnztnquh/public_html/setup-service-areas.php(12): Illuminate\Foundation\Application->make('db')
+#5 {main}
+  thrown in /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[14-Jun-2026 14:08:50 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "db" does not exist in /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('db')
+#1 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('db')
+#2 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('db', Array, true)
+#3 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('db', Array)
+#4 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('db', Array)
+#5 /home/qnztnquh/public_html/setup-service-areas.php(12): Illuminate\Foundation\Application->make('db')
+#6 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [db] does not exist. in /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('db')
+#1 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('db', Array, true)
+#2 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('db', Array)
+#3 /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('db', Array)
+#4 /home/qnztnquh/public_html/setup-service-areas.php(12): Illuminate\Foundation\Application->make('db')
+#5 {main}
+  thrown in /home/qnztnquh/public_html/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
