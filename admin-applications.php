@@ -171,7 +171,7 @@ if ($_POST['action'] ?? false) {
                 <?php if ($app['professional_photo_path']): ?>
                     <div class="photo-container">
                         <h3>📸 Professional Photo</h3>
-                        <img src="<?php echo htmlspecialchars($app['professional_photo_path']); ?>" alt="Professional Photo">
+                        <img src="/api/storage/uploads/<?php echo htmlspecialchars($app['professional_photo_path']); ?>" alt="Professional Photo" style="max-width: 100%; height: auto;">
                     </div>
                 <?php endif; ?>
 
@@ -179,7 +179,7 @@ if ($_POST['action'] ?? false) {
                 <?php if ($app['license_document_path']): ?>
                     <div class="document-container">
                         <h3>📄 License Document</h3>
-                        <a href="<?php echo htmlspecialchars($app['license_document_path']); ?>" class="document-link" target="_blank">
+                        <a href="/api/storage/uploads/<?php echo htmlspecialchars($app['license_document_path']); ?>" class="document-link" target="_blank">
                             📥 View License (<?php echo htmlspecialchars($app['license_document_original_name']); ?>)
                         </a>
                     </div>
