@@ -1,8 +1,11 @@
-Options -MultiViews -Indexes
+Options -MultiViews -Indexes FollowSymLinks
 RewriteEngine On
 
-# Disable directory listing
+# Disable directory listing and serve index.html for root
 DirectoryIndex index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^/?$ index.html [L]
 
 # ── Security: block sensitive files from web access ──────────────────────────
 <FilesMatch "(?i)(^\.env|\.(env|sql|patch|log|sh|bak|ini|conf|lock|sqlite|sqlite3)$)">
