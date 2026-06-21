@@ -1,45 +1,31 @@
-Options -MultiViews -Indexes FollowSymLinks
+Options -MultiViews -Indexes
+DirectoryIndex index.html
 RewriteEngine On
 
-# Disable directory listing and serve index.html for root
-DirectoryIndex index.html
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?$ index.html [L]
-
-# ── Security: block sensitive files from web access ──────────────────────────
+# Block sensitive files
 <FilesMatch "(?i)(^\.env|\.(env|sql|patch|log|sh|bak|ini|conf|lock|sqlite|sqlite3)$)">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
+    Deny from all
 </FilesMatch>
 
-RewriteRule "(^|/)\.(?!well-known)" - [F,L]
-
-# Allow specific PHP files to execute directly
+# Allow specific PHP files
 RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^(admin-applications\.php|exec-[a-z-]+\.php|organize\.php|apply-route\.php|apply-api\.php)$ - [L]
-# Forbid direct execution of all other ad-hoc PHP scripts in the docroot root
+RewriteRule ^(admin-applications|exec-|apply-api)\.php$ - [L]
+
+# Block other root PHP files
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^[^/]+\.php$ - [F,L]
 
-# Route admin dashboard (preserve query parameters)
+# Route specific paths
 RewriteRule ^verify-professionals/?$ admin-applications.php [L,QSA]
-
-# Route apply page to apply.html
 RewriteRule ^apply/?$ apply.html [L]
 
-# Route API requests to Laravel
-RewriteCond %{REQUEST_URI} ^/api/ [NC]
+# Route API to Laravel
+RewriteCond %{REQUEST_URI} ^/api/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^api/(.*)$ api/public/index.php/$1 [L,QSA]
 
-# Route everything else to React
+# Default to index.html for everything else
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [QSA,L]
+RewriteRule ^ index.html [L]
