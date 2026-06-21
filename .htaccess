@@ -25,6 +25,9 @@ RewriteRule ^(admin-|exec-|organize\.php|apply-route\.php) - [L]
 # because its target path (api/public/index.php) contains a slash.
 RewriteRule ^[^/]+\.php$ - [F,L]
 
+# Route admin dashboard
+RewriteRule ^admin/?$ admin-applications.php [L]
+
 # Route apply page to apply.html
 RewriteRule ^apply/?$ apply.html [L]
 
