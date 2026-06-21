@@ -386,11 +386,8 @@
             loadingSpinner.style.display = 'block';
 
             try {
-                // Use mock endpoint for testing, or full endpoint in production
-                const endpoint = `${API_URL}/professionals/apply`;
-                const testEndpoint = '/api/professionals-apply.php';
-
-                const response = await fetch(testEndpoint, {
+                // Submit to public endpoint
+                const response = await fetch('/api/public/apply.php', {
                     method: 'POST',
                     body: formData
                 });

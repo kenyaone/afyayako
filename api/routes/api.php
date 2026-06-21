@@ -79,6 +79,9 @@ Route::put('/professionals/availability', [ProfessionalController::class, 'updat
 Route::get('/professionals/{id}', [ProfessionalController::class, 'show']);
 Route::get('/professionals/{id}/reviews', [SessionFeedbackController::class, 'publicReviews']);
 
+// Public professional application (for new applicants)
+Route::post('/professionals/apply', [ProfessionalController::class, 'apply']);
+
 // -------------------------------------------------------
 // Authenticated routes
 // -------------------------------------------------------
@@ -98,9 +101,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/assessments', [AssessmentController::class, 'store']);
     Route::get('/assessments/recommend', [AssessmentController::class, 'recommend']);
     Route::get('/assessments/{id}', [AssessmentController::class, 'show']);
-
-    // Professionals (authenticated actions)
-    Route::post('/professionals/apply', [ProfessionalController::class, 'apply']);
 
     // Consultations — specific routes BEFORE the {id} wildcard
     Route::get('/consultations', [ConsultationController::class, 'index']);

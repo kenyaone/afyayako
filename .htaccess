@@ -17,25 +17,25 @@ RewriteEngine On
 # /.well-known/ reachable so SSL (AutoSSL/Let's Encrypt) renewals still work.
 RewriteRule "(^|/)\.(?!well-known)" - [F,L]
 
-# Allow admin dashboards and specific tools, block other root PHP scripts
-RewriteRule ^(admin-|exec-|organize\.php|apply-route\.php) - [L]
-# Forbid direct execution of ad-hoc PHP scripts in the docroot root
-# (setup-db.php, all_users.php, run-migrations.php, ...). The static React
-# app needs no root *.php, and the Laravel API under /api/ is unaffected
-# because its target path (api/public/index.php) contains a slash.
+# Allow specific PHP files to execute directly
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(admin-applications\.php|exec-[a-z-]+\.php|organize\.php|apply-route\.php|apply-api\.php)$ - [L]
+# Forbid direct execution of all other ad-hoc PHP scripts in the docroot root
+RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^[^/]+\.php$ - [F,L]
 
-# Route admin dashboard
-RewriteRule ^verify-professionals/?$ admin-applications.php [L]
+# Route admin dashboard (preserve query parameters)
+RewriteRule ^verify-professionals/?$ admin-applications.php [L,QSA]
 
 # Route apply page to apply.html
 RewriteRule ^apply/?$ apply.html [L]
 
-# Route API requests to Laravel
+# Route API requests to Laravel, but NOT apply.php
 RewriteCond %{REQUEST_URI} ^/api/ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.*)$ api/public/index.php?/$1 [L,QSA]
+RewriteCond %{REQUEST_URI} !apply\.php [NC]
+RewriteRule ^api/(.*)$ api/public/index.php/$1 [L,QSA]
 
 # Route everything else to React
 RewriteCond %{REQUEST_FILENAME} !-f
