@@ -17,6 +17,8 @@ RewriteEngine On
 # /.well-known/ reachable so SSL (AutoSSL/Let's Encrypt) renewals still work.
 RewriteRule "(^|/)\.(?!well-known)" - [F,L]
 
+# Allow admin dashboards and specific tools, block other root PHP scripts
+RewriteRule ^(admin-|exec-|organize\.php|apply-route\.php) - [L]
 # Forbid direct execution of ad-hoc PHP scripts in the docroot root
 # (setup-db.php, all_users.php, run-migrations.php, ...). The static React
 # app needs no root *.php, and the Laravel API under /api/ is unaffected
