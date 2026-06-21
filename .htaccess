@@ -2,7 +2,6 @@ Options -MultiViews
 RewriteEngine On
 
 # ── Security: block sensitive files from web access ──────────────────────────
-# Deny secret / dump / backup file types (.env, .env.*, .sql, .log, etc.)
 <FilesMatch "(?i)(^\.env|\.(env|sql|patch|log|sh|bak|ini|conf|lock|sqlite|sqlite3)$)">
     <IfModule mod_authz_core.c>
         Require all denied
@@ -13,8 +12,6 @@ RewriteEngine On
     </IfModule>
 </FilesMatch>
 
-# Deny all dot-files / dot-dirs (.env, .git, .htpasswd, ...) — but keep
-# /.well-known/ reachable so SSL (AutoSSL/Let's Encrypt) renewals still work.
 RewriteRule "(^|/)\.(?!well-known)" - [F,L]
 
 # Allow specific PHP files to execute directly
@@ -30,11 +27,10 @@ RewriteRule ^verify-professionals/?$ admin-applications.php [L,QSA]
 # Route apply page to apply.html
 RewriteRule ^apply/?$ apply.html [L]
 
-# Route API requests to Laravel, but NOT apply.php
+# Route API requests to Laravel
 RewriteCond %{REQUEST_URI} ^/api/ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !apply\.php [NC]
 RewriteRule ^api/(.*)$ api/public/index.php/$1 [L,QSA]
 
 # Route everything else to React
