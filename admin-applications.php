@@ -13,9 +13,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $action = $_GET['action'] ?? 'list';
 $appId = $_GET['id'] ?? null;
 
-// Debug: log the values
-error_log('Admin GET params: action=' . $action . ', id=' . $appId);
-
 // Handle approve/reject
 if ($_POST['action'] ?? false) {
     $id = $_POST['id'];
