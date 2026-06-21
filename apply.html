@@ -313,7 +313,7 @@
 
     <script>
         const PLATFORM_FEE = 35;
-        const API_URL = '/api';
+        const API_URL = '/api'; // Will be /api/professionals-apply.php in testing
 
         // Handle photo upload
         function handlePhotoUpload(input) {
@@ -386,7 +386,11 @@
             loadingSpinner.style.display = 'block';
 
             try {
-                const response = await fetch(`${API_URL}/professionals/apply`, {
+                // Use mock endpoint for testing, or full endpoint in production
+                const endpoint = `${API_URL}/professionals/apply`;
+                const testEndpoint = '/api/professionals-apply.php';
+
+                const response = await fetch(testEndpoint, {
                     method: 'POST',
                     body: formData
                 });
