@@ -1,0 +1,225 @@
+🚀 DEPLOYMENT INSTRUCTIONS
+==========================
+
+All files are on your production server at https://afyayako.co.ke/
+
+FILES UPLOADED (in root directory):
+- ProfessionalController.php
+- Professional.php
+- filesystems.php
+- professionals-apply.php
+- 2026_06_21_000001_create_professionals_table.php
+- apply.html
+- run-migration.php
+- Other documentation and setup files
+
+QUICK DEPLOYMENT (Copy & Paste Commands)
+=========================================
+
+If you have SSH/Terminal access (via cPanel or direct SSH):
+
+cd ~/public_html
+
+# Create directory structure
+mkdir -p api/app/Http/Controllers
+mkdir -p api/app/Models
+mkdir -p api/config
+mkdir -p api/database/migrations
+mkdir -p api/storage/uploads/professionals/photos
+mkdir -p api/storage/uploads/professionals/licenses
+mkdir -p api/bootstrap/cache
+
+# Move files to correct locations
+mv ProfessionalController.php api/app/Http/Controllers/
+mv Professional.php api/app/Models/
+mv filesystems.php api/config/
+mv 2026_06_21_000001_create_professionals_table.php api/database/migrations/
+mv professionals-apply.php api/
+
+# Set permissions
+chmod -R 775 api/storage/
+chmod -R 775 api/database/
+chmod -R 775 api/bootstrap/
+
+# Run database migration
+php run-migration.php
+
+# Verify setup
+php test-apply-form.php
+
+# Test the form
+curl https://afyayako.co.ke/apply.html | head -20
+
+DONE! Form is live at: https://afyayako.co.ke/apply.html
+
+---
+
+STEP-BY-STEP (If copying commands individually):
+
+1. Navigate to public_html:
+   cd ~/public_html
+
+2. Create app directory:
+   mkdir -p api/app/Http/Controllers
+   mkdir -p api/app/Models
+
+3. Create config directory:
+   mkdir -p api/config
+
+4. Create database directory:
+   mkdir -p api/database/migrations
+
+5. Create storage directories:
+   mkdir -p api/storage/uploads/professionals/photos
+   mkdir -p api/storage/uploads/professionals/licenses
+
+6. Create bootstrap cache:
+   mkdir -p api/bootstrap/cache
+
+7. Move controller file:
+   mv ProfessionalController.php api/app/Http/Controllers/
+
+8. Move model file:
+   mv Professional.php api/app/Models/
+
+9. Move config file:
+   mv filesystems.php api/config/
+
+10. Move migration file:
+    mv 2026_06_21_000001_create_professionals_table.php api/database/migrations/
+
+11. Move API endpoint:
+    mv professionals-apply.php api/
+
+12. Set permissions:
+    chmod -R 775 api/storage/
+    chmod -R 775 api/database/
+    chmod -R 775 api/bootstrap/
+
+13. Run migration:
+    php run-migration.php
+
+Expected output:
+    Connected to SQLite database
+    ✓ Created professionals table
+    ✓ Created migrations table
+    ✓ Database migration completed successfully!
+
+14. Verify:
+    php test-apply-form.php
+
+15. Access the form:
+    https://afyayako.co.ke/apply.html
+
+---
+
+VIA cPANEL TERMINAL:
+
+1. Log in to cPanel: http://54.36.164.223:2082/
+   User: qnztnquh
+   Password: [your password]
+
+2. Click: "Terminal" (in Advanced section)
+
+3. Paste all the commands from "QUICK DEPLOYMENT" section above
+
+4. Press Enter after each group of commands
+
+---
+
+FILES STATUS:
+=============
+
+Files in root directory (/home/qnztnquh/public_html/):
+✓ ProfessionalController.php (10.3 KB)
+✓ Professional.php (2.9 KB)
+✓ filesystems.php (1.3 KB)
+✓ professionals-apply.php (6.2 KB)
+✓ 2026_06_21_000001_create_professionals_table.php (2.5 KB)
+✓ apply.html (27.0 KB)
+✓ run-migration.php (2.1 KB)
+✓ test-apply-form.php (2.8 KB)
+
+After organization, they should be in:
+- api/app/Http/Controllers/Professional Controller.php
+- api/app/Models/Professional.php
+- api/config/filesystems.php
+- api/professionals-apply.php
+- api/database/migrations/2026_06_21_000001_create_professionals_table.php
+
+---
+
+MANUAL FILE ORGANIZATION (If Terminal not available):
+
+You can also manually move files via cPanel's File Manager:
+
+1. Log in to cPanel
+2. Click: "File Manager"
+3. Navigate to: public_html
+4. Create folders:
+   - api/app/Http/Controllers
+   - api/app/Models
+   - api/config
+   - api/database/migrations
+   - api/storage/uploads/professionals/photos
+   - api/storage/uploads/professionals/licenses
+5. Drag files to correct locations:
+   - ProfessionalController.php → api/app/Http/Controllers/
+   - Professional.php → api/app/Models/
+   - filesystems.php → api/config/
+   - 2026_06_21_000001_create_professionals_table.php → api/database/migrations/
+   - professionals-apply.php → api/
+6. Right-click folders → Change Permissions → Set to 775
+7. Run migration via browser: https://afyayako.co.ke/run-migration.php
+
+---
+
+TESTING AFTER DEPLOYMENT:
+
+Visit: https://afyayako.co.ke/apply.html
+
+You should see:
+✓ Professional application form
+✓ Photo upload section
+✓ License upload section
+✓ SOP agreement
+✓ All form fields
+
+Submit test form:
+curl -X POST https://afyayako.co.ke/api/professionals-apply.php \
+  -F "email=test@example.com" \
+  -F "full_name=Test Doctor" \
+  -F "professional_type=doctor" \
+  -F "sop_agreed=1" \
+  -F "signature_name=Test Doctor" \
+  -F "mpesa_number=0712345678" \
+  -F "rate_per_hour=2500"
+
+Expected response:
+{
+  "success": true,
+  "message": "Application submitted successfully...",
+  "professional_id": 1,
+  "status": "pending"
+}
+
+---
+
+SUPPORT:
+
+1. Check errors: /home/qnztnquh/public_html/api/error_log
+2. Check database: ls -la api/database/database.sqlite
+3. Check storage: ls -la api/storage/uploads/professionals/
+4. Documentation: Read PROFESSIONAL_UPLOAD_FEATURE.md
+
+---
+
+GITHUB:
+All code is backed up at: https://github.com/kenyaone/afyayako
+
+---
+
+Questions? Check:
+- PROFESSIONAL_UPLOAD_FEATURE.md
+- PRODUCTION_DEPLOYMENT.md
+- TESTING_GUIDE.md
