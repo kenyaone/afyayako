@@ -46,6 +46,9 @@ Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 
 Route::get('/crisis/hotlines', [CrisisController::class, 'hotlines']);
 
+// Tele-mental health informed-consent document (public so it can be shown pre-signup)
+Route::get('/consent/telehealth', [\App\Http\Controllers\ConsentController::class, 'document']);
+
 Route::get('/subscriptions/plans', [SubscriptionController::class, 'plans']);
 
 Route::get('/corporate/tiers', [CorporateController::class, 'tiers']);
@@ -73,20 +76,26 @@ Route::get('/professionals/{id}/slots', [AvailabilityController::class, 'bookabl
 
 // Professional routes — specific routes must appear before {id} wildcard
 Route::get('/professionals', [ProfessionalController::class, 'index']);
+Route::get('/professionals/specializations', [ProfessionalController::class, 'specializations']);
+Route::get('/locations', [\App\Http\Controllers\LocationController::class, 'index']);
+Route::get('/professionals/languages', [ProfessionalController::class, 'languages']);
 Route::post('/professionals/register', [ProfessionalController::class, 'register'])->middleware('auth:api');
+Route::post('/professionals/verify-license', [ProfessionalController::class, 'verifyLicense'])->middleware('auth:api');
 Route::get('/professionals/me/dashboard', [ProfessionalController::class, 'dashboard'])->middleware('auth:api');
+Route::get('/professionals/me/analytics', [ProfessionalController::class, 'analytics'])->middleware('auth:api');
 Route::put('/professionals/availability', [ProfessionalController::class, 'updateAvailability'])->middleware('auth:api');
 Route::get('/professionals/{id}', [ProfessionalController::class, 'show']);
 Route::get('/professionals/{id}/reviews', [SessionFeedbackController::class, 'publicReviews']);
-
-// Public professional application (for new applicants)
-Route::post('/professionals/apply', [ProfessionalController::class, 'apply']);
 
 // -------------------------------------------------------
 // Authenticated routes
 // -------------------------------------------------------
 
 Route::middleware('auth:api')->group(function () {
+
+    // Informed consent (tele-mental health)
+    Route::get('/consent/telehealth/status', [\App\Http\Controllers\ConsentController::class, 'status']);
+    Route::post('/consent/telehealth/accept', [\App\Http\Controllers\ConsentController::class, 'accept']);
 
     // Auth
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -100,19 +109,33 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/assessments', [AssessmentController::class, 'index']);
     Route::post('/assessments', [AssessmentController::class, 'store']);
     Route::get('/assessments/recommend', [AssessmentController::class, 'recommend']);
+    // Specific routes BEFORE the {id} wildcard
+    Route::get('/assessments/clinical-dashboard', [AssessmentController::class, 'clinicalDashboard']);
+    Route::post('/assessments/client-risk', [AssessmentController::class, 'clientRisk']);
     Route::get('/assessments/{id}', [AssessmentController::class, 'show']);
+
+    // Compliance (patient-side: file & view own incidents/complaints)
+    Route::post('/compliance/report-incident', [\App\Http\Controllers\ComplianceController::class, 'reportIncident']);
+    Route::get('/compliance/my-incidents', [\App\Http\Controllers\ComplianceController::class, 'myIncidents']);
+    Route::get('/compliance/my-complaints', [\App\Http\Controllers\ComplianceController::class, 'myComplaints']);
+
+    // Professionals (authenticated actions)
+    Route::post('/professionals/apply', [ProfessionalController::class, 'apply']);
 
     // Consultations — specific routes BEFORE the {id} wildcard
     Route::get('/consultations', [ConsultationController::class, 'index']);
     Route::post('/consultations', [ConsultationController::class, 'store']);
     Route::get('/consultations/professional/list', [ConsultationController::class, 'proList']);
     Route::post('/consultations/direct-book', [ConsultationController::class, 'directBook']);
+    // Must precede /consultations/{id} so "my-therapist" isn't matched as an id.
+    Route::get('/consultations/my-therapist', [ConsultationController::class, 'myTherapist']);
     Route::get('/consultations/{id}', [ConsultationController::class, 'show']);
     Route::post('/consultations/{id}/join', [ConsultationController::class, 'join']);
     Route::post('/consultations/{id}/end', [ConsultationController::class, 'endSession']);
     Route::post('/consultations/{id}/cancel', [ConsultationController::class, 'cancel']);
     Route::post('/consultations/{id}/rate', [ConsultationController::class, 'rate']);
     Route::put('/consultations/{id}/notes', [ConsultationController::class, 'addNotes']);
+    Route::post('/consultations/{id}/recording-consent', [ConsultationController::class, 'recordingConsent']);
     Route::post('/consultations/{id}/recording', [ConsultationController::class, 'saveRecording']);
     Route::delete('/consultations/{id}/recording', [ConsultationController::class, 'deleteRecording']);
     Route::get('/consultations/{id}/recording/share', [ConsultationController::class, 'shareRecording']);
@@ -143,6 +166,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/payments/paystack/initialize', [PaymentController::class, 'paystackInitialize']);
     Route::post('/payments/paystack/verify', [PaymentController::class, 'paystackVerify']);
     Route::post('/payments/pesapal/initiate', [PaymentController::class, 'pesapalInitiate']);
+    // Admin revenue dashboard + verified-professionals list (admin-gated)
+    Route::get('/payments/revenue', [AdminController::class, 'revenue'])->middleware('can:admin');
+    Route::get('/professionals/admin/all', [AdminController::class, 'professionals'])->middleware('can:admin');
 
     // Crisis
     Route::post('/crisis/report', [CrisisController::class, 'report']);
@@ -240,6 +266,7 @@ Route::middleware('auth:api')->group(function () {
 
     // Professional caseload
     Route::get('/caseload', [CaseloadController::class, 'index']);
+    Route::post('/caseload/{id}/screening', [CaseloadController::class, 'screenPatient']);
     Route::get('/caseload/{id}', [CaseloadController::class, 'patient']);
     Route::get('/professional/payouts', [CaseloadController::class, 'payoutStatement']);
 
@@ -256,6 +283,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/referrals', [ReferralController::class, 'store']);
     Route::get('/referrals', [ReferralController::class, 'index']);
     Route::get('/referrals/mine', [ReferralController::class, 'myReferrals']);
+    Route::get('/referrals/incoming', [ReferralController::class, 'incoming']);
+    Route::post('/referrals/{id}/respond', [ReferralController::class, 'respond']);
+    Route::post('/referrals/{id}/outcome', [ReferralController::class, 'reportOutcome']);
     Route::post('/referrals/{id}/approve', [ReferralController::class, 'approve']);
     Route::post('/referrals/{id}/reject', [ReferralController::class, 'reject']);
 
@@ -272,8 +302,13 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/professional/set-online', [ProfessionalController::class, 'setOnline']);
     Route::put('/professional/service-areas', [ProfessionalController::class, 'updateServiceAreas']);
 
-    // Continuity — patient's most recent completed professional
-    Route::get('/consultations/my-therapist', [ConsultationController::class, 'myTherapist']);
+    // (/consultations/my-therapist is registered earlier, before /consultations/{id})
+
+    // Supervision of practitioners (MoH Guideline 9)
+    Route::get('/supervision/supervisees', [\App\Http\Controllers\SupervisionController::class, 'mySupervisees']);
+    Route::get('/supervision/supervisors', [\App\Http\Controllers\SupervisionController::class, 'mySupervisors']);
+    Route::post('/supervision/{id}/sessions', [\App\Http\Controllers\SupervisionController::class, 'logSession']);
+    Route::get('/supervision/{id}/sessions', [\App\Http\Controllers\SupervisionController::class, 'sessions']);
 
     // Parental Consent (for minors)
     Route::post('/parental-consent/request', [ParentalConsentController::class, 'request']);
@@ -290,12 +325,27 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/burnout/pay', [BurnoutController::class, 'initiatePayment']);
     Route::post('/burnout/assess', [BurnoutController::class, 'assess']);
     Route::post('/burnout/{id}/send-report', [BurnoutController::class, 'sendReport']);
+    Route::post('/burnout/report/{id}/send-email', [BurnoutController::class, 'sendReport']); // frontend alias
+    Route::get('/burnout/report/{id}', [BurnoutController::class, 'report']);
+    Route::get('/burnout/report/{id}/pdf', [BurnoutController::class, 'reportPdf']);
     Route::get('/burnout/my-reports', [BurnoutController::class, 'myReports']);
 
     // Admin routes (role check via middleware)
     Route::middleware('can:admin')->prefix('admin')->group(function () {
         Route::get('/stats', [AdminController::class, 'stats']);
+        // Crisis queue
+        Route::get('/crisis', [AdminController::class, 'crisisEvents']);
+        Route::put('/crisis/{id}/resolve', [AdminController::class, 'resolveCrisis']);
+        // Audit trail
+        Route::get('/audit-logs', [AdminController::class, 'auditLogs']);
+        // Supervision assignment (Guideline 9)
+        Route::get('/supervisions', [\App\Http\Controllers\SupervisionController::class, 'adminList']);
+        Route::post('/supervisions', [\App\Http\Controllers\SupervisionController::class, 'adminAssign']);
+        Route::put('/supervisions/{id}/end', [\App\Http\Controllers\SupervisionController::class, 'end']);
+        Route::get('/eligible-supervisors', [AdminController::class, 'eligibleSupervisors']);
+        Route::put('/professionals/{id}/supervisor-eligibility', [AdminController::class, 'setSupervisorEligibility']);
         Route::get('/professionals', [AdminController::class, 'professionals']);
+        Route::get('/professionals/{id}/photo', [AdminController::class, 'professionalPhoto']);
         Route::put('/professionals/{id}/verify', [AdminController::class, 'verifyProfessional']);
         Route::get('/consultations', [AdminController::class, 'consultations']);
         Route::put('/consultations/{id}/confirm', [AdminController::class, 'confirmConsultation']);
@@ -319,6 +369,20 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/users', [AdminController::class, 'listUsers']);
         Route::put('/users/{id}/ban', [AdminController::class, 'banUser']);
         Route::put('/users/{id}/unban', [AdminController::class, 'unbanUser']);
+        // Locations (curated list + custom add)
+        Route::get('/locations', [\App\Http\Controllers\LocationController::class, 'adminIndex']);
+        Route::post('/locations', [\App\Http\Controllers\LocationController::class, 'store']);
+        Route::put('/locations/{id}', [\App\Http\Controllers\LocationController::class, 'update']);
+        Route::delete('/locations/{id}', [\App\Http\Controllers\LocationController::class, 'destroy']);
+        // Account management + password reset
+        Route::get('/test-accounts', [AdminController::class, 'testAccounts']);
+        Route::post('/test-accounts', [AdminController::class, 'createTestAccount']);
+        Route::post('/test-accounts/{id}/reset-password', [AdminController::class, 'resetUserPassword']);
+        Route::delete('/test-accounts/{id}', [AdminController::class, 'deleteTestAccount']);
+        // Compliance & quality dashboard
+        Route::get('/compliance/incidents', [AdminController::class, 'complianceIncidents']);
+        Route::get('/compliance/complaints', [AdminController::class, 'complianceComplaints']);
+        Route::get('/compliance/quality-metrics', [AdminController::class, 'complianceQualityMetrics']);
         // Peer mentor approvals
         Route::get('/peer-mentors', [PeerMentorController::class, 'adminList']);
         Route::put('/peer-mentors/{id}/approve', [PeerMentorController::class, 'adminApprove']);

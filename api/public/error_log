@@ -1,0 +1,593 @@
+[21-Jun-2026 17:09:19 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[21-Jun-2026 21:25:53 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[21-Jun-2026 21:26:00 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[21-Jun-2026 23:47:55 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[22-Jun-2026 06:04:37 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[22-Jun-2026 07:45:55 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[22-Jun-2026 07:45:55 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Application" not found in /home/qnztnquh/api/bootstrap/app.php:16
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(14): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/bootstrap/app.php on line 16
+[22-Jun-2026 07:47:04 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:13 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:18 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:23 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:33 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:43 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:43 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:47:53 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:48:03 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:48:08 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:48:13 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:48:23 UTC] PHP Fatal error:  Uncaught ReflectionException: Class "view" does not exist in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1125
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1125): ReflectionClass->__construct('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#19 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [view] does not exist. in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php:1127
+Stack trace:
+#0 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(936): Illuminate\Container\Container->build('view')
+#1 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('view', Array, true)
+#2 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('view', Array)
+#3 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('view', Array)
+#4 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php(1810): Illuminate\Foundation\Application->make('view')
+#5 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(240): Illuminate\Container\Container->offsetGet('view')
+#6 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(211): Illuminate\Support\Facades\Facade::resolveFacadeInstance('view')
+#7 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(357): Illuminate\Support\Facades\Facade::getFacadeRoot()
+#8 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/RegisterErrorViewPaths.php(17): Illuminate\Support\Facades\Facade::__callStatic('replaceNamespac...', Array)
+#9 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(991): Illuminate\Foundation\Exceptions\RegisterErrorViewPaths->__invoke()
+#10 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(966): Illuminate\Foundation\Exceptions\Handler->registerErrorViewPaths()
+#11 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(889): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#12 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(772): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#13 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(659): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#14 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(225): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\Contracts\Container\BindingResolutionException))
+#15 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(202): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#16 /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(262): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#17 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\Contracts\Container\BindingResolutionException))
+#18 {main}
+  thrown in /home/qnztnquh/api/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 1127
+[22-Jun-2026 07:57:53 UTC] PHP Warning:  require(/home/qnztnquh/api/vendor/autoload.php): Failed to open stream: No such file or directory in /home/qnztnquh/api/public/index.php on line 24
+[22-Jun-2026 07:57:53 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/api/public/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/api/public/index.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/qnztnquh/api/public/index.php on line 24
+[22-Jun-2026 07:58:03 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/api/vendor/composer/autoload_real.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/api/vendor/autoload.php:20
+Stack trace:
+#0 /home/qnztnquh/api/public/index.php(24): require()
+#1 {main}
+  thrown in /home/qnztnquh/api/vendor/autoload.php on line 20
+[22-Jun-2026 07:58:08 UTC] PHP Warning:  require(/home/qnztnquh/api/vendor/composer/../nunomaduro/termwind/src/Functions.php): Failed to open stream: No such file or directory in /home/qnztnquh/api/vendor/composer/autoload_real.php on line 41
+[22-Jun-2026 07:58:08 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/qnztnquh/api/vendor/composer/../nunomaduro/termwind/src/Functions.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/qnztnquh/api/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/qnztnquh/api/vendor/composer/autoload_real.php(45): {closure}('35a6ad97d21e794...', '/home/qnztnquh/...')
+#1 /home/qnztnquh/api/vendor/autoload.php(22): ComposerAutoloaderInit36793882908b6cbdd344b5a4840231db::getLoader()
+#2 /home/qnztnquh/api/public/index.php(24): require('/home/qnztnquh/...')
+#3 {main}
+  thrown in /home/qnztnquh/api/vendor/composer/autoload_real.php on line 41

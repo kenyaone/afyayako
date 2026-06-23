@@ -1,36 +1,20 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Create The Application
-|--------------------------------------------------------------------------
-|
-| First, we need to get an application instance. This is pulled from the
-| bootstrap file. The bootstrap file returns the Illuminate application
-| instance that we can use to bind our start files to the container.
-|
-*/
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
-$app = require __DIR__.'/../bootstrap/app.php';
+define('LARAVEL_START', microtime(true));
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request using
-| the application's HTTP kernel. Then, we will send the response back
-| to this client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
+// Determine if the application is in maintenance mode...
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
 
-$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+// Register the Composer autoloader...
+require __DIR__.'/../vendor/autoload.php';
 
-$response = $kernel->handle(
-    $request = \Illuminate\Http\Request::capture()
-);
+// Bootstrap Laravel and handle the request...
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
-$response->send();
-
-$kernel->terminate($request, $response);
+$app->handleRequest(Request::capture());

@@ -8,6 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // The professionals table is already created by 2024_01_01_000004.
+        // Guard so this (originally a standalone deploy) is a no-op on a full DB.
+        if (Schema::hasTable('professionals')) {
+            return;
+        }
+
         Schema::create('professionals', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();

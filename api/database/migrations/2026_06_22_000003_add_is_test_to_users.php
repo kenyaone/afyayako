@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        if (Schema::hasColumn('users', 'is_test')) {
+            return;
+        }
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_test')->default(false);
+        });
+    }
+
+    public function down(): void
+    {
+        if (Schema::hasColumn('users', 'is_test')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('is_test');
+            });
+        }
+    }
+};

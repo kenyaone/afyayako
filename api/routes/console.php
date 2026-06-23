@@ -1,19 +1,13 @@
 <?php
 
+use App\Jobs\SendSessionReminders;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
-
-/*
-|--------------------------------------------------------------------------
-| Console Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of your Closure based console
-| commands. Each Closure is bound to a command instance and receives
-| all of the arguments and input that the user provides.
-|
-*/
+use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+// Run every 30 minutes — catches both the 24h and 1h reminder windows
+Schedule::job(new SendSessionReminders)->everyThirtyMinutes();

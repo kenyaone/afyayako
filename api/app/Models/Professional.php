@@ -10,10 +10,19 @@ class Professional extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The user account behind this professional (linked by email).
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
+
     protected $fillable = [
         'email',
         'full_name',
         'phone',
+        'gender',
         'professional_type',
         'kmpdc_license',
         'cpb_license',
@@ -37,6 +46,7 @@ class Professional extends Model
         'verified_at',
         'bio',
         'years_experience',
+        'qualification',
     ];
 
     protected $casts = [
@@ -55,6 +65,14 @@ class Professional extends Model
         'sop_agreed_at',
         'verified_at',
     ];
+
+    /**
+     * Weekly availability slots for this professional.
+     */
+    public function availability()
+    {
+        return $this->hasMany(ProfessionalAvailability::class, 'professional_id');
+    }
 
     /**
      * Scope: Get only verified professionals
