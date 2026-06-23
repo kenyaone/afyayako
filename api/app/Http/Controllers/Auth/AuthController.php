@@ -23,7 +23,7 @@ class AuthController extends Controller
             'password'     => 'required|string|min:6',
             'email'        => 'nullable|email|unique:users,email',
             'phone'        => 'nullable|string|max:15',
-            'date_of_birth' => 'nullable|date|before:today',
+            'date_of_birth' => 'required|date|before:today',
             'role'         => 'sometimes|in:user,professional',
             'anonymity_preference' => 'sometimes|nullable|in:anonymous,identified',
         ]);
@@ -50,11 +50,15 @@ class AuthController extends Controller
         $token = JWTAuth::fromUser($user);
         $refreshToken = JWTAuth::fromUser($user, ['type' => 'refresh']);
 
+        $age = \Carbon\Carbon::parse($user->date_of_birth)->age;
+        $requiresParentalConsent = $age < 18 && !$user->parentalConsent()->exists();
+
         return response()->json([
             'message' => 'Account created successfully',
             'user'    => $user,
             'access'  => $token,
             'refresh' => $refreshToken,
+            'requires_parental_consent' => $requiresParentalConsent,
         ], 201);
     }
 

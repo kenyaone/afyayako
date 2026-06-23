@@ -95,4 +95,26 @@ class ParentalConsentController extends Controller
             'consent' => $consent,
         ]);
     }
+
+    public function status(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user->date_of_birth) {
+            return response()->json([
+                'requires_consent' => false,
+                'has_consent' => false,
+            ]);
+        }
+
+        $age = \Carbon\Carbon::parse($user->date_of_birth)->age;
+        $requiresConsent = $age < 18;
+        $hasConsent = $user->parentalConsent()->exists();
+
+        return response()->json([
+            'requires_consent' => $requiresConsent,
+            'has_consent' => $hasConsent,
+            'is_adult' => !$requiresConsent,
+        ]);
+    }
 }

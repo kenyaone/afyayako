@@ -313,6 +313,7 @@ Route::middleware('auth:api')->group(function () {
     // Parental Consent (for minors)
     Route::post('/parental-consent/request', [ParentalConsentController::class, 'request']);
     Route::post('/parental-consent/verify', [ParentalConsentController::class, 'verify']);
+    Route::get('/parental-consent/status', [ParentalConsentController::class, 'status']);
 
     // Treatment Plans
     Route::post('/treatment-plans', [TreatmentPlanController::class, 'store']);
