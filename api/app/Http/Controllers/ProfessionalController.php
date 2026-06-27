@@ -115,14 +115,16 @@ class ProfessionalController extends Controller
             $professional->years_experience = $request->years_experience;
             $professional->qualification = $request->qualification;
 
-            // Set initial status to pending (admin review required)
-            $professional->status = 'pending';
+            // Auto-approve applicants to 'verified' status
+            // KMPDC License verification is deferred to admin review (kmpdc_verified stays false)
+            $professional->status = 'verified';
+            $professional->verified_at = Carbon::now();
 
             $professional->save();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Application submitted successfully. Our team will review your documents and contact you within 24 hours.',
+                'message' => 'Application submitted successfully. You can now access your professional dashboard.',
                 'professional_id' => $professional->id,
                 'status' => $professional->status,
             ], 201);
@@ -310,8 +312,8 @@ class ProfessionalController extends Controller
         $totalReviews = (clone $fb)->count();
         $rating       = $totalReviews ? round((float) (clone $fb)->avg('overall_rating'), 1) : null;
 
-        // Pending payout: professional keeps 80% of completed-session value
-        $pendingPayouts = round((float) (clone $completed)->sum('amount') * 0.80, 2);
+        // Pending payout: professional keeps 65% of completed-session value
+        $pendingPayouts = round((float) (clone $completed)->sum('amount') * 0.65, 2);
 
         // Upcoming / active sessions
         $upcoming = \App\Models\Consultation::with(['user:id,display_name,username,avatar'])
@@ -374,7 +376,7 @@ class ProfessionalController extends Controller
         $completed = (clone $base)->where('status', 'completed');
 
         $totalSessions = (clone $completed)->count();
-        $totalEarned   = round((float) (clone $completed)->sum('amount') * 0.80, 2);
+        $totalEarned   = round((float) (clone $completed)->sum('amount') * 0.65, 2);
         $allCount      = (clone $base)->count();
         $cancelled     = (clone $base)->where('status', 'cancelled')->count();
         $cancellationRate = $allCount > 0 ? round($cancelled / $allCount * 100, 1) : 0;
@@ -398,7 +400,7 @@ class ProfessionalController extends Controller
             $mDone  = (clone $completed)->whereBetween('scheduled_at', [$start, $end]);
             $mCount = (clone $mDone)->count();
             $mCanc  = (clone $base)->where('status', 'cancelled')->whereBetween('scheduled_at', [$start, $end])->count();
-            $mAmt   = round((float) (clone $mDone)->sum('amount') * 0.80, 2);
+            $mAmt   = round((float) (clone $mDone)->sum('amount') * 0.65, 2);
             $mFb    = \App\Models\SessionFeedback::whereHas('consultation', fn($q) => $q->where('professional_id', $pro->id))
                         ->whereBetween('created_at', [$start, $end]);
             $mAvg   = (clone $mFb)->count() ? round((float) (clone $mFb)->avg('overall_rating'), 1) : 0;
@@ -479,7 +481,7 @@ class ProfessionalController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'kmpdc_license'      => 'required|string|max:100',
+            'kmpdc_license'      => 'nullable|string|max:100',
             'cpb_license'        => 'nullable|string|max:100',
             'qualification'      => 'required|string|max:255',
             'credential_document'=> 'nullable|string|max:500',
@@ -521,13 +523,15 @@ class ProfessionalController extends Controller
             return response()->json(['success' => false, 'error' => 'Select at least one language.'], 422);
         }
 
-        // One application per account/email — update in place if re-applying.
-        $professional = Professional::withTrashed()->firstOrNew(['email' => $user->email]);
+        // One application per account — update in place if re-applying.
+        // Email is optional for counsellors, so find by user_id if available
+        $lookupEmail = $user->email ?? "user_{$user->id}@counselor.local";
+        $professional = Professional::withTrashed()->firstOrNew(['email' => $lookupEmail]);
         if ($professional->trashed()) {
             $professional->restore();
         }
 
-        $professional->email            = $user->email;
+        $professional->email            = $lookupEmail;
         $professional->full_name        = $user->display_name ?: ($user->username ?? $user->email);
         $professional->phone            = $user->phone;
         $professional->professional_type= 'counselor';
@@ -550,7 +554,8 @@ class ProfessionalController extends Controller
         $professional->is_available_physical = (bool) ($request->location_county || $request->location_city);
         $professional->sop_agreed       = true;
         $professional->sop_agreed_at    = Carbon::now();
-        $professional->status           = 'pending';
+        $professional->status           = 'verified';
+        $professional->verified_at      = Carbon::now();
 
         if ($request->hasFile('professional_photo')) {
             $professional->professional_photo_path = $this->storeFile(
