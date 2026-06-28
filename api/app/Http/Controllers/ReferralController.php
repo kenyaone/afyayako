@@ -13,7 +13,7 @@ class ReferralController extends Controller
     public function store(Request $request)
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $request->validate([
@@ -59,7 +59,7 @@ class ReferralController extends Controller
     public function index()
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $referrals = Referral::with(['patient:id,display_name'])
@@ -86,7 +86,7 @@ class ReferralController extends Controller
     public function incoming()
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $referrals = Referral::with(['patient:id,display_name', 'professional.user:id,display_name'])
@@ -102,7 +102,7 @@ class ReferralController extends Controller
     public function respond(Request $request, $id)
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $request->validate([
@@ -138,7 +138,7 @@ class ReferralController extends Controller
     public function reportOutcome(Request $request, $id)
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $request->validate([

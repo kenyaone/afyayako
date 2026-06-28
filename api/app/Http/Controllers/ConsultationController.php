@@ -211,7 +211,7 @@ class ConsultationController extends Controller
     public function endSession($id, Request $request)
     {
         $user = auth('api')->user();
-        $professional = Professional::where('email', $user->email)->first();
+        $professional = Professional::forUser($user)->first();
 
         if (!$professional) {
             return response()->json(['error' => 'Professional profile not found'], 404);
@@ -418,7 +418,7 @@ class ConsultationController extends Controller
     public function proList()
     {
         $user = auth('api')->user();
-        $professional = Professional::where('email', $user->email)->first();
+        $professional = Professional::forUser($user)->first();
 
         if (!$professional) {
             return response()->json(['error' => 'Professional profile not found'], 404);
@@ -559,7 +559,7 @@ class ConsultationController extends Controller
         }
 
         $user = auth('api')->user();
-        $professional = Professional::where('email', $user->email)->first();
+        $professional = Professional::forUser($user)->first();
 
         if (!$professional) {
             return response()->json(['error' => 'Professional profile not found'], 404);

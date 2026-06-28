@@ -183,7 +183,7 @@ class SessionFeedbackController extends Controller
     public function myFeedback()
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $feedbacks = SessionFeedback::with('consultation:id,consultation_id,scheduled_at')

@@ -91,6 +91,15 @@ class Professional extends Model
     }
 
     /**
+     * Scope: Find by user (by user_id first, fallback to email)
+     */
+    public function scopeForUser($query, $user)
+    {
+        return $query->where('user_id', $user->id)
+            ->orWhere('email', $user->email);
+    }
+
+    /**
      * Get photo URL
      */
     public function getPhotoUrlAttribute()

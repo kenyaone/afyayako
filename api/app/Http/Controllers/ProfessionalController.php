@@ -9,6 +9,7 @@ use App\Models\Professional;
 use App\Models\Specialization;
 use App\Models\Language;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\URL;
 
 class ProfessionalController extends Controller
 {
@@ -198,7 +199,7 @@ class ProfessionalController extends Controller
                 'rate_per_hour' => $professional->rate_per_hour,
                 'years_experience' => $professional->years_experience,
                 'bio' => $professional->bio,
-                'photo_url' => $professional->professional_photo_path ? asset('storage/' . $professional->professional_photo_path) : null,
+                'photo_url' => $professional->professional_photo_path ? Storage::disk('uploads')->url($professional->professional_photo_path) : null,
             ],
         ]);
     }
@@ -280,7 +281,7 @@ class ProfessionalController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
-        $professional = Professional::where('email', $user->email)->first();
+        $professional = Professional::forUser($user)->first();
 
         if (!$professional) {
             return response()->json([
@@ -364,7 +365,9 @@ class ProfessionalController extends Controller
     public function analytics(Request $request)
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::where('user_id', $user->id)
+            ->orWhere('email', $user->email)
+            ->first();
         if (!$pro) {
             return response()->json(['error' => 'Not a professional'], 403);
         }
@@ -449,7 +452,7 @@ class ProfessionalController extends Controller
     public function updateAvailability(Request $request)
     {
         $user = auth()->user();
-        $professional = Professional::where('email', $user->email)->first();
+        $professional = Professional::forUser($user)->first();
 
         if (!$professional) {
             return response()->json([
@@ -554,8 +557,8 @@ class ProfessionalController extends Controller
         $professional->is_available_physical = (bool) ($request->location_county || $request->location_city);
         $professional->sop_agreed       = true;
         $professional->sop_agreed_at    = Carbon::now();
-        $professional->status           = 'verified';
-        $professional->verified_at      = Carbon::now();
+        $professional->status           = 'pending';
+        $professional->verified_at      = null;
 
         if ($request->hasFile('professional_photo')) {
             $professional->professional_photo_path = $this->storeFile(
@@ -570,7 +573,7 @@ class ProfessionalController extends Controller
 
         return response()->json([
             'success'         => true,
-            'message'         => 'Application submitted successfully. Our team will review your documents within 24–48 hours.',
+            'message'         => 'Application submitted successfully. Our admin team will review and verify your credentials within 24–48 hours.',
             'professional_id' => $professional->id,
             'status'          => $professional->status,
             'user'            => $user,

@@ -13,7 +13,7 @@ class AvailabilityController extends Controller
     public function update(Request $request)
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         $request->validate([
@@ -48,7 +48,7 @@ class AvailabilityController extends Controller
     public function mine()
     {
         $user = auth('api')->user();
-        $pro  = Professional::where('email', $user->email)->first();
+        $pro  = Professional::forUser($user)->first();
         if (!$pro) return response()->json(['error' => 'Not a professional.'], 403);
 
         return response()->json([
