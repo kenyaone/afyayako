@@ -231,6 +231,7 @@ class AdminController extends Controller
 
         // Competence floor (MoH: minimum a diploma + at least 3 years supervised
         // experience). A professional cannot be VERIFIED without meeting it.
+        // Note: Email and license are optional for counselors (per recent policy).
         if ($newStatus === 'verified') {
             $missing = [];
             if ((int) $professional->years_experience < 3) {
@@ -239,9 +240,6 @@ class AdminController extends Controller
             if (empty($professional->qualification)) {
                 $missing[] = 'a stated qualification (minimum diploma)';
             }
-            if (empty($professional->kmpdc_license)) {
-                $missing[] = 'a registration/license number';
-            }
             if ($missing) {
                 return response()->json([
                     'error' => 'Cannot verify — competence floor not met: ' . implode(', ', $missing) . '.',
@@ -249,14 +247,46 @@ class AdminController extends Controller
             }
         }
 
-        $professional->update([
+        $updates = [
             'status'      => $newStatus,
             'verified_at' => $newStatus === 'verified' ? now() : null,
-        ]);
+        ];
+
+        // Auto-verify KMPDC when approving (license verification is optional)
+        if ($newStatus === 'verified') {
+            $updates['kmpdc_verified'] = true;
+            $updates['kmpdc_verified_at'] = now();
+        }
+
+        $professional->update($updates);
         \App\Models\AuditLog::record('verify_professional', 'professional', $professional->id, ['status' => $newStatus]);
 
         return response()->json([
             'message'      => 'Status updated to ' . $newStatus,
+            'professional' => $professional,
+        ]);
+    }
+
+    public function verifyKmpdcLicense(Request $request, $id)
+    {
+        $professional = Professional::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'verified' => 'required|boolean',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 422);
+        }
+
+        $verified = $request->boolean('verified');
+        $professional->update([
+            'kmpdc_verified'    => $verified,
+            'kmpdc_verified_at' => $verified ? now() : null,
+        ]);
+        \App\Models\AuditLog::record('verify_kmpdc', 'professional', $professional->id, ['kmpdc_verified' => $verified]);
+
+        return response()->json([
+            'message' => 'KMPDC License ' . ($verified ? 'verified' : 'unverified'),
             'professional' => $professional,
         ]);
     }
@@ -675,8 +705,8 @@ class AdminController extends Controller
         $sessions      = Consultation::whereIn('status', $paidStatuses);
         $sessionCount  = (clone $sessions)->count();
         $sessionTotal  = (float) (clone $sessions)->sum('amount');
-        $platformShare = round($sessionTotal * 0.20, 2);
-        $proShare      = round($sessionTotal * 0.80, 2);
+        $platformShare = round($sessionTotal * 0.35, 2);
+        $proShare      = round($sessionTotal * 0.65, 2);
 
         // Subscriptions (active = not expired and status active).
         $subQuery       = \App\Models\Subscription::where('status', 'active');

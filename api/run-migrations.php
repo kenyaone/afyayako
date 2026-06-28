@@ -16,7 +16,7 @@ if (!file_exists($apiPath . '/database/database.sqlite')) {
 $envFile = $apiPath . '/.env';
 $env = file_get_contents($envFile);
 $env = str_replace(
-    'DB_DATABASE=/home/tele/uberhealth/api/database/database.sqlite',
+    'DB_DATABASE=/home/qnztnquh/api/database/database.sqlite',
     'DB_DATABASE=' . $apiPath . '/database/database.sqlite',
     $env
 );
@@ -28,7 +28,7 @@ $app = require $apiPath . '/bootstrap/app.php';
 $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
 
 echo "<pre style='background:#000;color:#0f0;padding:20px;font-family:monospace;'>";
-echo "[" . date('H:i:s') . "] Starting UberHealth deployment...\n\n";
+echo "[" . date('H:i:s') . "] Starting Afya Yako deployment...\n\n";
 
 echo "[" . date('H:i:s') . "] Running migrations...\n";
 try {
@@ -55,6 +55,6 @@ try {
 }
 
 echo "=== ✓ DEPLOYMENT SUCCESSFUL ===\n";
-echo "UberHealth is now live with all features!\n";
+echo "Afya Yako is now live with all features!\n";
 echo "</pre>";
 ?>

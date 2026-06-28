@@ -317,7 +317,7 @@ class AuthController extends Controller
         $file = $request->file('avatar');
         $name = 'avatars/' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('uploads'), $name);
-        $url = 'https://api.uberhealth.co.ke/uploads/' . $name;
+        $url = 'https://api.afyayako.co.ke/uploads/' . $name;
 
         $user->update(['avatar' => $url]);
 
