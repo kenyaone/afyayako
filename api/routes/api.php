@@ -84,6 +84,7 @@ Route::post('/professionals/verify-license', [ProfessionalController::class, 've
 Route::get('/professionals/me/dashboard', [ProfessionalController::class, 'dashboard'])->middleware('auth:api');
 Route::get('/professionals/me/analytics', [ProfessionalController::class, 'analytics'])->middleware('auth:api');
 Route::put('/professionals/availability', [ProfessionalController::class, 'updateAvailability'])->middleware('auth:api');
+Route::get('/professionals/{id}/photo', [ProfessionalController::class, 'getPhoto']);
 Route::get('/professionals/{id}', [ProfessionalController::class, 'show']);
 Route::get('/professionals/{id}/reviews', [SessionFeedbackController::class, 'publicReviews']);
 
@@ -348,6 +349,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/professionals', [AdminController::class, 'professionals']);
         Route::get('/professionals/{id}/photo', [AdminController::class, 'professionalPhoto']);
         Route::put('/professionals/{id}/verify', [AdminController::class, 'verifyProfessional']);
+        Route::put('/professionals/{id}/verify-kmpdc', [AdminController::class, 'verifyKmpdcLicense']);
         Route::get('/consultations', [AdminController::class, 'consultations']);
         Route::put('/consultations/{id}/confirm', [AdminController::class, 'confirmConsultation']);
         Route::get('/workload', [AdminController::class, 'workload']);

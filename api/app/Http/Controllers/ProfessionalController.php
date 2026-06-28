@@ -157,6 +157,28 @@ class ProfessionalController extends Controller
     }
 
     /**
+     * Get professional's photo (public endpoint)
+     */
+    public function getPhoto($id)
+    {
+        $professional = Professional::find($id);
+
+        if (!$professional || !$professional->professional_photo_path) {
+            abort(404);
+        }
+
+        $disk = Storage::disk('uploads');
+        if (!$disk->exists($professional->professional_photo_path)) {
+            abort(404);
+        }
+
+        return response($disk->get($professional->professional_photo_path), 200, [
+            'Content-Type'  => $disk->mimeType($professional->professional_photo_path) ?: 'image/jpeg',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
+    }
+
+    /**
      * Get professional details (authenticated)
      */
     public function show($id)
@@ -199,7 +221,7 @@ class ProfessionalController extends Controller
                 'rate_per_hour' => $professional->rate_per_hour,
                 'years_experience' => $professional->years_experience,
                 'bio' => $professional->bio,
-                'photo_url' => $professional->professional_photo_path ? Storage::disk('uploads')->url($professional->professional_photo_path) : null,
+                'photo_url' => $professional->professional_photo_path ? url("/api/professionals/{$professional->id}/photo") : null,
             ],
         ]);
     }
@@ -261,6 +283,7 @@ class ProfessionalController extends Controller
             $arr['rating']          = null;
             $arr['total_reviews']   = 0;
             $arr['match_score']     = null;
+            $arr['photo_url']       = $p->professional_photo_path ? url("/api/professionals/{$p->id}/photo") : null;
             return $arr;
         });
 

@@ -11,10 +11,13 @@ class Professional extends Model
     use SoftDeletes;
 
     /**
-     * The user account behind this professional (linked by email).
+     * The user account behind this professional (linked by user_id, fallback to email).
      */
     public function user()
     {
+        if ($this->user_id) {
+            return $this->belongsTo(User::class, 'user_id');
+        }
         return $this->belongsTo(User::class, 'email', 'email');
     }
 
