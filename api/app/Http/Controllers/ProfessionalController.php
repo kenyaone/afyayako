@@ -211,7 +211,7 @@ class ProfessionalController extends Controller
                 'id' => $professional->id,
                 'name' => $professional->full_name,
                 'display_name' => $professional->full_name ?: 'Professional',
-                'avatar' => null,
+                'avatar' => $professional->professional_photo_path ? url("/api/professionals/{$professional->id}/photo") : null,
                 'specializations' => $toObjects($professional->specializations),
                 'languages' => $toObjects($professional->languages),
                 'availability' => $professional->availability ?? [],
@@ -277,7 +277,7 @@ class ProfessionalController extends Controller
         $professionals->getCollection()->transform(function ($p) use ($toObjects) {
             $arr = $p->toArray();
             $arr['display_name']    = $p->full_name ?: 'Professional';
-            $arr['avatar']          = null;
+            $arr['avatar']          = $p->professional_photo_path ? url("/api/professionals/{$p->id}/photo") : null;
             $arr['specializations'] = $toObjects($p->specializations);
             $arr['languages']       = $toObjects($p->languages);
             $arr['rating']          = null;
