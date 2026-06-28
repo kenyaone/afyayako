@@ -52,7 +52,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function professional()
     {
-        return $this->hasOne(Professional::class, 'email', 'email');
+        return $this->hasOne(Professional::class, 'user_id', 'id');
     }
 
     public function assessments()
