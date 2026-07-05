@@ -53,6 +53,9 @@ Route::get('/subscriptions/plans', [SubscriptionController::class, 'plans']);
 
 Route::get('/corporate/tiers', [CorporateController::class, 'tiers']);
 
+// Public — employee signs up via HR-generated invite link (no auth yet)
+Route::post('/eap/join/{token}', [\App\Http\Controllers\EapController::class, 'joinViaLink'])->name('eap.join');
+
 Route::get('/burnout/questions', [BurnoutController::class, 'questions']);
 
 // M-Pesa callbacks (called by Safaricom, no token)
@@ -264,6 +267,20 @@ Route::middleware('auth:api')->group(function () {
 
     // EAP employer dashboard
     Route::get('/corporate/eap-stats', [CorporateController::class, 'eapStats']);
+
+    // EAP HR — invite link generation & employee management (recovered 2026-07-05)
+    Route::post('/eap/generate-invite',       [\App\Http\Controllers\EapController::class, 'generateInviteLink']);
+    Route::get('/eap/invite-links',           [\App\Http\Controllers\EapController::class, 'getInviteLinks']);
+    Route::delete('/eap/invite-links/{id}',   [\App\Http\Controllers\EapController::class, 'revokeInviteLink']);
+    Route::get('/eap/employees',              [\App\Http\Controllers\EapController::class, 'getEmployees']);
+
+    // EAP session verification / audit (HR + therapist)
+    Route::get('/eap/sessions',               [\App\Http\Controllers\EapVerificationController::class, 'getSessions']);
+    Route::get('/eap/sessions/export',        [\App\Http\Controllers\EapVerificationController::class, 'exportSessions']);
+    Route::get('/eap/sessions/{id}',          [\App\Http\Controllers\EapVerificationController::class, 'getSessionDetail']);
+    Route::get('/eap/report/monthly',         [\App\Http\Controllers\EapVerificationController::class, 'getMonthlyReport']);
+    Route::post('/eap/verify-completion/{consultationId}',
+                                              [\App\Http\Controllers\EapVerificationController::class, 'verifyCompletion']);
 
     // Professional caseload
     Route::get('/caseload', [CaseloadController::class, 'index']);

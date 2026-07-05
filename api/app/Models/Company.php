@@ -29,4 +29,19 @@ class Company extends Model
     {
         return $this->hasMany(EapSubscription::class);
     }
+
+    public function inviteLinks()
+    {
+        return $this->hasMany(EapInviteLink::class);
+    }
+
+    public function corporateEmployees()
+    {
+        return $this->hasMany(CorporateEmployee::class);
+    }
+
+    public function eapSessions()
+    {
+        return $this->hasMany(EapSession::class);
+    }
 }

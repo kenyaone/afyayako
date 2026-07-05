@@ -19,7 +19,11 @@ export default function Corporate() {
   const employeeCount = watch('employee_count')
 
   useEffect(() => {
-    api.get('/corporate/tiers').then(r => { setTiers(r.data); setSelectedTier(r.data[0]) })
+    api.get('/corporate/tiers').then(r => {
+      const list: EAPTier[] = Array.isArray(r.data) ? r.data : (r.data?.tiers ?? [])
+      setTiers(list)
+      if (list.length) setSelectedTier(list[0])
+    }).catch(() => setTiers([]))
   }, [])
 
   useEffect(() => {
@@ -138,20 +142,38 @@ export default function Corporate() {
         <h2 className="font-semibold text-gray-900 mb-3">Select Your Package</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {tiers.map(tier => {
-            const minMonthly = Math.round(Number(tier.price_kes_annual) / 12 / tier.max_employees);
-            const maxMonthly = Math.round(Number(tier.price_kes_annual) / 12 / tier.min_employees);
+            const annualPerEmployee = Number(tier.price_kes_annual) || 0
+            const monthlyPerEmployee = annualPerEmployee ? Math.round(annualPerEmployee / 12) : 0
+            const isCustom = annualPerEmployee === 0
+            const maxEmpDisplay = tier.max_employees >= 1000 ? `${tier.min_employees}+` : `${tier.min_employees}–${tier.max_employees}`
             return (
               <button
                 key={tier.id}
                 onClick={() => { setSelectedTier(tier); setValue('tier_id', tier.id) }}
-                className={`card text-left border-2 transition-all ${selectedTier?.id === tier.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'}`}
+                className={`card text-left border-2 transition-all ${selectedTier?.id === tier.id ? 'border-primary-500 bg-primary-50' : 'border-gray-200 hover:border-primary-300'}`}
               >
-                <div className="font-semibold text-gray-900">{tier.name}</div>
-                <div className="text-xs text-gray-500 mb-2">{tier.min_employees}–{tier.max_employees} employees</div>
-                <div className="text-xl font-bold text-blue-700">KES {Number(tier.price_kes_annual).toLocaleString()}<span className="text-sm text-gray-400">/yr</span></div>
-                <div className="text-xs text-green-600 font-medium mt-1">KES {minMonthly.toLocaleString()}–{maxMonthly.toLocaleString()}/employee/month</div>
-                <div className="text-xs text-gray-500 mt-1">{tier.sessions_per_employee} sessions per employee</div>
-                {selectedTier?.id === tier.id && <CheckCircle size={16} className="text-blue-500 mt-2" />}
+                <div className="font-semibold text-gray-900">{tier.name} Enterprise</div>
+                <div className="text-xs text-gray-500 mb-2">{maxEmpDisplay} employees</div>
+                {isCustom ? (
+                  <>
+                    <div className="text-xl font-bold text-primary-700">Custom pricing</div>
+                    <div className="text-xs text-gray-500 mt-1">Tailored to your organization</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-xl font-bold text-primary-700">
+                      KSh {monthlyPerEmployee.toLocaleString()}
+                      <span className="text-sm text-gray-500 font-normal"> per employee / month</span>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      ≈ KSh {annualPerEmployee.toLocaleString()} per employee / year
+                    </div>
+                  </>
+                )}
+                <div className="text-xs text-gray-600 mt-2">
+                  {tier.sessions_per_employee} in-person session{tier.sessions_per_employee === 1 ? '' : 's'} per employee / year · 24/7 tele-therapy
+                </div>
+                {selectedTier?.id === tier.id && <CheckCircle size={16} className="text-primary-500 mt-2" />}
               </button>
             );
           })}

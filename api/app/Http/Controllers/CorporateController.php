@@ -107,11 +107,15 @@ class CorporateController extends Controller
         $severityBreakdown = $assessments->groupBy('severity')
             ->map(fn($g) => $g->count());
 
-        // Monthly sessions trend (last 6 months)
+        // Monthly sessions trend (last 6 months) — DB-agnostic
+        $driver = \DB::connection()->getDriverName();
+        $monthExpr = $driver === 'sqlite'
+            ? "strftime('%Y-%m', scheduled_at)"
+            : "DATE_FORMAT(scheduled_at, '%Y-%m')";
         $trend = \App\Models\Consultation::where('eap_subscription_id', $sub->id)
             ->where('status', 'completed')
             ->where('scheduled_at', '>=', now()->subMonths(6))
-            ->selectRaw("DATE_FORMAT(scheduled_at, '%Y-%m') as month, COUNT(*) as count")
+            ->selectRaw("$monthExpr as month, COUNT(*) as count")
             ->groupBy('month')
             ->orderBy('month')
             ->get();
