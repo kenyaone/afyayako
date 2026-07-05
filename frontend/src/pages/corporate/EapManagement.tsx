@@ -60,10 +60,11 @@ export default function EapManagement() {
     setError('')
     setSuccess('')
     try {
+      // Anonymity by design: no `email` field, no `max_uses` limit.
+      // One reusable link → posted publicly by HR → all staff can use → HR
+      // cannot correlate a joiner (EMP-XXXXX) with any specific person.
       const res = await api.post('/eap/generate-invite', {
-        max_uses: data.max_uses,
         expires_in_days: data.expires_in_days,
-        email: data.email,
       })
 
       setSuccess(`Invite link created! Use it to invite employees.`)
@@ -150,42 +151,30 @@ export default function EapManagement() {
           Generate New Invite Link
         </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Max Uses (Optional)</label>
-              <input
-                {...register('max_uses')}
-                type="number"
-                min="1"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder="Leave empty for unlimited"
-              />
-              <p className="text-xs text-gray-500 mt-1">How many employees can use this link</p>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Expires In (Days)</label>
-              <input
-                {...register('expires_in_days')}
-                type="number"
-                min="1"
-                max="365"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder="Leave empty for no expiry"
-              />
-              <p className="text-xs text-gray-500 mt-1">Auto-expire the link after X days</p>
-            </div>
-          </div>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-5">
+          <p className="text-amber-900 font-semibold text-sm mb-1">⚠️ Protect employee anonymity</p>
+          <p className="text-amber-800 text-xs leading-relaxed">
+            Post this link on <b>Slack, Teams, intranet, or an all-staff BCC email</b> — never DM it to a specific employee.
+            If only one person uses a personalised link, HR can infer who used the service — defeating the whole point of an
+            anonymous EAP. Reusable links keep it truly anonymous.
+          </p>
+        </div>
 
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">Pre-fill Email (Optional)</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">Expires In (Days) — optional</label>
             <input
-              {...register('email')}
-              type="email"
+              {...register('expires_in_days')}
+              type="number"
+              min="7"
+              max="365"
+              defaultValue={90}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-              placeholder="employee@example.com"
+              placeholder="90"
             />
-            <p className="text-xs text-gray-500 mt-1">Pre-populate employee email (still anonymous after signup)</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Auto-expires after this many days. Default 90. Between 7 and 365.
+            </p>
           </div>
 
           <button
@@ -193,7 +182,7 @@ export default function EapManagement() {
             disabled={loading}
             className="w-full px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition disabled:opacity-50"
           >
-            {loading ? 'Generating...' : 'Generate Invite Link'}
+            {loading ? 'Generating…' : 'Generate reusable link for all staff'}
           </button>
         </form>
       </div>
