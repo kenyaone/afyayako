@@ -1,0 +1,13 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/qnztnquh/public_html/
+    - /bin/cp -R assets $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp manifest.json $DEPLOYPATH
+    - /bin/cp sw.js $DEPLOYPATH
+    - /bin/cp favicon.svg $DEPLOYPATH
+    - /bin/cp icon-192.png $DEPLOYPATH
+    - /bin/cp icon-512.png $DEPLOYPATH
+    - /bin/cp apple-touch-icon.png $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH
