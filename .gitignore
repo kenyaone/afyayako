@@ -2,3 +2,20 @@
 .env
 .env.*
 !.env.example
+
+# Node
+node_modules/
+
+# Local dev extracted frontend source (not part of production repo)
+afyayako-frontend/
+
+# Backup folders auto-created by deploy scripts
+_backup_*/
+
+# Local Herd-generated files
+api/database/database.sqlite
+api/storage/logs/*.log
+api/storage/framework/cache/data/*
+api/storage/framework/sessions/*
+api/storage/framework/views/*
+!.gitkeep

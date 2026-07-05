@@ -26,7 +26,7 @@ self.addEventListener('fetch', e => {
 
   // Skip non-GET and external requests
   if (e.request.method !== 'GET') return
-  if (!url.origin.includes('afyayako') && !url.origin.includes('mhapke') && url.origin !== self.location.origin) return
+  if (!url.origin.includes('uberhealth') && !url.origin.includes('mhapke') && url.origin !== self.location.origin) return
 
   // API: network-first, no cache
   if (url.pathname.startsWith('/api/') || url.hostname.startsWith('api.')) return
