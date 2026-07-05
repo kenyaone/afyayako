@@ -1,0 +1,56 @@
+{
+  "name": "Afya Yako Siri Yako",
+  "short_name": "AfyaYako",
+  "description": "Mental health, addiction & gambling recovery — Kenya. Your Health, Your Secret.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f766e",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["health", "medical"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Take Assessment",
+      "short_name": "Assess",
+      "description": "Take a free mental health assessment",
+      "url": "/assessments",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Find a Therapist",
+      "short_name": "Therapists",
+      "description": "Browse KMPDC-verified therapists",
+      "url": "/professionals",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
