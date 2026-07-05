@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Heart, Brain, TrendingDown, ClipboardList, Award } from 'lucide-react'
 import api from '../../api/axios'
+import { useAuthStore } from '../../store/authStore'
 
 interface ScreeningTool {
   id: string
@@ -24,11 +25,22 @@ interface Assessment {
   created_at: string
 }
 
+interface Consultation {
+  id: string
+  patient_id: number
+  patient_name: string
+  status: string
+}
+
 type Tab = 'patient-tools' | 'patient-results' | 'professional-wellness'
 
 export default function ScreeningTools() {
   const { consultationId } = useParams()
-  const [tab, setTab] = useState<Tab>('patient-tools')
+  const user = useAuthStore(s => s.user)
+  const isProfessional = user?.role === 'professional'
+  const defaultTab: Tab = isProfessional ? 'patient-tools' : 'patient-results'
+
+  const [tab, setTab] = useState<Tab>(defaultTab)
   const [tools, setTools] = useState<ScreeningTool[]>([])
   const [professionalTools, setProfessionalTools] = useState<ScreeningTool[]>([])
   const [assessments, setAssessments] = useState<Assessment[]>([])
@@ -37,44 +49,98 @@ export default function ScreeningTools() {
   const [selectedTool, setSelectedTool] = useState<string | null>(null)
   const [reason, setReason] = useState('')
   const [recommendingTool, setRecommendingTool] = useState(false)
+  const [consultations, setConsultations] = useState<Consultation[]>([])
+  const [selectedConsultation, setSelectedConsultation] = useState<string | null>(consultationId ?? null)
 
   useEffect(() => {
+    if (isProfessional && !consultationId) {
+      loadConsultations()
+    }
     loadTools()
-  }, [consultationId])
+  }, [consultationId, selectedConsultation])
+
+  const loadConsultations = async () => {
+    try {
+      const res = await api.get('/consultations')
+      if (res.data?.consultations && Array.isArray(res.data.consultations)) {
+        setConsultations(res.data.consultations)
+        if (!selectedConsultation && res.data.consultations.length > 0) {
+          setSelectedConsultation(res.data.consultations[0].id)
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load consultations:', e)
+    }
+  }
 
   const loadTools = async () => {
     setLoading(true)
     try {
       // Load WHO screening tools
       const toolsRes = await api.get('/screening-tools')
-      setTools(toolsRes.data.tools)
+      if (toolsRes.data?.tools && Array.isArray(toolsRes.data.tools)) {
+        setTools(toolsRes.data.tools)
+      } else {
+        setTools([])
+        console.warn('Unexpected tools response format:', toolsRes.data)
+      }
 
       // Load professional wellness tools
-      const proRes = await api.get('/professional/wellness-tools')
-      setProfessionalTools(proRes.data.tools)
+      try {
+        const proRes = await api.get('/professional/wellness-tools')
+        if (proRes.data?.tools && Array.isArray(proRes.data.tools)) {
+          setProfessionalTools(proRes.data.tools)
+        } else {
+          setProfessionalTools([])
+        }
+      } catch (e) {
+        console.warn('Wellness tools not available:', e)
+        setProfessionalTools([])
+      }
 
-      if (consultationId) {
-        // Load patient assessment results
-        const assessRes = await api.get(`/consultations/${consultationId}/patient-assessments`)
-        setAssessments(assessRes.data.assessments)
+      const activeConsultationId = consultationId || selectedConsultation
+      if (activeConsultationId) {
+        try {
+          // Load patient assessment results
+          const assessRes = await api.get(`/consultations/${activeConsultationId}/patient-assessments`)
+          if (assessRes.data?.assessments) {
+            setAssessments(assessRes.data.assessments)
+          } else {
+            setAssessments([])
+          }
+        } catch (e) {
+          console.warn('Patient assessments not available:', e)
+          setAssessments([])
+        }
       }
 
       // Load professional's own assessments
-      const proAssessRes = await api.get('/professional/wellness-assessments')
-      setProfessionalAssessments(proAssessRes.data.assessments)
+      try {
+        const proAssessRes = await api.get('/professional/wellness-assessments')
+        if (proAssessRes.data?.assessments) {
+          setProfessionalAssessments(proAssessRes.data.assessments)
+        } else {
+          setProfessionalAssessments([])
+        }
+      } catch (e) {
+        console.warn('Professional assessments not available:', e)
+        setProfessionalAssessments([])
+      }
     } catch (err) {
       console.error('Failed to load tools:', err)
+      setTools([])
     } finally {
       setLoading(false)
     }
   }
 
   const recommendTool = async (toolId: string) => {
-    if (!consultationId) return
+    const activeConsultationId = consultationId || selectedConsultation
+    if (!activeConsultationId) return
 
     setRecommendingTool(true)
     try {
-      await api.post(`/consultations/${consultationId}/recommend-tool`, {
+      await api.post(`/consultations/${activeConsultationId}/recommend-tool`, {
         tool_id: toolId,
         reason: reason,
       })
@@ -96,22 +162,47 @@ export default function ScreeningTools() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Screening Tools & Wellness</h1>
-        <p className="text-gray-600 mt-2">WHO-recommended assessments for patient care and professional wellbeing</p>
+        <p className="text-gray-600 mt-2">
+          {isProfessional
+            ? 'WHO-recommended assessments for patient care and professional wellbeing'
+            : 'WHO-recommended screening tools to support your mental health assessment'}
+        </p>
       </div>
+
+      {/* Patient/Consultation Selector for Professionals */}
+      {isProfessional && !consultationId && consultations.length > 0 && (
+        <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
+          <label className="block text-sm font-semibold text-teal-900 mb-2">Select Patient</label>
+          <select
+            value={selectedConsultation || ''}
+            onChange={(e) => setSelectedConsultation(e.target.value)}
+            className="w-full px-3 py-2 border border-teal-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 bg-white"
+          >
+            <option value="">Choose a patient...</option>
+            {consultations.map(c => (
+              <option key={c.id} value={c.id}>
+                {c.patient_name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex gap-4 border-b border-gray-200">
-        <button
-          onClick={() => setTab('patient-tools')}
-          className={`pb-4 px-4 font-semibold border-b-2 ${
-            tab === 'patient-tools'
-              ? 'border-teal-600 text-teal-600'
-              : 'border-transparent text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          <ClipboardList className="inline mr-2" size={18} />
-          Patient Screening Tools
-        </button>
+        {isProfessional && (
+          <button
+            onClick={() => setTab('patient-tools')}
+            className={`pb-4 px-4 font-semibold border-b-2 ${
+              tab === 'patient-tools'
+                ? 'border-teal-600 text-teal-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <ClipboardList className="inline mr-2" size={18} />
+            Patient Screening Tools
+          </button>
+        )}
         <button
           onClick={() => setTab('patient-results')}
           className={`pb-4 px-4 font-semibold border-b-2 ${
@@ -121,26 +212,30 @@ export default function ScreeningTools() {
           }`}
         >
           <TrendingDown className="inline mr-2" size={18} />
-          Patient Results
+          {isProfessional ? 'Patient Results' : 'My Assessments'}
         </button>
-        <button
-          onClick={() => setTab('professional-wellness')}
-          className={`pb-4 px-4 font-semibold border-b-2 ${
-            tab === 'professional-wellness'
-              ? 'border-teal-600 text-teal-600'
-              : 'border-transparent text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          <Heart className="inline mr-2" size={18} />
-          Professional Wellness
-        </button>
+        {isProfessional && (
+          <button
+            onClick={() => setTab('professional-wellness')}
+            className={`pb-4 px-4 font-semibold border-b-2 ${
+              tab === 'professional-wellness'
+                ? 'border-teal-600 text-teal-600'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <Heart className="inline mr-2" size={18} />
+            Professional Wellness
+          </button>
+        )}
       </div>
 
       {/* Patient Screening Tools Tab */}
       {tab === 'patient-tools' && (
         <div className="space-y-4">
           <p className="text-sm text-gray-600 mb-6">
-            Recommend WHO-recognized screening tools to your patients to support clinical assessment and early intervention.
+            {isProfessional
+              ? 'Recommend WHO-recognized screening tools to your patients to support clinical assessment and early intervention.'
+              : 'Available WHO-recognized screening tools to help assess your mental health and wellbeing.'}
           </p>
           {tools.map(tool => (
             <div key={tool.id} className="bg-white rounded-lg p-6 border border-gray-200 hover:border-teal-300">
@@ -156,7 +251,7 @@ export default function ScreeningTools() {
                   </div>
                   <p className="text-xs text-teal-600 mt-2 font-semibold">{tool.recommendation}</p>
                 </div>
-                {consultationId && (
+                {isProfessional && (consultationId || selectedConsultation) && (
                   <button
                     onClick={() => setSelectedTool(tool.id)}
                     className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-semibold whitespace-nowrap"
@@ -205,13 +300,17 @@ export default function ScreeningTools() {
       {/* Patient Results Tab */}
       {tab === 'patient-results' && (
         <div className="space-y-4">
-          {assessments.length === 0 ? (
+          {(isProfessional ? assessments : assessments).length === 0 ? (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center text-blue-800">
               <Brain size={32} className="mx-auto mb-2 opacity-50" />
-              <p>No assessments completed yet.</p>
+              <p>
+                {isProfessional
+                  ? 'No assessments completed yet.'
+                  : 'You haven\'t completed any screening assessments yet. Visit the Assessments section to get started.'}
+              </p>
             </div>
           ) : (
-            assessments.map(assessment => (
+            (isProfessional ? assessments : assessments).map(assessment => (
               <div key={assessment.id} className="bg-white rounded-lg p-6 border border-gray-200">
                 <div className="flex justify-between items-start gap-4">
                   <div className="flex-1">

@@ -276,7 +276,7 @@ export default function Signup() {
         </div>
 
         {/* Progress Bar */}
-        {step !== 'success' && step !== 'usertype' && (
+        {step !== 'success' && step !== 'type' && (
           <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
               {progressSteps.map((stepName, idx) => (
@@ -286,7 +286,7 @@ export default function Signup() {
                       idx < currentStepIndex
                         ? 'bg-green-500 text-white'
                         : idx === currentStepIndex
-                        ? 'bg-primary-600 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-gray-200 text-gray-600'
                     }`}
                   >
@@ -355,7 +355,7 @@ export default function Signup() {
 
             <button
               onClick={() => handleTypeSelect('individual')}
-              className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition text-left"
+              className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition text-left"
             >
               <div className="text-2xl mb-2">👤</div>
               <h3 className="font-semibold text-gray-900">Individual</h3>
@@ -364,7 +364,7 @@ export default function Signup() {
 
             <button
               onClick={() => handleTypeSelect('couples')}
-              className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition text-left"
+              className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition text-left"
             >
               <div className="text-2xl mb-2">👥</div>
               <h3 className="font-semibold text-gray-900">Couples</h3>
@@ -373,11 +373,11 @@ export default function Signup() {
 
             <button
               onClick={() => handleTypeSelect('teen')}
-              className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition text-left"
+              className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition text-left"
             >
               <div className="text-2xl mb-2">👨‍👧</div>
-              <h3 className="font-semibold text-gray-900">My Teen Needs Help</h3>
-              <p className="text-sm text-gray-600 mt-1">Parent registers to find therapist for child</p>
+              <h3 className="font-semibold text-gray-900">Teen</h3>
+              <p className="text-sm text-gray-600 mt-1">Support for my child (under 18)</p>
             </button>
           </div>
         )}
@@ -404,7 +404,7 @@ export default function Signup() {
                   required: 'Username is required',
                   minLength: { value: 5, message: 'At least 5 characters' }
                 })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="StrengthSeeker101"
                 disabled={loading}
               />
@@ -416,7 +416,7 @@ export default function Signup() {
               <label className="block text-sm font-semibold text-gray-900 mb-2">Display Name</label>
               <input
                 {...register('display_name', { required: 'Display name is required' })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="John, Anonymous, or any name"
                 disabled={loading}
               />
@@ -429,7 +429,7 @@ export default function Signup() {
               <input
                 {...register('email')}
                 type="email"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="For session reminders only"
                 disabled={loading}
               />
@@ -442,7 +442,7 @@ export default function Signup() {
                 {...register('date_of_birth', { required: 'Date of birth is required' })}
                 type="date"
                 max={new Date().toISOString().split('T')[0]}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 disabled={loading}
               />
               {errors.date_of_birth && <p className="text-red-600 text-xs mt-1">{errors.date_of_birth.message}</p>}
@@ -457,7 +457,7 @@ export default function Signup() {
                     minLength: { value: 8, message: 'At least 8 characters' }
                   })}
                   type={showPassword ? 'text' : 'password'}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
                   placeholder="••••••••"
                   disabled={loading}
                 />
@@ -481,7 +481,7 @@ export default function Signup() {
                   validate: (val) => val === password || 'Passwords do not match'
                 })}
                 type="password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="••••••••"
                 disabled={loading}
               />
@@ -489,20 +489,18 @@ export default function Signup() {
             </div>
 
             <div className="flex gap-3 pt-4">
-              {!isProfessional && (
-                <button
-                  type="button"
-                  onClick={() => setStep('type')}
-                  className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition flex items-center justify-center gap-2"
-                  disabled={loading}
-                >
-                  <ArrowLeft size={18} /> Back
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => setStep('type')}
+                className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition flex items-center justify-center gap-2"
+                disabled={loading}
+              >
+                <ArrowLeft size={18} /> Back
+              </button>
               <button
                 type="submit"
                 disabled={loading}
-                className={`flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition flex items-center justify-center gap-2 ${!isProfessional ? '' : ''}`}
+                className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition flex items-center justify-center gap-2"
               >
                 {loading ? 'Saving...' : (<>Next <ArrowRight size={18} /></>)}
               </button>
@@ -875,20 +873,17 @@ export default function Signup() {
         {/* STEP 3: PARENT CONSENT (TEEN ONLY) */}
         {step === 'parent' && (
           <form onSubmit={handleSubmit(handleParentInfoSubmit)} className="space-y-4">
-            {accountType === 'teen' && (
-              <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 mb-6">
-                <p className="font-semibold text-purple-900 mb-1">👨‍👧 Parent Authorization</p>
-                <p className="text-sm text-purple-800">
-                  By providing your information, you confirm you have parental authority to register your teen for therapy on this platform.
-                </p>
-              </div>
-            )}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-sm text-blue-900">
+                Since you're under 18, we need your parent or guardian to give permission before you can start therapy.
+              </p>
+            </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">Parent/Guardian Name</label>
               <input
                 {...register('parent_name', { required: 'Parent name is required' })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter full name"
                 disabled={loading}
               />
@@ -903,7 +898,7 @@ export default function Signup() {
                   pattern: { value: /^\S+@\S+$/, message: 'Invalid email' }
                 })}
                 type="email"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="parent@example.com"
                 disabled={loading}
               />
@@ -915,7 +910,7 @@ export default function Signup() {
               <input
                 {...register('parent_consent', { required: 'You must confirm parent consent' })}
                 type="checkbox"
-                className="mt-1 w-5 h-5 accent-primary-600 flex-shrink-0"
+                className="mt-1 w-5 h-5 accent-blue-600 flex-shrink-0"
                 disabled={loading}
               />
               <span className="text-sm text-gray-700">
@@ -936,7 +931,7 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition flex items-center justify-center gap-2"
               >
                 {loading ? 'Saving...' : (<>Next <ArrowRight size={18} /></>)}
               </button>
@@ -1022,16 +1017,16 @@ export default function Signup() {
               <input
                 {...register('consent', { required: 'You must agree to continue' })}
                 type="checkbox"
-                className="mt-1 w-5 h-5 accent-primary-600 flex-shrink-0"
+                className="mt-1 w-5 h-5 accent-blue-600 flex-shrink-0"
                 disabled={loading}
               />
               <span className="text-sm text-gray-700">
                 I agree to the{' '}
-                <Link to="/terms" target="_blank" className="text-primary-600 font-semibold hover:underline">
+                <Link to="/terms" target="_blank" className="text-blue-600 font-semibold hover:underline">
                   Terms of Service
                 </Link>
                 {' '}and{' '}
-                <Link to="/privacy" target="_blank" className="text-primary-600 font-semibold hover:underline">
+                <Link to="/privacy" target="_blank" className="text-blue-600 font-semibold hover:underline">
                   Privacy Policy
                 </Link>
               </span>
@@ -1077,64 +1072,25 @@ export default function Signup() {
               </div>
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome!</h2>
-
-            {userType === 'therapist' && (
-              <>
-                <p className="text-gray-600 mb-6">Your professional account has been created successfully!</p>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-900">
-                  <p className="font-semibold mb-2">Next steps:</p>
-                  <ul className="text-left space-y-1 text-xs">
-                    <li>• Complete your profile with additional credentials</li>
-                    <li>• Upload license documents for verification</li>
-                    <li>• Set your availability and consultation rates</li>
-                    <li>• Start accepting patient consultations</li>
-                  </ul>
-                </div>
-              </>
-            )}
-            {userType === 'corporate' && (
-              <>
-                <p className="text-gray-600 mb-6">Your organization account has been created successfully!</p>
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 text-sm text-green-900">
-                  <p className="font-semibold mb-2">Your EAP is ready to go!</p>
-                  <ul className="text-left space-y-1 text-xs">
-                    <li>• Start adding employees to your program</li>
-                    <li>• View usage analytics and reports</li>
-                    <li>• Customize wellness initiatives</li>
-                    <li>• Connect with licensed therapists</li>
-                  </ul>
-                </div>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-900">
-                  <p className="font-semibold mb-2">🔒 Employee Privacy Guarantee</p>
-                  <p className="text-xs leading-relaxed">
-                    Your employees' counseling sessions are completely confidential. HR and management will never have access to who uses the EAP or details of their sessions. Full anonymity and privacy are guaranteed.
-                  </p>
-                </div>
-              </>
-            )}
-            {userType === 'individual' && (
-              <>
-                <p className="text-gray-600 mb-6">Your account has been created successfully.</p>
-                {accountType === 'teen' && (
-                  <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6 text-sm text-primary-900">
-                    A consent form has been sent to your parent/guardian. They need to review and approve it before you can start therapy.
-                  </div>
-                )}
-              </>
+            <p className="text-gray-600 mb-6">Your account has been created successfully.</p>
+            {accountType === 'teen' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-900">
+                A consent form has been sent to your parent/guardian. They need to review and approve it before you can start therapy.
+              </div>
             )}
             <p className="text-gray-600 text-sm">Redirecting you now...</p>
           </div>
         )}
 
         {/* Footer - Sign In Link */}
-        {(step === 'usertype' || step === 'type' || step === 'success') ? (
+        {(step === 'type' || step === 'success') && (
           <p className="text-center text-sm text-gray-600 mt-6">
             Already have an account?{' '}
-            <Link to="/login" className="text-primary-600 font-semibold hover:underline">
+            <Link to="/login" className="text-blue-600 font-semibold hover:underline">
               Sign in
             </Link>
           </p>
-        ) : null}
+        )}
       </div>
     </div>
   )

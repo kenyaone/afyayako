@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Phone, Send } from 'lucide-react'
+import { ArrowLeft, Phone, Send, CheckCircle2, Shield, Lock } from 'lucide-react'
 import api from '../../api/axios'
 
-// Normalise a Kenyan phone number to the 2547######## / 2541######## form the API expects.
 function normalizePhone(input: string): string {
   let d = input.replace(/\D/g, '')
   if (d.startsWith('0')) d = '254' + d.slice(1)
@@ -19,7 +18,7 @@ export default function ParentalConsent() {
   const isPostSignup = searchParams.get('flow') === 'signup'
   const isConsultationFlow = searchParams.get('flow') === 'consultation'
 
-  const [step, setStep] = useState<'request' | 'verify'>('request')
+  const [step, setStep] = useState<'request' | 'verify' | 'success'>('request')
   const [guardianName, setGuardianName] = useState('')
   const [guardianPhone, setGuardianPhone] = useState('')
   const [relationship, setRelationship] = useState('parent')
@@ -61,13 +60,16 @@ export default function ParentalConsent() {
         minor_assent: minorAssent,
         consultation_id: consultationId,
       })
-      if (isPostSignup) {
-        navigate('/dashboard')
-      } else if (isConsultationFlow && professionalId) {
-        navigate(`/professionals/${professionalId}`)
-      } else {
-        navigate('/consultations')
-      }
+      setStep('success')
+      setTimeout(() => {
+        if (isPostSignup) {
+          navigate('/dashboard')
+        } else if (isConsultationFlow && professionalId) {
+          navigate(`/professionals/${professionalId}`)
+        } else {
+          navigate('/consultations')
+        }
+      }, 2000)
     } catch (error: any) {
       setMessage(error.response?.data?.error || error.response?.data?.message || 'Invalid OTP')
     } finally {
@@ -76,51 +78,105 @@ export default function ParentalConsent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-2xl mx-auto px-5 py-4 flex items-center gap-3">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-3">
           {!isPostSignup && (
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium">
-              <ArrowLeft size={18} />
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition"
+            >
+              <ArrowLeft size={20} />
             </button>
           )}
-          <h1 className="text-lg font-bold text-gray-900">
-            {isPostSignup ? 'Complete Your Account Setup' : 'Guardian Consent Required'}
-          </h1>
+          <div>
+            <h1 className="text-lg sm:text-xl font-bold text-gray-900">
+              {isPostSignup ? 'Parental Consent Required' : 'Guardian Verification'}
+            </h1>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-5 py-8">
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-6">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <h2 className="text-lg font-bold text-blue-900 mb-2">Parent/Guardian Verification Required</h2>
-            <p className="text-blue-800 text-sm leading-relaxed">
-              {isPostSignup
-                ? "Since you're under 18, your parent or guardian must verify their identity, and you must give your own assent to use this service. Your guardian will receive an SMS with a 6-digit code."
-                : "Since you're under 18, your parent or guardian must consent to this appointment, and you must give your own assent. Your guardian will receive an SMS with a 6-digit code."}
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
+        {/* Progress Indicator */}
+        {step !== 'success' && (
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-4 flex-1">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition ${
+                    step === 'request'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-green-500 text-white'
+                  }`}
+                >
+                  {step === 'request' ? '1' : '✓'}
+                </div>
+                <div className="flex-1 h-1 bg-gray-200"></div>
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition ${
+                    step === 'verify'
+                      ? 'bg-blue-600 text-white'
+                      : step === 'request'
+                      ? 'bg-gray-200 text-gray-500'
+                      : 'bg-green-500 text-white'
+                  }`}
+                >
+                  {step === 'verify' ? '2' : step === 'success' ? '✓' : '2'}
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 text-center">
+              Step {step === 'request' ? 1 : 2} of 2: {step === 'request' ? 'Guardian Details' : 'Verify OTP'}
             </p>
           </div>
+        )}
 
-          {step === 'request' ? (
-            <>
-              <div className="mb-6 space-y-4">
+        {/* Main Content */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          {/* Info Banner */}
+          <div className="bg-blue-50 border-b border-blue-200 p-6">
+            <div className="flex gap-4">
+              <Shield size={24} className="text-blue-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h2 className="text-lg font-bold text-blue-900 mb-2">Your Parent/Guardian's Permission is Required</h2>
+                <p className="text-blue-800 text-sm leading-relaxed">
+                  {isPostSignup
+                    ? "Since you're under 18, your parent or guardian must verify their identity. We'll send them a 6-digit code via SMS."
+                    : "Since you're under 18, your parent or guardian must consent to this appointment. We'll send them a 6-digit code via SMS."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="p-6 sm:p-8">
+            {step === 'request' && (
+              <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Guardian's Full Name</label>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Parent/Guardian Name
+                  </label>
                   <input
                     type="text"
                     placeholder="e.g. Jane Doe"
                     value={guardianName}
                     onChange={(e) => setGuardianName(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={loading}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Relationship</label>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Relationship
+                  </label>
                   <select
                     value={relationship}
                     onChange={(e) => setRelationship(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={loading}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                   >
                     <option value="parent">Parent</option>
                     <option value="guardian">Guardian</option>
@@ -129,109 +185,175 @@ export default function ParentalConsent() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Guardian's Phone Number</label>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Parent/Guardian Phone Number
+                  </label>
                   <input
                     type="tel"
                     placeholder="0712 345 678"
                     value={guardianPhone}
                     onChange={(e) => setGuardianPhone(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+                    disabled={loading}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-lg"
                   />
+                  <p className="text-xs text-gray-500 mt-2">Kenyan phone number (e.g. 0712345678 or +254712345678)</p>
                   {guardianPhone && !phoneValid && (
-                    <p className="text-red-500 text-xs mt-1">Enter a valid Kenyan number (e.g. 0712345678).</p>
+                    <p className="text-red-600 text-xs mt-2 font-semibold">
+                      ✗ Enter a valid Kenyan number (e.g. 0712345678)
+                    </p>
                   )}
                 </div>
+
+                {message && (
+                  <div
+                    className={`p-4 rounded-lg text-sm font-medium ${
+                      message.includes('sent')
+                        ? 'bg-green-50 text-green-700 border border-green-200'
+                        : 'bg-red-50 text-red-700 border border-red-200'
+                    }`}
+                  >
+                    {message}
+                  </div>
+                )}
+
+                <button
+                  onClick={handleRequestOTP}
+                  disabled={!guardianName || !phoneValid || loading}
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                >
+                  <Phone size={18} />
+                  {loading ? 'Sending OTP...' : 'Send OTP to Guardian'}
+                </button>
               </div>
+            )}
 
-              {message && (
-                <div className={`p-4 rounded-lg mb-6 text-sm ${message.includes('sent') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-                  {message}
-                </div>
-              )}
+            {step === 'verify' && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Enter the 6-Digit Code</h3>
+                  <p className="text-gray-600 text-sm mb-6">
+                    Your guardian should have received a 6-digit code on <strong>{guardianPhone.replace(/^254/, '+254')}</strong>. Ask them to share it with you.
+                  </p>
 
-              <button
-                onClick={handleRequestOTP}
-                disabled={!guardianName || !phoneValid || loading}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-              >
-                <Phone size={18} />
-                {loading ? 'Sending OTP...' : 'Send OTP to Guardian'}
-              </button>
-            </>
-          ) : (
-            <>
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Enter OTP</h3>
-                <p className="text-gray-500 text-sm mb-4">Your guardian should have received a 6-digit code. Ask them to share it with you.</p>
+                  <div className="flex gap-2 mb-6">
+                    {[0, 1, 2, 3, 4, 5].map((_, i) => (
+                      <input
+                        key={i}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={otp[i] || ''}
+                        onChange={(e) => {
+                          const newOtp = otp.split('')
+                          newOtp[i] = e.target.value.replace(/\D/g, '')
+                          setOtp(newOtp.join(''))
+                          if (e.target.value && i < 5) {
+                            (e.target.nextElementSibling as HTMLInputElement)?.focus()
+                          }
+                        }}
+                        disabled={loading}
+                        className="w-14 h-16 text-center text-3xl font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+                        placeholder="—"
+                      />
+                    ))}
+                  </div>
 
-                <div className="flex gap-2 mb-4">
-                  {[0, 1, 2, 3, 4, 5].map((_, i) => (
+                  <label className="flex items-start gap-3 cursor-pointer p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition">
                     <input
-                      key={i}
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={1}
-                      value={otp[i] || ''}
-                      onChange={(e) => {
-                        const newOtp = otp.split('')
-                        newOtp[i] = e.target.value.replace(/\D/g, '')
-                        setOtp(newOtp.join(''))
-                        if (e.target.value && i < 5) {
-                          (e.target.nextElementSibling as HTMLInputElement)?.focus()
-                        }
-                      }}
-                      className="w-12 h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      type="checkbox"
+                      checked={minorAssent}
+                      onChange={(e) => setMinorAssent(e.target.checked)}
+                      disabled={loading}
+                      className="mt-1 w-5 h-5 accent-blue-600 flex-shrink-0 rounded cursor-pointer"
                     />
-                  ))}
+                    <span className="text-sm text-gray-700 leading-relaxed font-medium">
+                      I agree to {isPostSignup ? 'use this platform and receive' : 'receive'} these mental health services
+                      <span className="text-gray-500 text-xs block mt-1">(Your own consent/assent)</span>
+                    </span>
+                  </label>
                 </div>
 
-                <label className="flex items-start gap-3 cursor-pointer mb-2">
-                  <input
-                    type="checkbox"
-                    checked={minorAssent}
-                    onChange={(e) => setMinorAssent(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 accent-blue-600 flex-shrink-0"
-                  />
-                  <span className="text-sm text-gray-600 leading-relaxed">
-                    I agree to {isPostSignup ? 'use this platform and receive' : 'receive'} these tele-mental health services (my own assent).
-                  </span>
-                </label>
+                {message && (
+                  <div
+                    className={`p-4 rounded-lg text-sm font-medium ${
+                      message.toLowerCase().includes('invalid')
+                        ? 'bg-red-50 text-red-700 border border-red-200'
+                        : 'bg-green-50 text-green-700 border border-green-200'
+                    }`}
+                  >
+                    {message}
+                  </div>
+                )}
+
+                <button
+                  onClick={handleVerifyOTP}
+                  disabled={otp.length !== 6 || !minorAssent || loading}
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                >
+                  <Send size={18} />
+                  {loading ? 'Verifying...' : 'Verify OTP & Continue'}
+                </button>
 
                 <button
                   onClick={() => setStep('request')}
-                  className="text-blue-600 text-sm font-semibold hover:underline"
+                  disabled={loading}
+                  className="w-full py-3 bg-white border-2 border-gray-300 hover:border-gray-400 text-gray-700 font-semibold rounded-lg transition-colors"
                 >
-                  Change guardian details
+                  Change Guardian Details
                 </button>
               </div>
+            )}
 
-              {message && (
-                <div className={`p-4 rounded-lg mb-6 text-sm ${message.toLowerCase().includes('invalid') ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>
-                  {message}
+            {step === 'success' && (
+              <div className="text-center py-8">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle2 size={32} className="text-green-600" />
+                  </div>
                 </div>
-              )}
-
-              <button
-                onClick={handleVerifyOTP}
-                disabled={otp.length !== 6 || !minorAssent || loading}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-              >
-                <Send size={18} />
-                {loading ? 'Verifying...' : 'Verify OTP & Continue'}
-              </button>
-            </>
-          )}
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Parental Consent Verified!</h2>
+                <p className="text-gray-600 mb-1">Your guardian has verified their identity.</p>
+                <p className="text-gray-500 text-sm">You're all set to start therapy. Redirecting...</p>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-6 text-sm text-gray-600">
-          <p className="font-semibold text-gray-900 mb-2">Why we need this:</p>
-          <ul className="space-y-1 text-xs">
-            <li>✓ <strong>Legal requirement</strong> for minors (Kenya mental health regulations)</li>
-            <li>✓ <strong>Ensures parental awareness</strong> — guardian knows their child is using the service</li>
-            <li>✓ <strong>Protects your privacy &amp; safety</strong> — guardian contact is for verification only, not shared with therapists</li>
-            <li>✓ <strong>Your autonomy respected</strong> — you must also agree (your own assent matters)</li>
-          </ul>
-        </div>
+        {/* Why Section */}
+        {step !== 'success' && (
+          <div className="mt-8 bg-gray-50 rounded-lg p-6 border border-gray-200">
+            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Lock size={18} className="text-blue-600" />
+              Why We Need Your Guardian's Consent
+            </h3>
+            <ul className="space-y-3">
+              <li className="flex gap-3">
+                <span className="text-blue-600 font-bold text-lg flex-shrink-0">✓</span>
+                <span className="text-sm text-gray-700">
+                  <strong>Legal requirement</strong> — Kenya mental health regulations require parental consent for minors
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-blue-600 font-bold text-lg flex-shrink-0">✓</span>
+                <span className="text-sm text-gray-700">
+                  <strong>Ensures awareness</strong> — Your guardian knows you're getting mental health support
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-blue-600 font-bold text-lg flex-shrink-0">✓</span>
+                <span className="text-sm text-gray-700">
+                  <strong>Protects privacy</strong> — Guardian contact is for verification only, never shared with therapists
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-blue-600 font-bold text-lg flex-shrink-0">✓</span>
+                <span className="text-sm text-gray-700">
+                  <strong>Your voice matters</strong> — You must also give your own consent/assent to use the service
+                </span>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
