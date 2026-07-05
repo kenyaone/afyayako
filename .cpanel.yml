@@ -2,6 +2,8 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/qnztnquh/public_html/
+
+    # ── Frontend (compiled build) ─────────────────────────────────────
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp manifest.json $DEPLOYPATH
@@ -11,3 +13,20 @@ deployment:
     - /bin/cp icon-512.png $DEPLOYPATH
     - /bin/cp apple-touch-icon.png $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
+
+    # ── Backend (Laravel API) — code only, never .env or DB ───────────
+    # Preserves prod's .env, sqlite DB, storage/uploads, vendor/, bootstrap/cache
+    - /usr/bin/rsync -a --delete
+        --exclude='.env' --exclude='.env.*' --exclude='database.sqlite'
+        --exclude='database.sqlite-*' --exclude='storage/'
+        --exclude='vendor/' --exclude='bootstrap/cache/'
+        api/app/       $DEPLOYPATH/api/app/
+    - /usr/bin/rsync -a --delete
+        api/routes/    $DEPLOYPATH/api/routes/
+    - /usr/bin/rsync -a
+        api/database/migrations/ $DEPLOYPATH/api/database/migrations/
+
+    # ── Run new migrations ────────────────────────────────────────────
+    - cd $DEPLOYPATH/api && /usr/bin/php artisan migrate --force
+    - cd $DEPLOYPATH/api && /usr/bin/php artisan config:clear
+    - cd $DEPLOYPATH/api && /usr/bin/php artisan route:clear
