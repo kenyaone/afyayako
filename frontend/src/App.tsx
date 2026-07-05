@@ -47,6 +47,7 @@ import ReferralPromo from './pages/profile/ReferralPromo'
 import Journal from './pages/phr/Journal'
 import SessionTemplates from './pages/professional/SessionTemplates'
 import ScreeningTools from './pages/professional/ScreeningTools'
+import ProfessionalDashboard from './pages/dashboard/ProfessionalDashboard'
 import ProgressCertificate from './pages/tools/ProgressCertificate'
 import EAPDashboard from './pages/corporate/EAPDashboard'
 import FAQ from './pages/legal/FAQ'
@@ -141,6 +142,7 @@ export default function App() {
           <Route path="/templates" element={<SessionTemplates />} />
           <Route path="/screening-tools" element={<ScreeningTools />} />
           <Route path="/screening-tools/:consultationId" element={<ScreeningTools />} />
+          <Route path="/professional-dashboard" element={<ProfessionalDashboard />} />
           <Route path="/certificate" element={<ProgressCertificate />} />
           <Route path="/eap-dashboard" element={<EAPDashboard />} />
           <Route path="/peer-mentors" element={<PeerMentors />} />

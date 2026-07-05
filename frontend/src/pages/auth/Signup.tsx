@@ -591,26 +591,9 @@ export default function Signup() {
               </select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">KMPDC License (Optional)</label>
-                <input
-                  {...register('kmpdc_license')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="License #"
-                  disabled={loading}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">CPB License (Optional)</label>
-                <input
-                  {...register('cpb_license')}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="License #"
-                  disabled={loading}
-                />
-              </div>
-            </div>
+            <p className="text-xs text-gray-500 -mt-1 mb-2">
+              You'll enter your KMPDC or CPB license number in the verification step after signup.
+            </p>
 
             <div>
               <label className="block text-sm font-semibold text-gray-900 mb-2">Years of Experience</label>
@@ -622,18 +605,6 @@ export default function Signup() {
                 disabled={loading}
               />
               {errors.years_experience && <p className="text-red-600 text-xs mt-1">{errors.years_experience.message}</p>}
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">Hourly Rate (KES)</label>
-              <input
-                {...register('rate_per_hour')}
-                type="number"
-                step="0.01"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                placeholder="2500"
-                disabled={loading}
-              />
             </div>
 
             <div>
