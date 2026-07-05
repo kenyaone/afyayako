@@ -171,7 +171,7 @@ export default function Corporate() {
                   </>
                 )}
                 <div className="text-xs text-gray-600 mt-2">
-                  {tier.sessions_per_employee} in-person session{tier.sessions_per_employee === 1 ? '' : 's'} per employee / year · 24/7 tele-therapy
+                  Up to {tier.sessions_per_employee} in-person session{tier.sessions_per_employee === 1 ? '' : 's'} per employee / month · 24/7 tele-therapy
                 </div>
                 {selectedTier?.id === tier.id && <CheckCircle size={16} className="text-primary-500 mt-2" />}
               </button>

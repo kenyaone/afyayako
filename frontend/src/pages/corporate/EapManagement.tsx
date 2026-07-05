@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import api from '../../api/axios'
-import { Copy, Plus, Trash2, Clock, Users, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Copy, Plus, Trash2, Clock, Users, CheckCircle2, AlertCircle, Send, Mail } from 'lucide-react'
 
 interface InviteLink {
   id: number
@@ -187,6 +187,9 @@ export default function EapManagement() {
         </form>
       </div>
 
+      {/* ── Broadcast to Staff ─────────────────────────────────────── */}
+      <BroadcastSection inviteLinks={inviteLinks} onSent={fetchInviteLinks} />
+
       {/* Invite Links List */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="p-6 border-b border-gray-200">
@@ -295,3 +298,155 @@ export default function EapManagement() {
     </div>
   )
 }
+
+// ── Broadcast to Staff ────────────────────────────────────────────────
+// HR pastes their employee email list once; the system BCCs each address
+// with the reusable invite link. HR receives an aggregate count only —
+// the list is never persisted, so HR cannot correlate joiners to people.
+
+interface BroadcastSectionProps {
+  inviteLinks: InviteLink[]
+  onSent: () => void
+}
+
+function BroadcastSection({ inviteLinks }: BroadcastSectionProps) {
+  const [rawEmails, setRawEmails] = useState('')
+  const [customMessage, setCustomMessage] = useState('')
+  const [selectedToken, setSelectedToken] = useState<string>('')
+  const [busy, setBusy] = useState(false)
+  const [result, setResult] = useState<{ sent: number; failed: number } | null>(null)
+  const [errText, setErrText] = useState('')
+
+  const activeLinks = inviteLinks.filter(l => l.is_active)
+
+  // Default to the newest active link when one becomes available
+  useEffect(() => {
+    if (!selectedToken && activeLinks.length) setSelectedToken(activeLinks[0].full_token || activeLinks[0].token)
+  }, [activeLinks, selectedToken])
+
+  // Parse the textarea permissively: split on commas, semicolons, whitespace,
+  // then filter to things that look like emails. Dedupe case-insensitively.
+  const parsedEmails: string[] = Array.from(
+    new Set(
+      rawEmails
+        .split(/[\s,;]+/)
+        .map(s => s.trim().toLowerCase())
+        .filter(s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s))
+    )
+  )
+
+  const send = async () => {
+    setErrText('')
+    setResult(null)
+    if (!selectedToken) { setErrText('Generate a reusable invite link first.'); return }
+    if (parsedEmails.length === 0) { setErrText('Add at least one valid employee email above.'); return }
+
+    setBusy(true)
+    try {
+      const res = await api.post('/eap/broadcast', {
+        token: selectedToken,
+        emails: parsedEmails,
+        custom_message: customMessage.trim() || undefined,
+      })
+      setResult({ sent: res.data.sent ?? 0, failed: res.data.failed ?? 0 })
+      setRawEmails('')
+      setCustomMessage('')
+    } catch (err: any) {
+      setErrText(err.response?.data?.error || 'Failed to send invitations. Please try again.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <h2 className="text-xl font-bold text-gray-900 mb-1 flex items-center gap-2">
+        <Send size={20} /> Send invite to all staff at once
+      </h2>
+      <p className="text-sm text-gray-600 mb-4">
+        Paste your employee email list. We BCC everyone with the reusable link and never store the list —
+        you get a delivery count only. HR cannot see who opened, clicked, or joined.
+      </p>
+
+      {activeLinks.length === 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-sm text-amber-900">
+          You need an active invite link first. Use the "Generate reusable link" section above.
+        </div>
+      )}
+
+      {activeLinks.length > 1 && (
+        <div className="mb-4">
+          <label className="block text-sm font-semibold text-gray-900 mb-2">Which invite link?</label>
+          <select
+            value={selectedToken}
+            onChange={e => setSelectedToken(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            {activeLinks.map(l => (
+              <option key={l.id} value={l.full_token || l.token}>
+                {l.token} · expires {l.expires_at ? new Date(l.expires_at).toLocaleDateString() : 'never'}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <div className="mb-4">
+        <label className="block text-sm font-semibold text-gray-900 mb-2">
+          Employee emails ({parsedEmails.length} recognised)
+        </label>
+        <textarea
+          value={rawEmails}
+          onChange={e => setRawEmails(e.target.value)}
+          rows={6}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 font-mono text-sm"
+          placeholder={`jane@company.co.ke\nomondi@company.co.ke\nakinyi@company.co.ke\n\nOr paste them comma-separated — we'll figure it out.`}
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          One per line, or comma/semicolon-separated. Duplicates are ignored.
+        </p>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-semibold text-gray-900 mb-2">
+          <Mail size={14} className="inline mr-1" /> Personal note (optional)
+        </label>
+        <textarea
+          value={customMessage}
+          onChange={e => setCustomMessage(e.target.value)}
+          rows={3}
+          maxLength={1200}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+          placeholder="Add a message from you, e.g. 'From your HR team — a benefit we've rolled out to support you.'"
+        />
+      </div>
+
+      {errText && (
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 flex gap-2 mb-4">
+          <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
+          <span>{errText}</span>
+        </div>
+      )}
+
+      {result && (
+        <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 mb-4">
+          <div className="font-semibold">✓ Invitations dispatched</div>
+          <div className="text-sm mt-1">Sent: {result.sent} · Failed: {result.failed}</div>
+          <div className="text-xs mt-1 text-green-700">
+            The email list has been discarded. You cannot see who opens the email, clicks the link, or joins.
+          </div>
+        </div>
+      )}
+
+      <button
+        onClick={send}
+        disabled={busy || parsedEmails.length === 0 || !selectedToken}
+        className="px-6 py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 text-white font-semibold rounded-lg transition flex items-center gap-2"
+      >
+        <Send size={16} />
+        {busy ? 'Sending…' : `Send invite to ${parsedEmails.length} staff${parsedEmails.length === 1 ? '' : ''}`}
+      </button>
+    </div>
+  )
+}
+
