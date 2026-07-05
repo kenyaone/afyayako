@@ -16,6 +16,15 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const { t } = useT()
   const isAdmin = user?.role === 'admin'
   const isProfessional = user?.role === 'professional'
+  const isCorporate = user?.role === 'corporate' || user?.role === 'hr'
+
+  const corporateLinks = [
+    { to: '/eap-dashboard', icon: LayoutDashboard, label: 'EAP Overview' },
+    { to: '/eap-manage',    icon: Users,           label: 'Invite Employees' },
+    { to: '/eap-verify',    icon: ShieldCheck,     label: 'Session Audit' },
+    { to: '/profile',       icon: Building2,       label: 'Company Profile' },
+    { to: '/settings',      icon: Settings,        label: 'Settings' },
+  ]
 
   const userLinks = [
     { to: '/dashboard', icon: LayoutDashboard, label: t('dashboard') },
@@ -68,7 +77,10 @@ export default function Sidebar({ onClose }: SidebarProps) {
     userLinks[userLinks.length - 1],
   ]
 
-  const links = isAdmin ? adminLinks : isProfessional ? professionalLinks : userLinksWithPricing
+  const links = isAdmin ? adminLinks
+              : isCorporate ? corporateLinks
+              : isProfessional ? professionalLinks
+              : userLinksWithPricing
 
   return (
     <aside className="w-64 h-full flex flex-col" style={{ background: 'linear-gradient(180deg, #0a5e2a 0%, #0f4d48 60%, #0a3d38 100%)' }}>
