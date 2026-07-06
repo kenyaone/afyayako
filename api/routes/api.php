@@ -56,6 +56,10 @@ Route::get('/corporate/tiers', [CorporateController::class, 'tiers']);
 // Public — employee signs up via HR-generated invite link (no auth yet)
 Route::post('/eap/join/{token}', [\App\Http\Controllers\EapController::class, 'joinViaLink'])->name('eap.join');
 
+// Public — anonymous post-session feedback (per-session token, no auth)
+Route::get('/feedback/{token}',  [\App\Http\Controllers\SessionFeedbackAnonymousController::class, 'show']);
+Route::post('/feedback/{token}', [\App\Http\Controllers\SessionFeedbackAnonymousController::class, 'submit']);
+
 Route::get('/burnout/questions', [BurnoutController::class, 'questions']);
 
 // M-Pesa callbacks (called by Safaricom, no token)

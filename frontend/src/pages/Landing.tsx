@@ -230,6 +230,36 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── WHAT WE COVER (moved above the fold) ── */}
+      <section id="cover" className="bg-white py-16 md:py-20 px-5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 bg-orange-100 border border-orange-200 text-orange-800 text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
+              <Sparkles size={13}/> What we help with
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
+              Depression. Anxiety. <span className="bg-gradient-to-r from-amber-500 via-red-500 to-fuchsia-600 bg-clip-text text-transparent">Alcohol. Betting. Substance use.</span>
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              A single EAP that covers the whole spectrum — from workplace burnout to alcohol,
+              substance-use, and betting/gambling recovery — with KMPDC- and CPB-verified therapists.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {WHAT_WE_COVER.map(({icon: Icon, accent, title, blurb}) => (
+              <div key={title} className="relative bg-white border-2 border-gray-100 hover:border-transparent rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all group overflow-hidden">
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${accent}`} />
+                <div className={`relative w-10 h-10 rounded-lg bg-gradient-to-br ${accent} flex items-center justify-center mb-3 shadow-sm`}>
+                  <Icon size={20} className="text-white"/>
+                </div>
+                <div className="relative font-bold text-gray-900 group-hover:text-white transition-colors">{title}</div>
+                <div className="relative text-xs text-gray-600 group-hover:text-white/90 leading-relaxed mt-1 transition-colors">{blurb}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── SEGMENTS ── */}
       <section id="segments" className="relative py-20 px-5 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-rose-50 to-violet-50" />
@@ -262,35 +292,6 @@ export default function Landing() {
             })}
           </div>
         </div>
-        </div>
-      </section>
-
-      {/* ── WHAT WE COVER ── */}
-      <section id="cover" className="bg-white py-20 px-5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 bg-orange-100 border border-orange-200 text-orange-800 text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
-              <Sparkles size={13}/> What we help with
-            </div>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
-              The stuff nobody talks about at work.
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              A single EAP that covers the whole spectrum — from workplace burnout to alcohol and betting recovery — with KMPDC- and CPB-verified therapists.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {WHAT_WE_COVER.map(({icon: Icon, accent, title, blurb}) => (
-              <div key={title} className="relative bg-white border-2 border-gray-100 hover:border-transparent rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all group overflow-hidden">
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${accent}`} />
-                <div className={`relative w-10 h-10 rounded-lg bg-gradient-to-br ${accent} flex items-center justify-center mb-3 shadow-sm`}>
-                  <Icon size={20} className="text-white"/>
-                </div>
-                <div className="relative font-bold text-gray-900 group-hover:text-white transition-colors">{title}</div>
-                <div className="relative text-xs text-gray-600 group-hover:text-white/90 leading-relaxed mt-1 transition-colors">{blurb}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

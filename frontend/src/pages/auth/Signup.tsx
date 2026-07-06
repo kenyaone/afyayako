@@ -56,14 +56,19 @@ export default function Signup() {
     defaultValues: { account_type: null }
   })
 
-  const [userType, setUserType] = useState<UserType>(null)
-  const [step, setStep] = useState<Step>('usertype')
+  // Public /signup is now for THERAPISTS ONLY.
+  // Employees join via /eap/join/:token (anonymous).
+  // Companies sign up via /corporate (no login required).
+  // Individuals/couples cannot self-signup — this is a B2B EAP.
+  const [userType, setUserType] = useState<UserType>('therapist')
+  const [step, setStep] = useState<Step>('professional')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<Partial<FormData>>({})
 
   useEffect(() => {
+    // Kept for backwards compat — location.state may still push role
     const state = location.state as any
     if (state?.role === 'professional') {
       setUserType('therapist')

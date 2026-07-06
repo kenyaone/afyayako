@@ -168,6 +168,27 @@ class ConsultationController extends Controller
         }
 
         $isProfessional = $consultation->professional->email === $user->email;
+
+        // ── Attendance audit: record who joined (A) ─────────────────
+        // First-time join for a party stamps their joined_at.
+        // Once both stamps exist, mark attendance_verified when the two
+        // parties overlapped by ≥ 20 minutes (rough "session happened").
+        if ($isProfessional && !$consultation->professional_joined_at) {
+            $consultation->update(['professional_joined_at' => now()]);
+        } elseif (!$isProfessional && !$consultation->patient_joined_at) {
+            $consultation->update(['patient_joined_at' => now()]);
+        }
+        if ($consultation->patient_joined_at && $consultation->professional_joined_at
+            && !$consultation->attendance_verified_at) {
+            $pat = Carbon::parse($consultation->patient_joined_at);
+            $pro = Carbon::parse($consultation->professional_joined_at);
+            $bothPresentFrom = $pat->greaterThan($pro) ? $pat : $pro;
+            $overlapMinutes  = $bothPresentFrom->diffInMinutes(now());
+            if ($overlapMinutes >= 20) {
+                $consultation->update(['attendance_verified_at' => now()]);
+            }
+        }
+
         $jitsiUrl = 'https://meet.ffmuc.net/' . $consultation->jitsi_room;
 
         // Shared data the professional can see
@@ -226,15 +247,74 @@ class ConsultationController extends Controller
             return response()->json(['error' => 'Session not found'], 404);
         }
 
+        // ── Gate B: clinical notes required to mark complete ─────────
+        $clinicalNotes = $request->input('clinical_notes', $request->input('notes'));
+        $wordCount = str_word_count(strip_tags((string) $clinicalNotes));
+        if ($wordCount < 30) {
+            return response()->json([
+                'error' => 'Clinical notes are required (minimum 30 words) to complete a session.',
+                'notes_word_count' => $wordCount,
+                'required_word_count' => 30,
+            ], 422);
+        }
+
+        // ── Gate A: attendance verified (both parties joined) ────────
+        if (!$consultation->attendance_verified_at) {
+            return response()->json([
+                'error' => 'Attendance not verified — both employee and therapist must have joined the session.',
+                'patient_joined'      => (bool) $consultation->patient_joined_at,
+                'professional_joined' => (bool) $consultation->professional_joined_at,
+            ], 422);
+        }
+
         $consultation->update([
-            'status'     => 'completed',
-            'actual_end' => now(),
-            'professional_notes' => $request->input('notes', $consultation->professional_notes),
+            'status'                    => 'completed',
+            'actual_end'                => now(),
+            'professional_notes'        => $clinicalNotes,
+            'clinical_notes'            => $clinicalNotes,
+            'clinical_notes_filed_at'   => now(),
+            'clinical_notes_word_count' => $wordCount,
         ]);
 
         $professional->increment('total_sessions');
 
-        return response()->json(['message' => 'Session marked complete', 'consultation' => $consultation]);
+        // Mirror the audit signals onto the eap_sessions row (if any)
+        // so HR's /eap-verify can filter without joining consultations.
+        try {
+            \DB::table('eap_sessions')
+                ->where('consultation_id', $consultation->id)
+                ->update([
+                    'attendance_verified' => true,
+                    'notes_filed'         => true,
+                    'session_status'      => 'completed',
+                    'updated_at'          => now(),
+                ]);
+        } catch (\Throwable $e) { /* no-op if column missing */ }
+
+        // Queue post-session feedback request (D) — sent 24h later by the
+        // eap:send-feedback-requests scheduled command.
+        try {
+            \App\Models\SessionFeedback::firstOrCreate(
+                ['consultation_id' => $consultation->id],
+                [
+                    'user_id'               => $consultation->user_id,
+                    'professional_id'       => $consultation->professional_id,
+                    'feedback_token'        => bin2hex(random_bytes(16)),
+                    'feedback_requested_at' => now(),
+                ]
+            );
+        } catch (\Throwable $e) { \Log::warning('Feedback queue failed: '.$e->getMessage()); }
+
+        return response()->json([
+            'message'      => 'Session marked complete',
+            'consultation' => $consultation->fresh(),
+            'audit'        => [
+                'attendance_verified' => true,
+                'notes_filed'         => true,
+                'notes_word_count'    => $wordCount,
+                'feedback_scheduled'  => true,
+            ],
+        ]);
     }
 
     // ─── Recording management ─────────────────────────────────────────────────
