@@ -19,6 +19,7 @@ import Profile from './pages/Profile'
 import Landing from './pages/Landing'
 import ApplyAsProfessional from './pages/apply/ApplyAsProfessional'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import EapApplications from './pages/admin/EapApplications'
 import RevenueDashboard from './pages/admin/RevenueDashboard'
 import Pricing from './pages/pricing/Pricing'
 import Subscribe from './pages/subscribe/Subscribe'
@@ -124,6 +125,7 @@ export default function App() {
           <Route path="/apply" element={<ApplyAsProfessional />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/revenue" element={<RevenueDashboard />} />
+          <Route path="/admin/eap-applications" element={<EapApplications />} />
           <Route path="/subscribe" element={<Subscribe />} />
           <Route path="/eap-manage" element={<EapManagement />} />
           <Route path="/eap-verify" element={<EapSessionVerification />} />

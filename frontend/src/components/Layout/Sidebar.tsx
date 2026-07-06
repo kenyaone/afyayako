@@ -64,6 +64,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const adminLinks = [
     { to: '/dashboard', icon: LayoutDashboard, label: t('dashboard') },
     { to: '/admin', icon: ShieldCheck, label: 'Verify Professionals' },
+    { to: '/admin/eap-applications', icon: Building2, label: 'EAP Applications' },
     { to: '/admin/revenue', icon: DollarSign, label: 'Revenue' },
     { to: '/professionals', icon: Users, label: 'All Professionals' },
     { to: '/eap-dashboard', icon: Building2, label: 'EAP Dashboard' },

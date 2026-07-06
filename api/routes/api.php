@@ -277,6 +277,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/eap/invite-links',           [\App\Http\Controllers\EapController::class, 'getInviteLinks']);
     Route::delete('/eap/invite-links/{id}',   [\App\Http\Controllers\EapController::class, 'revokeInviteLink']);
     Route::get('/eap/employees',              [\App\Http\Controllers\EapController::class, 'getEmployees']);
+
+    // Admin — corporate application approval
+    Route::get( '/admin/eap-applications',             [\App\Http\Controllers\EapApplicationController::class, 'index']);
+    Route::post('/admin/eap-applications/{id}/approve',[\App\Http\Controllers\EapApplicationController::class, 'approve']);
+    Route::post('/admin/eap-applications/{id}/reject', [\App\Http\Controllers\EapApplicationController::class, 'reject']);
     Route::post('/eap/broadcast',             [\App\Http\Controllers\EapController::class, 'broadcastInvite']);
 
     // EAP session verification / audit (HR + therapist)

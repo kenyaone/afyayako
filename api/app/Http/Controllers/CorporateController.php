@@ -19,28 +19,38 @@ class CorporateController extends Controller
 
     public function apply(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // Accept both new frontend field names (company_name, tier_id) and
+        // the legacy ones (name, eap_tier_id) so both callers work.
+        $companyName = $request->input('name') ?? $request->input('company_name');
+        $tierId      = $request->input('eap_tier_id') ?? $request->input('tier_id');
+
+        $validator = Validator::make(array_merge($request->all(), [
+            'name'        => $companyName,
+            'eap_tier_id' => $tierId,
+        ]), [
             'name'           => 'required|string|max:200',
             'contact_name'   => 'required|string|max:100',
             'contact_email'  => 'required|email',
-            'contact_phone'  => 'required|string|max:15',
+            'contact_phone'  => 'required|string|max:20',
             'industry'       => 'sometimes|nullable|string|max:100',
             'employee_count' => 'required|integer|min:1',
             'kra_pin'        => 'sometimes|nullable|string|max:20',
             'address'        => 'sometimes|nullable|string',
             'eap_tier_id'    => 'required|exists:eap_tiers,id',
+            'payment_method' => 'sometimes|nullable|in:invoice_net30,bank_transfer,cheque,mpesa',
+            'billing_notes'  => 'sometimes|nullable|string|max:1000',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 422);
         }
 
-        $tier = EapTier::find($request->eap_tier_id);
+        $tier = EapTier::find($tierId);
 
         DB::beginTransaction();
         try {
             $company = Company::create([
-                'name'           => $request->name,
+                'name'           => $companyName,
                 'contact_name'   => $request->contact_name,
                 'contact_email'  => $request->contact_email,
                 'contact_phone'  => $request->contact_phone,
@@ -62,12 +72,28 @@ class CorporateController extends Controller
                 'sessions_total'  => $sessionsTotal,
                 'sessions_used'   => 0,
                 'amount_paid'     => 0,
+                'payment_method'  => $request->input('payment_method'),
+                'billing_notes'   => $request->input('billing_notes'),
             ]);
 
             DB::commit();
 
+            // ── Gap #1: sales notification (fire-and-forget) ─────
+            try {
+                \Illuminate\Support\Facades\Mail::to(config('mail.sales_address', 'sales@afyayako.co.ke'))
+                    ->send(new \App\Mail\NewCorporateApplication(
+                        company:       $company,
+                        subscription:  $eapSub,
+                        tierName:      $tier->name,
+                        paymentMethod: $request->input('payment_method'),
+                        billingNotes:  $request->input('billing_notes'),
+                    ));
+            } catch (\Throwable $e) {
+                \Log::warning('Sales notification failed: '.$e->getMessage());
+            }
+
             return response()->json([
-                'message'          => 'EAP application submitted. Our team will contact you shortly.',
+                'message'          => 'EAP application submitted. Our team will contact you within 1 business day.',
                 'company'          => $company,
                 'eap_subscription' => $eapSub->load('eapTier'),
             ], 201);
