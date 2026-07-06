@@ -187,33 +187,56 @@ export default function Landing() {
             </div>
           </div>
           <div className="relative">
-            <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6">
-              <div className="text-xs uppercase tracking-widest text-primary-700 font-semibold mb-3">HR Dashboard preview</div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <div>
-                    <div className="text-xs text-gray-500">Employees enrolled</div>
-                    <div className="text-2xl font-bold text-gray-900">38 <span className="text-xs text-gray-400 font-normal">of 45</span></div>
+            {/* Live-looking HR dashboard preview card — mimics the real
+                /eap-dashboard styling so buyers can see what they'll get */}
+            <div className="rounded-3xl shadow-2xl overflow-hidden text-white"
+                 style={{ background: 'linear-gradient(135deg, #0f766e 0%, #7c3aed 55%, #ec4899 100%)' }}>
+              {/* header */}
+              <div className="relative px-6 pt-6 pb-14">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-orange-400/25 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-cyan-400/25 rounded-full blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur border border-white/25 text-white text-[10px] px-2 py-1 rounded-full mb-2 font-bold uppercase tracking-widest">
+                    <Sparkles size={10} className="text-yellow-200"/> Small tier · active
                   </div>
-                  <TrendingUp size={22} className="text-primary-600"/>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                  <div>
-                    <div className="text-xs text-gray-500">Sessions this month</div>
-                    <div className="text-2xl font-bold text-gray-900">54</div>
+                  <div className="text-lg font-black leading-tight">TestCorp Kenya Ltd</div>
+                  <div className="text-xs text-white/80 flex items-center gap-1 mt-1"><EyeOff size={11}/> Anonymised aggregate data</div>
+                  <div className="mt-3 bg-white/10 backdrop-blur border border-white/20 rounded-xl p-3">
+                    <div className="text-[9px] uppercase tracking-widest text-white/70">Your impact this month</div>
+                    <div className="text-sm font-bold mt-1 leading-snug">You supported <span className="text-yellow-200">38</span> people through 54 sessions.</div>
+                    <div className="inline-flex items-center gap-1 text-[10px] font-bold mt-2 px-2 py-0.5 rounded-full bg-emerald-400/25 text-emerald-100">
+                      <TrendingUp size={9}/> +8 vs last month
+                    </div>
                   </div>
-                  <Video size={22} className="text-teal-600"/>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <div>
-                    <div className="text-xs text-gray-500">Utilisation</div>
-                    <div className="text-2xl font-bold text-gray-900">32%</div>
-                  </div>
-                  <Users size={22} className="text-emerald-600"/>
                 </div>
               </div>
-              <div className="mt-4 bg-gray-50 rounded-lg px-3 py-2 text-xs text-gray-500 flex items-center gap-1.5">
-                <EyeOff size={12}/> No individual identities shown. All anonymised.
+
+              {/* white body */}
+              <div className="bg-white -mt-8 mx-4 mb-4 rounded-2xl p-4 shadow-lg text-slate-900">
+                <div className="grid grid-cols-3 gap-3 text-center mb-3">
+                  <div className="rounded-lg bg-teal-50 border border-teal-100 py-2">
+                    <div className="text-lg font-black text-teal-700">38</div>
+                    <div className="text-[9px] uppercase tracking-widest text-teal-800 font-semibold">Reached</div>
+                  </div>
+                  <div className="rounded-lg bg-violet-50 border border-violet-100 py-2">
+                    <div className="text-lg font-black text-violet-700">54</div>
+                    <div className="text-[9px] uppercase tracking-widest text-violet-800 font-semibold">Sessions</div>
+                  </div>
+                  <div className="rounded-lg bg-orange-50 border border-orange-100 py-2">
+                    <div className="text-lg font-black text-orange-700">32%</div>
+                    <div className="text-[9px] uppercase tracking-widest text-orange-800 font-semibold">Used</div>
+                  </div>
+                </div>
+                {/* fake mini trend */}
+                <div className="h-14 flex items-end gap-1 mb-2">
+                  {[8, 12, 15, 22, 34, 46, 54].map((v, i) => (
+                    <div key={i} className="flex-1 rounded-t"
+                         style={{ height: `${(v/54)*100}%`, background: 'linear-gradient(180deg, #f97316 0%, #ec4899 60%, #7c3aed 100%)' }}/>
+                  ))}
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] text-gray-500">
+                  <EyeOff size={11}/> Never individual identities · KDPA 2019 compliant
+                </div>
               </div>
             </div>
           </div>
