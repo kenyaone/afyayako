@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { X, Sparkles, Zap } from 'lucide-react'
+import { X, Heart, TrendingUp } from 'lucide-react'
 
 /**
- * Time-triggered launch-offer popup on the public landing.
- * Shows 22s after page load OR at 50% scroll, whichever comes first.
- * Dismissal is remembered in localStorage for 7 days so returning
- * visitors aren't nagged.
+ * Mission-driven overlay on the public landing.
+ * Frames the ask around Kenyan workplace mental-health reality rather
+ * than a price discount — the buyer here is HR/CEO signing an EAP out
+ * of duty of care, not chasing a coupon.
+ *
+ * Shows 22s after page load OR at 50% scroll. Dismissal remembered in
+ * localStorage for 7 days.
  */
 
 const STORAGE_KEY = 'ay_launch_offer_dismissed_at'
@@ -31,7 +34,7 @@ function markDismissed() {
 
 export default function LaunchOfferPopup() {
   const [open, setOpen] = useState(false)
-  const [ready, setReady] = useState(false)   // fires opening animation
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     if (wasDismissedRecently()) return
@@ -54,7 +57,6 @@ export default function LaunchOfferPopup() {
 
   useEffect(() => {
     if (open) {
-      // one animation-frame delay so transform starts from off-screen
       const id = window.requestAnimationFrame(() => setReady(true))
       return () => window.cancelAnimationFrame(id)
     }
@@ -70,83 +72,89 @@ export default function LaunchOfferPopup() {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 transition-opacity"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 transition-opacity"
       style={{ opacity: ready ? 1 : 0 }}
       onClick={dismiss}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl transition-transform"
-        style={{
-          transform: ready ? 'translateY(0) scale(1)' : 'translateY(20px) scale(.96)',
-          background: 'linear-gradient(135deg, #f97316 0%, #ec4899 55%, #8b5cf6 100%)',
-        }}
+        className="relative w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl transition-transform bg-white"
+        style={{ transform: ready ? 'translateY(0) scale(1)' : 'translateY(20px) scale(.96)' }}
       >
         <button
           onClick={dismiss}
-          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
           aria-label="Close"
         >
           <X size={18}/>
         </button>
 
-        {/* Content */}
-        <div className="p-8 md:p-10 text-white">
-          <div className="inline-flex items-center gap-2 bg-white/20 border border-white/30 text-white text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
-            <Sparkles size={13}/> Launch offer · Kenya
+        {/* Coloured header band */}
+        <div
+          className="px-8 md:px-10 pt-8 pb-14 text-white relative"
+          style={{ background: 'linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #059669 100%)' }}
+        >
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur border border-white/25 text-white text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
+            <Heart size={13} className="text-rose-200"/> Duty of care
           </div>
-
-          <h2 className="text-2xl md:text-3xl font-black leading-tight mb-3">
-            First 10 companies get<br/>
-            <span className="text-yellow-200">2 months free.</span>
+          <h2 className="text-2xl md:text-3xl font-black leading-tight">
+            Your team is<br/>carrying more<br/>
+            <span className="text-yellow-200">than they can say.</span>
           </h2>
+        </div>
 
-          <p className="text-white/90 text-sm md:text-base mb-6 leading-relaxed">
-            We're onboarding our first cohort of Kenyan employers this month.
-            Book an EAP demo before <b>31st July 2026</b> and get your first 60 days on us
-            — no card, no lock-in, just try it with your team.
-          </p>
-
-          <div className="space-y-2 mb-7 text-sm">
-            <div className="flex items-start gap-2">
-              <div className="mt-0.5 w-5 h-5 rounded-full bg-white/30 flex items-center justify-center flex-shrink-0">
-                <Zap size={12}/>
+        {/* Body — stats + mission */}
+        <div className="p-8 md:p-10 -mt-8">
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-5 mb-6">
+            <div className="grid grid-cols-3 divide-x divide-gray-200 text-center">
+              <div className="px-2">
+                <div className="text-2xl font-black text-primary-700">1 in 4</div>
+                <div className="text-[11px] text-gray-600 leading-tight mt-1">Kenyans will face a mental-health condition this year</div>
               </div>
-              <span>Full EAP access for every employee</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="mt-0.5 w-5 h-5 rounded-full bg-white/30 flex items-center justify-center flex-shrink-0">
-                <Zap size={12}/>
+              <div className="px-2">
+                <div className="text-2xl font-black text-orange-600">75%</div>
+                <div className="text-[11px] text-gray-600 leading-tight mt-1">of employees hide burnout from their employer</div>
               </div>
-              <span>Onboarding + HR dashboard walk-through</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="mt-0.5 w-5 h-5 rounded-full bg-white/30 flex items-center justify-center flex-shrink-0">
-                <Zap size={12}/>
+              <div className="px-2">
+                <div className="text-2xl font-black text-rose-600">4×</div>
+                <div className="text-[11px] text-gray-600 leading-tight mt-1">productivity loss vs. cost of treatment</div>
               </div>
-              <span>Anonymised monthly reports included</span>
             </div>
+            <p className="text-[11px] text-gray-500 text-center mt-3">
+              Sources: KMPDC · Kenya MoH Tele-Mental Health Guidelines, 2021 · WHO Kenya
+            </p>
           </div>
+
+          <p className="text-gray-700 text-[15px] leading-relaxed mb-6">
+            The employers who lead this decade will be the ones who treat mental health
+            the way we now treat physical safety — as a duty, not a perk.
+            <br/><br/>
+            Give your team a confidential place to talk to a KMPDC-verified professional,
+            before it becomes a crisis. Your name will be part of that shift.
+          </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              to="/corporate?promo=launch2mo"
+              to="/corporate?utm=popup_mission"
               onClick={dismiss}
-              className="flex-1 text-center px-5 py-3.5 bg-white text-slate-900 hover:bg-yellow-100 rounded-xl font-bold transition-colors"
+              className="flex-1 text-center px-5 py-3.5 rounded-xl font-bold text-white shadow-lg shadow-primary-900/20 transition-transform hover:scale-[1.02]"
+              style={{ background: 'linear-gradient(135deg, #0d9488 0%, #059669 100%)' }}
             >
-              Claim my 2 months →
+              <div className="flex items-center justify-center gap-2">
+                <TrendingUp size={16}/> Start with your team
+              </div>
             </Link>
             <a
-              href="mailto:sales@afyayako.co.ke?subject=Book%20an%20EAP%20demo%20(launch%20offer)"
+              href="mailto:sales@afyayako.co.ke?subject=EAP%20conversation"
               onClick={dismiss}
-              className="flex-1 text-center px-5 py-3.5 bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl font-semibold transition-colors"
+              className="flex-1 text-center px-5 py-3.5 bg-white hover:bg-gray-50 border-2 border-primary-600 rounded-xl font-semibold text-primary-700 transition-colors"
             >
-              Book a demo
+              Talk to us first
             </a>
           </div>
 
-          <p className="text-xs text-white/70 mt-5 text-center">
-            Limited to first 10 organisations. Applies to Small and Medium tiers.
+          <p className="text-xs text-gray-500 mt-5 text-center">
+            KMPDC- &amp; CPB-verified therapists · Anonymous by design · Kenya DPA 2019 compliant
           </p>
         </div>
       </div>

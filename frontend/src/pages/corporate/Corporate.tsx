@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import api from '../../api/axios'
-import { Building2, CheckCircle, Users, BarChart3, Shield, TrendingDown, Zap } from 'lucide-react'
+import { Building2, CheckCircle, Users, BarChart3, Shield, TrendingDown, Zap, Landmark, FileText, Smartphone, Receipt, Copy } from 'lucide-react'
 
 interface EAPTier { id: number; name: string; min_employees: number; max_employees: number; price_kes_annual: string; sessions_per_employee: number; features: string[] }
+type PaymentMethod = 'bank_transfer' | 'cheque' | 'invoice_net30' | 'mpesa'
 interface FormData {
   company_name: string; contact_name: string; contact_email: string; contact_phone: string
   industry: string; employee_count: number; kra_pin: string; tier_id: number; phone: string
+  payment_method: PaymentMethod
+  billing_notes?: string
 }
 
 export default function Corporate() {
@@ -48,15 +51,21 @@ export default function Corporate() {
   }
 
   if (submitted) return (
-    <div className="max-w-lg mx-auto card text-center py-14 mt-8">
-      <Building2 size={52} className="text-blue-500 mx-auto mb-4" />
-      <h2 className="text-2xl font-bold text-gray-900 mb-3">Application Received!</h2>
-      <p className="text-gray-600 mb-2">Check your phone for the M-Pesa payment request.</p>
-      <p className="text-gray-500 text-sm mb-6">Once payment is confirmed, your company account will be activated and your HR contact will receive onboarding instructions.</p>
-      <div className="bg-blue-50 rounded-lg p-4 text-sm text-blue-800 text-left space-y-1">
-        <div>✅ Account activated within 1 business day</div>
-        <div>✅ Employee access codes sent to HR contact</div>
-        <div>✅ Onboarding call scheduled</div>
+    <div className="max-w-lg mx-auto mt-8">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-10 text-center">
+        <div className="w-14 h-14 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle size={30} className="text-primary-600" />
+        </div>
+        <h2 className="text-2xl font-black text-gray-900 mb-2">Application received</h2>
+        <p className="text-gray-600 mb-6">
+          Thank you. Our team will reach out within <strong>1 business day</strong> with your
+          invoice / payment instructions and set up your HR account.
+        </p>
+        <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 text-sm text-primary-900 text-left space-y-1.5">
+          <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary-600"/> Invoice emailed to your billing contact</div>
+          <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary-600"/> HR dashboard access provisioned on payment</div>
+          <div className="flex items-center gap-2"><CheckCircle size={14} className="text-primary-600"/> Onboarding call scheduled</div>
+        </div>
       </div>
     </div>
   )
@@ -226,23 +235,171 @@ export default function Corporate() {
           </div>
         </div>
 
-        {selectedTier && (
-          <div className="bg-blue-50 rounded-xl p-4">
-            <div className="font-medium text-blue-900 mb-2">Order Summary</div>
-            <div className="flex justify-between text-sm text-blue-800">
-              <span>{selectedTier.name} EAP Package (1 year)</span>
-              <span className="font-bold">KES {Number(selectedTier.price_kes_annual).toLocaleString()}</span>
+        {selectedTier && (() => {
+          const emp = Number(watch('employee_count')) || Number(selectedTier.max_employees) || 0
+          const monthlyPerEmp  = Number(selectedTier.price_kes_annual) / 12
+          const isCustom       = Number(selectedTier.price_kes_annual) === 0
+          const monthlyTotal   = isCustom ? 0 : monthlyPerEmp * emp
+          const annualTotal    = monthlyTotal * 12
+          return (
+            <div className="bg-primary-50 border border-primary-200 rounded-xl p-5">
+              <div className="font-bold text-primary-900 text-base mb-3">Order summary</div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between text-primary-900">
+                  <span>{selectedTier.name} EAP · {emp} employees</span>
+                  <span>{isCustom ? 'Custom' : `KSh ${Math.round(monthlyPerEmp).toLocaleString()}/emp/mo`}</span>
+                </div>
+                <div className="flex justify-between text-primary-900">
+                  <span>Session allocation</span>
+                  <span>{emp * selectedTier.sessions_per_employee} sessions / month</span>
+                </div>
+                <div className="border-t border-primary-200 my-2" />
+                <div className="flex justify-between font-bold text-primary-900 text-base">
+                  <span>Monthly bill</span>
+                  <span>{isCustom ? 'Contact sales' : `KSh ${Math.round(monthlyTotal).toLocaleString()}`}</span>
+                </div>
+                {!isCustom && (
+                  <div className="text-xs text-primary-700">≈ KSh {Math.round(annualTotal).toLocaleString()} / year · cancel any time</div>
+                )}
+              </div>
             </div>
-            <div className="text-xs text-blue-600 mt-1">{watch('employee_count') || selectedTier.max_employees} employees × {selectedTier.sessions_per_employee} sessions each</div>
-          </div>
-        )}
+          )
+        })()}
+
+        <PaymentMethodPicker register={register} watch={watch} />
 
         <input type="hidden" {...register('tier_id')} value={selectedTier?.id} />
 
-        <button type="submit" disabled={loading || !selectedTier} className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50">
-          {loading ? 'Submitting...' : `Apply & Pay KES ${selectedTier ? Number(selectedTier.price_kes_annual).toLocaleString() : '—'}`}
+        <button
+          type="submit"
+          disabled={loading || !selectedTier}
+          className="w-full py-3.5 rounded-xl font-bold text-white shadow-lg transition-transform hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100"
+          style={{ background: 'linear-gradient(135deg, #0d9488 0%, #059669 100%)' }}
+        >
+          {loading ? 'Submitting…' : 'Submit application'}
         </button>
+        <p className="text-xs text-gray-500 text-center">
+          You'll receive an invoice or payment instructions within 1 business day. No card charged today.
+        </p>
       </form>
     </div>
   )
 }
+
+// ── Payment method picker ─────────────────────────────────────────────
+// Kenyan corporates rarely pay via M-Pesa STK for enterprise invoicing —
+// bank transfer (RTGS/EFT), cheque, or a Net-30 invoice is the norm.
+// M-Pesa Business is still offered for small SMEs who want to move fast.
+
+interface PickerProps {
+  register: any
+  watch: any
+}
+
+function PaymentMethodPicker({ register, watch }: PickerProps) {
+  const method = watch('payment_method') || 'invoice_net30'
+
+  const options: { value: 'invoice_net30' | 'bank_transfer' | 'cheque' | 'mpesa'; icon: any; label: string; blurb: string }[] = [
+    { value: 'invoice_net30', icon: Receipt,    label: 'Request an invoice (Net 30)',  blurb: 'We email a PDF invoice. Pay within 30 days via any method.' },
+    { value: 'bank_transfer', icon: Landmark,   label: 'Bank transfer (RTGS / EFT)',   blurb: 'Send from your business account. Bank details below.' },
+    { value: 'cheque',        icon: FileText,   label: 'Cheque',                        blurb: 'Corporate cheque payable to Afya Yako Health Ltd.' },
+    { value: 'mpesa',         icon: Smartphone, label: 'M-Pesa Business (small SMEs)',  blurb: 'Paybill 4-digit code — best for teams under ~20.' },
+  ]
+
+  return (
+    <div>
+      <div className="mb-3">
+        <div className="font-bold text-gray-900 text-base">Preferred payment method</div>
+        <div className="text-xs text-gray-500 mt-0.5">No card charged today. We'll follow up within 1 business day.</div>
+      </div>
+
+      <div className="space-y-2.5">
+        {options.map(({ value, icon: Icon, label, blurb }) => {
+          const active = method === value
+          return (
+            <label
+              key={value}
+              className={`flex items-start gap-3 p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                active ? 'border-primary-600 bg-primary-50' : 'border-gray-200 bg-white hover:border-primary-300'
+              }`}
+            >
+              <input
+                type="radio"
+                {...register('payment_method', { required: true })}
+                value={value}
+                defaultChecked={value === 'invoice_net30'}
+                className="sr-only"
+              />
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${active ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                <Icon size={18}/>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className={`font-semibold text-sm ${active ? 'text-primary-800' : 'text-gray-900'}`}>{label}</div>
+                <div className="text-xs text-gray-600 mt-0.5">{blurb}</div>
+              </div>
+              <div className={`mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${active ? 'border-primary-600 bg-primary-600' : 'border-gray-300'}`}>
+                {active && <div className="w-2 h-2 bg-white rounded-full"/>}
+              </div>
+            </label>
+          )
+        })}
+      </div>
+
+      {(method === 'bank_transfer' || method === 'cheque') && (
+        <BankDetails method={method as 'bank_transfer' | 'cheque'} />
+      )}
+
+      <div className="mt-4">
+        <label className="block text-sm font-semibold text-gray-900 mb-2">Billing notes (optional)</label>
+        <textarea
+          {...register('billing_notes')}
+          rows={2}
+          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+          placeholder="Purchase-order number, VAT status, procurement contact… anything we should reference on the invoice."
+        />
+      </div>
+    </div>
+  )
+}
+
+function BankDetails({ method }: { method: 'bank_transfer' | 'cheque' }) {
+  const [copied, setCopied] = useState<string | null>(null)
+  const copy = (label: string, val: string) => {
+    try { navigator.clipboard.writeText(val); setCopied(label); setTimeout(() => setCopied(null), 1500) } catch {}
+  }
+
+  const rows = method === 'bank_transfer' ? [
+    ['Account name',  'Afya Yako Health Ltd'],
+    ['Bank',          'Equity Bank Kenya'],
+    ['Branch',        'Nairobi CBD'],
+    ['Account number','1234567890123'],
+    ['Swift code',    'EQBLKENAXXX'],
+    ['Reference',     'Use your company name as reference'],
+  ] : [
+    ['Payable to',    'Afya Yako Health Ltd'],
+    ['Deliver to',    'PO Box 12345 · 00100 Nairobi'],
+    ['Reference',     'Write your company name on the back'],
+    ['Clearance',     'Cheque cleared within 3–5 business days'],
+  ]
+
+  return (
+    <div className="mt-3 bg-slate-900 rounded-xl p-5 text-white">
+      <div className="text-xs uppercase tracking-widest text-primary-300 font-semibold mb-3">
+        {method === 'bank_transfer' ? 'Bank details' : 'Cheque details'}
+      </div>
+      <div className="space-y-2 text-sm">
+        {rows.map(([label, val]) => (
+          <div key={label} className="flex items-center justify-between gap-3 border-b border-slate-800 py-2 last:border-b-0">
+            <span className="text-slate-400 text-xs">{label}</span>
+            <span className="font-mono text-white text-right">{val}</span>
+            <button type="button" onClick={() => copy(label, val)}
+              className={`text-xs px-2 py-1 rounded ${copied === label ? 'bg-emerald-500 text-white' : 'bg-slate-700 hover:bg-slate-600 text-slate-300'}`}>
+              {copied === label ? 'Copied' : <Copy size={12}/>}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
