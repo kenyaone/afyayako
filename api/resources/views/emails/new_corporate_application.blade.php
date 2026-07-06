@@ -29,7 +29,6 @@
                     'invoice_net30' => 'Invoice — Net 30 days',
                     'bank_transfer' => 'Bank transfer (RTGS/EFT)',
                     'cheque'        => 'Cheque',
-                    'mpesa'         => 'M-Pesa Business',
                 ];
             @endphp
             <strong>{{ $labels[$paymentMethod] ?? ($paymentMethod ?: 'Not specified') }}</strong>

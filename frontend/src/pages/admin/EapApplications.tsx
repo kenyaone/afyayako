@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import api from '../../api/axios'
 import {
   Building2, Mail, Phone, Users, Clock, CheckCircle2, XCircle,
-  DollarSign, FileText, AlertCircle, Loader2, Landmark, Receipt, Smartphone,
+  DollarSign, FileText, AlertCircle, Loader2, Landmark, Receipt,
 } from 'lucide-react'
 
 interface Application {
@@ -32,14 +32,12 @@ const METHOD_LABEL: Record<string, string> = {
   invoice_net30: 'Invoice · Net 30',
   bank_transfer: 'Bank transfer',
   cheque:        'Cheque',
-  mpesa:         'M-Pesa Business',
 }
 
 const METHOD_ICON: Record<string, any> = {
   invoice_net30: Receipt,
   bank_transfer: Landmark,
   cheque:        FileText,
-  mpesa:         Smartphone,
 }
 
 const STATUS_STYLE: Record<string, string> = {

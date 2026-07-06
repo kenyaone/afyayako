@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import api from '../../api/axios'
-import { Building2, CheckCircle, Users, BarChart3, Shield, TrendingDown, Zap, Landmark, FileText, Smartphone, Receipt, Copy } from 'lucide-react'
+import { Building2, CheckCircle, Users, BarChart3, Shield, TrendingDown, Zap, Landmark, FileText, Receipt, Copy } from 'lucide-react'
 
 interface EAPTier { id: number; name: string; min_employees: number; max_employees: number; price_kes_annual: string; sessions_per_employee: number; features: string[]; pricing_model?: 'flat_monthly' | 'per_employee_month' | 'custom' }
-type PaymentMethod = 'bank_transfer' | 'cheque' | 'invoice_net30' | 'mpesa'
+type PaymentMethod = 'bank_transfer' | 'cheque' | 'invoice_net30'
 interface FormData {
   company_name: string; contact_name: string; contact_email: string; contact_phone: string
-  industry: string; employee_count: number; kra_pin: string; tier_id: number; phone: string
+  industry: string; employee_count: number; kra_pin: string; tier_id: number
   payment_method: PaymentMethod
   billing_notes?: string
 }
@@ -241,10 +241,6 @@ export default function Corporate() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Contact Phone <span className="text-red-500">*</span></label>
             <input {...register('contact_phone', { required: true })} className="input-field" placeholder="0712345678" />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">M-Pesa Payment Number <span className="text-red-500">*</span></label>
-            <input {...register('phone', { required: true })} className="input-field" placeholder="0712345678" />
-          </div>
         </div>
 
         {selectedTier && (() => {
@@ -314,9 +310,9 @@ export default function Corporate() {
 }
 
 // ── Payment method picker ─────────────────────────────────────────────
-// Kenyan corporates rarely pay via M-Pesa STK for enterprise invoicing —
-// bank transfer (RTGS/EFT), cheque, or a Net-30 invoice is the norm.
-// M-Pesa Business is still offered for small SMEs who want to move fast.
+// Kenyan corporates pay via Net-30 invoice, RTGS/EFT bank transfer, or
+// cheque — the enterprise finance norm. M-Pesa is not a corporate
+// payment channel for EAP subscriptions and is intentionally omitted.
 
 interface PickerProps {
   register: any
@@ -326,11 +322,10 @@ interface PickerProps {
 function PaymentMethodPicker({ register, watch }: PickerProps) {
   const method = watch('payment_method') || 'invoice_net30'
 
-  const options: { value: 'invoice_net30' | 'bank_transfer' | 'cheque' | 'mpesa'; icon: any; label: string; blurb: string }[] = [
-    { value: 'invoice_net30', icon: Receipt,    label: 'Request an invoice (Net 30)',  blurb: 'We email a PDF invoice. Pay within 30 days via any method.' },
-    { value: 'bank_transfer', icon: Landmark,   label: 'Bank transfer (RTGS / EFT)',   blurb: 'Send from your business account. Bank details below.' },
-    { value: 'cheque',        icon: FileText,   label: 'Cheque',                        blurb: 'Corporate cheque payable to Afya Yako Health Ltd.' },
-    { value: 'mpesa',         icon: Smartphone, label: 'M-Pesa Business (small SMEs)',  blurb: 'Paybill 4-digit code — best for teams under ~20.' },
+  const options: { value: 'invoice_net30' | 'bank_transfer' | 'cheque'; icon: any; label: string; blurb: string }[] = [
+    { value: 'invoice_net30', icon: Receipt,  label: 'Request an invoice (Net 30)', blurb: 'We email a PDF invoice. Pay within 30 days via any method.' },
+    { value: 'bank_transfer', icon: Landmark, label: 'Bank transfer (RTGS / EFT)',  blurb: 'Send from your business account. Bank details below.' },
+    { value: 'cheque',        icon: FileText, label: 'Cheque',                       blurb: 'Corporate cheque payable to Afya Yako Health Ltd.' },
   ]
 
   return (

@@ -69,7 +69,7 @@ class EapApplicationController extends Controller
 
         $validator = Validator::make($request->all(), [
             'amount_paid'    => 'sometimes|nullable|numeric|min:0',
-            'payment_method' => 'sometimes|nullable|in:invoice_net30,bank_transfer,cheque,mpesa',
+            'payment_method' => 'sometimes|nullable|in:invoice_net30,bank_transfer,cheque',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 422);

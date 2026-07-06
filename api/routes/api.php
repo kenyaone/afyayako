@@ -52,6 +52,8 @@ Route::get('/consent/telehealth', [\App\Http\Controllers\ConsentController::clas
 Route::get('/subscriptions/plans', [SubscriptionController::class, 'plans']);
 
 Route::get('/corporate/tiers', [CorporateController::class, 'tiers']);
+// Public — a prospect can submit an EAP application without an account
+Route::post('/corporate/apply', [CorporateController::class, 'apply']);
 
 // Public — employee signs up via HR-generated invite link (no auth yet)
 Route::post('/eap/join/{token}', [\App\Http\Controllers\EapController::class, 'joinViaLink'])->name('eap.join');
@@ -185,8 +187,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/subscriptions/subscribe', [SubscriptionController::class, 'subscribe']);
     Route::get('/subscriptions/current', [SubscriptionController::class, 'current']);
 
-    // Corporate / EAP
-    Route::post('/corporate/apply', [CorporateController::class, 'apply']);
+    // Corporate / EAP — apply moved to the public section above
 
     // Lessons
     Route::get('/lessons', [LessonController::class, 'index']);

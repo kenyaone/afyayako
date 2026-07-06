@@ -37,7 +37,7 @@ class CorporateController extends Controller
             'kra_pin'        => 'sometimes|nullable|string|max:20',
             'address'        => 'sometimes|nullable|string',
             'eap_tier_id'    => 'required|exists:eap_tiers,id',
-            'payment_method' => 'sometimes|nullable|in:invoice_net30,bank_transfer,cheque,mpesa',
+            'payment_method' => 'sometimes|nullable|in:invoice_net30,bank_transfer,cheque',
             'billing_notes'  => 'sometimes|nullable|string|max:1000',
         ]);
 
