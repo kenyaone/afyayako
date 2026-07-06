@@ -63,7 +63,7 @@ const HOW_IT_WORKS = [
   { n: 1, title: 'Your HR signs up',           blurb: 'Pick a tier (Small / Medium / Large), enter your team size, and we generate a confidential invite link for your staff.' },
   { n: 2, title: 'Post the link privately',    blurb: 'Share on your intranet, BCC in an all-staff email, or pin in Slack/Teams. No one gets a personal invite.' },
   { n: 3, title: 'Staff sign up anonymously',  blurb: "Each employee gets a code (EMP-XXXXX). Their name, email, and sessions stay private — HR can't link them back." },
-  { n: 4, title: 'They book real sessions',    blurb: 'KMPDC- & CPB-verified therapists. 24/7 tele-therapy plus up to 4 in-person sessions per employee per month.' },
+  { n: 4, title: 'They book real sessions',    blurb: 'CPB-licensed therapists. 24/7 tele-therapy plus up to 4 in-person sessions per employee per month.' },
   { n: 5, title: 'HR sees aggregate reports',  blurb: 'Utilisation percentage, session counts, and cost — never names, never session content. GDPR / KDPA-compliant.' },
 ]
 
@@ -71,7 +71,7 @@ const PRIVACY = [
   { icon: EyeOff,    label: 'No employee identities',        detail: 'HR only sees anonymous codes and aggregate counts.' },
   { icon: Shield,    label: 'Kenya DPA 2019 compliant',      detail: 'Data-protection-by-design across the whole platform.' },
   { icon: FileCheck, label: 'MoH Tele-mental Health guide',  detail: 'Aligned with the January 2021 Ministry of Health guidelines.' },
-  { icon: Award,     label: 'KMPDC & CPB verified',          detail: "Every therapist's licence is checked against the public registry." },
+  { icon: Award,     label: 'CPB-licensed',          detail: "Every therapist's licence is checked against the public registry." },
 ]
 
 const PRICING = [
@@ -98,7 +98,7 @@ const FAQ = [
   },
   {
     q: 'Are the therapists licensed in Kenya?',
-    a: 'Yes. Every therapist on the platform is verified against the KMPDC (Kenya Medical Practitioners & Dentists Council) or CPB (Counsellors & Psychologists Board) public registries before they can accept sessions.',
+    a: 'Yes. Every therapist on the platform is licensed by the Counsellors & Psychologists Board (CPB) of Kenya and verified against the public registry before they can accept sessions. Where psychiatric medication is clinically indicated, we refer to KMPDC-registered psychiatrists.',
   },
   {
     q: 'How many sessions does each employee get?',
@@ -106,7 +106,7 @@ const FAQ = [
   },
   {
     q: 'What happens if a member of staff is in crisis?',
-    a: 'The 24/7 helpline routes to a KMPDC-verified therapist immediately. High-risk cases follow a documented safety-plan protocol aligned with the MoH tele-mental-health guidelines.',
+    a: 'The 24/7 helpline routes to a CPB-licensed therapist immediately. High-risk cases follow a documented safety-plan protocol aligned with the MoH tele-mental-health guidelines.',
   },
   {
     q: 'Can we integrate with our SSO or HRIS?',
@@ -129,6 +129,7 @@ export default function Landing() {
           </div>
           <div className="flex gap-1 items-center">
             <a href="#segments"   className="hidden md:block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-700">Who it's for</a>
+            <a href="#debrief"    className="hidden md:block px-3 py-2 text-sm font-medium text-rose-700 hover:text-rose-800">Crisis support</a>
             <a href="#how"        className="hidden md:block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-700">How it works</a>
             <a href="#pricing"    className="hidden md:block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-700">Pricing</a>
             <a href="#faq"        className="hidden md:block px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-700">FAQ</a>
@@ -165,7 +166,7 @@ export default function Landing() {
               <strong className="text-gray-900"> companies</strong>,
               <strong className="text-gray-900"> schools</strong>, and
               <strong className="text-gray-900"> NGOs</strong> — 24/7 tele-therapy plus in-person
-              sessions with KMPDC- &amp; CPB-verified professionals. Staff sign up anonymously.
+              sessions with CPB-licensed professionals. Staff sign up anonymously.
               HR never sees who.
             </p>
             <div className="flex gap-3 flex-wrap">
@@ -246,7 +247,7 @@ export default function Landing() {
       {/* ── TRUST BAR ── */}
       <section className="bg-white border-y border-gray-100 py-6">
         <div className="max-w-6xl mx-auto px-5 flex flex-wrap justify-center md:justify-between items-center gap-x-8 gap-y-3 text-sm text-gray-500">
-          <span className="flex items-center gap-2"><Award size={16} className="text-primary-600"/> KMPDC-verified therapists</span>
+          <span className="flex items-center gap-2"><Award size={16} className="text-primary-600"/> CPB-licensed therapists</span>
           <span className="flex items-center gap-2"><Award size={16} className="text-primary-600"/> CPB-verified counsellors</span>
           <span className="flex items-center gap-2"><Shield size={16} className="text-primary-600"/> Kenya Data Protection Act 2019</span>
           <span className="flex items-center gap-2"><FileCheck size={16} className="text-primary-600"/> MoH Tele-mental Health guidelines</span>
@@ -265,7 +266,7 @@ export default function Landing() {
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               A single EAP that covers the whole spectrum — from workplace burnout to alcohol,
-              substance-use, and betting/gambling recovery — with KMPDC- and CPB-verified therapists.
+              substance-use, and betting/gambling recovery — with CPB-licensed therapists.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -279,6 +280,70 @@ export default function Landing() {
                 <div className="relative text-xs text-gray-600 group-hover:text-white/90 leading-relaxed mt-1 transition-colors">{blurb}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CRISIS RESPONSE / STAFF DEBRIEF ─────────────────────── */}
+      <section id="debrief" className="relative py-16 md:py-20 px-5 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-50 via-orange-50 to-amber-50" />
+        <div className="absolute -right-20 top-1/2 w-72 h-72 bg-rose-300/40 rounded-full blur-3xl" />
+        <div className="absolute -left-16 bottom-0 w-64 h-64 bg-amber-300/40 rounded-full blur-3xl" />
+
+        <div className="relative max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+            <div className="md:col-span-3">
+              <div className="inline-flex items-center gap-2 bg-rose-100 border border-rose-200 text-rose-800 text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
+                <HeartCrack size={13}/> Included in every EAP
+              </div>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 leading-tight">
+                When tragedy strikes your team,<br/>
+                <span className="bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 bg-clip-text text-transparent">we're there within 48 hours.</span>
+              </h2>
+              <p className="text-gray-700 leading-relaxed mb-5">
+                Loss of a colleague. Workplace accident. Robbery. Sudden layoffs.
+                Whatever the crisis, your surviving staff need a safe space to process it — together.
+                We provide <strong>group debrief sessions</strong> with a licensed therapist, on-site or online, so no one has to carry it alone.
+              </p>
+              <ul className="space-y-2.5 mb-6">
+                {[
+                  ['Rapid response', 'First session scheduled within 48 hours of the request'],
+                  ['Group + individual', 'Structured group debrief plus optional 1-to-1 follow-ups for anyone who needs more'],
+                  ['On-site or virtual', "We come to your office, or we run it over video — whatever's safer for the team"],
+                  ['Trauma-trained therapists', 'CPB-licensed therapists with critical incident stress debriefing training'],
+                ].map(([title, blurb]) => (
+                  <li key={title} className="flex items-start gap-3">
+                    <div className="mt-1 w-5 h-5 rounded-full bg-rose-500 flex-shrink-0 flex items-center justify-center"><CheckCircle2 size={12} className="text-white"/></div>
+                    <div>
+                      <div className="font-bold text-gray-900 text-sm">{title}</div>
+                      <div className="text-gray-600 text-sm">{blurb}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <a href="mailto:crisis@afyayako.co.ke?subject=Critical%20incident%20support%20request" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-lg shadow-rose-900/25 transition-transform hover:scale-105"
+                 style={{ background: 'linear-gradient(135deg, #f43f5e 0%, #f97316 100%)' }}>
+                <AlertCircle size={16}/> Request crisis support
+              </a>
+              <p className="text-xs text-gray-500 mt-2">Existing customers: also reachable 24/7 via the crisis helpline.</p>
+            </div>
+
+            {/* Case-study card */}
+            <div className="md:col-span-2">
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-7">
+                <div className="text-xs uppercase tracking-widest text-rose-600 font-bold mb-2">Example</div>
+                <div className="text-base font-bold text-gray-900 mb-2">"We lost a teammate over the weekend. I needed help fast."</div>
+                <div className="text-sm text-gray-600 leading-relaxed">
+                  A logistics firm lost an employee suddenly. The rest of the team came in Monday to an empty desk.
+                  We ran a <strong>90-minute group debrief on Tuesday afternoon</strong>, followed by three private 1-to-1 sessions during the week.
+                  By Friday every member of the team who wanted to talk, had talked.
+                </div>
+                <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                  <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">HR</div>
+                  <div>Client story · anonymised</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -410,7 +475,7 @@ export default function Landing() {
             ))}
           </div>
           <p className="text-center text-xs text-gray-500 mt-6">
-            All plans include KMPDC- &amp; CPB-verified therapists, 24/7 crisis helpline, anonymous employee signup, and monthly usage reports.
+            All plans include CPB-licensed therapists, 24/7 crisis helpline, anonymous employee signup, and monthly usage reports.
           </p>
         </div>
       </section>

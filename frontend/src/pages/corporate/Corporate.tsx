@@ -119,7 +119,7 @@ export default function Corporate() {
           {[
             { icon: Users, title: 'Anonymous Access', desc: 'Employees access support privately — HR only sees aggregate stats, never individual data.' },
             { icon: BarChart3, title: 'HR Dashboard', desc: 'Track utilisation, trending issues, and ROI. Monthly reports delivered automatically.' },
-            { icon: Shield, title: 'KMPDC Verified', desc: 'All therapists are licensed professionals. Sessions are encrypted end-to-end.' },
+            { icon: Shield, title: 'CPB-Licensed', desc: 'All therapists are licensed professionals. Sessions are encrypted end-to-end.' },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="card text-center">
               <Icon size={28} className="text-blue-500 mx-auto mb-2" />

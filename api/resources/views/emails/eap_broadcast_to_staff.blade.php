@@ -6,7 +6,7 @@
 
         <div style="background: linear-gradient(135deg, #0d9488, #0f766e); padding: 32px 28px; color: white;">
             <div style="font-size: 22px; font-weight: 700;">🌿 A confidential benefit from {{ $company->name }}</div>
-            <div style="font-size: 14px; opacity: .9; margin-top: 4px;">Free access to KMPDC- &amp; CPB-verified therapists</div>
+            <div style="font-size: 14px; opacity: .9; margin-top: 4px;">Free access to CPB-licensed therapists</div>
         </div>
 
         <div style="padding: 28px;">

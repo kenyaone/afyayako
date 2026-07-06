@@ -129,7 +129,7 @@ export default function LaunchOfferPopup() {
               </div>
             </div>
             <p className="text-[11px] text-gray-500 text-center mt-3">
-              Sources: KMPDC · Kenya MoH Tele-Mental Health Guidelines, 2021 · WHO Kenya
+              Sources: Counsellors & Psychologists Board Kenya · Kenya MoH Tele-Mental Health Guidelines, 2021 · WHO Kenya
             </p>
           </div>
 
@@ -137,7 +137,7 @@ export default function LaunchOfferPopup() {
             The employers who lead this decade will be the ones who treat mental health
             the way we now treat physical safety — as a duty, not a perk.
             <br/><br/>
-            Give your team a confidential place to talk to a KMPDC-verified professional,
+            Give your team a confidential place to talk to a CPB-licensed professional,
             before it becomes a crisis. Your name will be part of that shift.
           </p>
 
@@ -162,7 +162,7 @@ export default function LaunchOfferPopup() {
           </div>
 
           <p className="text-xs text-gray-500 mt-5 text-center">
-            KMPDC- &amp; CPB-verified therapists · Anonymous by design · Kenya DPA 2019 compliant
+            CPB-licensed therapists · Anonymous by design · Kenya DPA 2019 compliant
           </p>
         </div>
       </div>

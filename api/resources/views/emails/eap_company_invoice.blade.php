@@ -53,7 +53,7 @@
                     <tr>
                         <td style="padding: 14px 12px; border-bottom: 1px solid #f1f5f9;">
                             <div style="font-weight: 600;">{{ $tierName }} EAP tier</div>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">24/7 tele-therapy · 6 in-person sessions/employee/year · KMPDC- &amp; CPB-verified therapists</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">24/7 tele-therapy · 6 in-person sessions/employee/year · CPB-licensed therapists</div>
                         </td>
                         <td style="padding: 14px 12px; border-bottom: 1px solid #f1f5f9; text-align: right;">{{ $employeesCovered }}</td>
                         <td style="padding: 14px 12px; border-bottom: 1px solid #f1f5f9; text-align: right;">

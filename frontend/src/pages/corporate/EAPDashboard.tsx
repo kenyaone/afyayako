@@ -144,7 +144,7 @@ export default function EAPDashboard() {
                 </div>
               )}
               <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-semibold bg-white/15 text-white">
-                <Award size={12}/> KMPDC & CPB verified
+                <Award size={12}/> CPB-licensed
               </div>
             </div>
           </div>
