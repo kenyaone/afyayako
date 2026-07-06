@@ -28,7 +28,7 @@
             </div>
 
             <div style="margin-top: 24px; text-align: center;">
-                <a href="{{ config('app.frontend_url', 'https://afyayako.co.ke') }}/eap-verify"
+                <a href="{{ env('FRONTEND_URL','https://afyayako.co.ke') }}/eap-verify"
                    style="background: #0d9488; color: white; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 600; display: inline-block;">
                     Full anonymized report →
                 </a>

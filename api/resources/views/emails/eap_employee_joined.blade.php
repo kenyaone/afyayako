@@ -33,13 +33,13 @@
 
             <h2 style="font-size: 16px; font-weight: 700; margin: 28px 0 10px; color: #111827;">Next steps</h2>
             <ol style="padding-left: 20px; margin: 0; line-height: 1.7; color: #374151;">
-                <li>Browse CPB-licensed therapists at <a href="{{ config('app.frontend_url', 'https://afyayako.co.ke') }}/professionals" style="color: #0d9488;">Find a Therapist</a>.</li>
+                <li>Browse CPB-licensed therapists at <a href="{{ env('FRONTEND_URL','https://afyayako.co.ke') }}/professionals" style="color: #0d9488;">Find a Therapist</a>.</li>
                 <li>Book a session — 6 face-to-face sessions per year are fully covered by {{ $companyName }}.</li>
                 <li>Chat 24/7 with the crisis helpline if you're not ready to book yet.</li>
             </ol>
 
             <div style="text-align: center; margin: 28px 0 0;">
-                <a href="{{ config('app.frontend_url', 'https://afyayako.co.ke') }}/professionals"
+                <a href="{{ env('FRONTEND_URL','https://afyayako.co.ke') }}/professionals"
                    style="background: #0d9488; color: white; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 600; display: inline-block;">
                     Find a therapist →
                 </a>

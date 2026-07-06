@@ -131,7 +131,7 @@ class EapApplicationController extends Controller
                 company:      $company->fresh(),
                 user:         $user->fresh(),
                 tempPassword: $tempPassword,
-                loginUrl:     rtrim(config('app.frontend_url', config('app.url')), '/').'/login',
+                loginUrl:     rtrim(env('FRONTEND_URL', 'https://afyayako.co.ke'), '/').'/login',
             ));
         } catch (\Throwable $e) {
             \Log::warning('HR credentials email failed: '.$e->getMessage());

@@ -43,7 +43,7 @@ class SendSessionFeedbackRequests extends Command
                 continue;
             }
 
-            $url = rtrim(config('app.frontend_url', config('app.url')), '/')
+            $url = rtrim(env('FRONTEND_URL', 'https://afyayako.co.ke'), '/')
                  . '/feedback/' . $fb->feedback_token;
 
             try {

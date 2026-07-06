@@ -267,7 +267,7 @@ class EapController extends Controller
             return response()->json(['error' => 'Invite link is invalid or expired'], 422);
         }
 
-        $inviteUrl = rtrim(config('app.frontend_url', config('app.url')), '/')
+        $inviteUrl = rtrim(env('FRONTEND_URL', 'https://afyayako.co.ke'), '/')
             . '/eap/join/' . $link->token;
 
         $sent   = 0;

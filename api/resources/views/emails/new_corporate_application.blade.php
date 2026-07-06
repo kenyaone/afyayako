@@ -46,7 +46,7 @@
         </div>
 
         <div style="text-align:center;margin:24px 0 0">
-            <a href="{{ config('app.frontend_url', 'https://afyayako.co.ke') }}/admin/eap-applications"
+            <a href="{{ env('FRONTEND_URL','https://afyayako.co.ke') }}/admin/eap-applications"
                style="background:#0d9488;color:#fff;text-decoration:none;padding:14px 32px;border-radius:10px;font-weight:700;display:inline-block">
                 Approve / activate in admin →
             </a>
