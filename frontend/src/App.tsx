@@ -97,6 +97,12 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
+        {/* B2B / EAP marketing routes — no login required. Someone
+            evaluating the platform should be able to see plans and
+            start signup without an account. */}
+        <Route path="/pricing"   element={<Pricing />} />
+        <Route path="/corporate" element={<Corporate />} />
+
         <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/assessments" element={<Assessments />} />
@@ -115,9 +121,7 @@ export default function App() {
           <Route path="/apply" element={<ApplyAsProfessional />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/revenue" element={<RevenueDashboard />} />
-          <Route path="/pricing" element={<Pricing />} />
           <Route path="/subscribe" element={<Subscribe />} />
-          <Route path="/corporate" element={<Corporate />} />
           <Route path="/eap-manage" element={<EapManagement />} />
           <Route path="/eap-verify" element={<EapSessionVerification />} />
           <Route path="/lessons" element={<Lessons />} />

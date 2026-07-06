@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import {
   Building2, GraduationCap, HeartHandshake, Shield, Video, Users,
-  CheckCircle2, ArrowRight, Award, EyeOff, TrendingUp, FileCheck,
+  CheckCircle2, ArrowRight, Award, EyeOff, TrendingUp, FileCheck, Sparkles,
 } from 'lucide-react'
+import LaunchOfferPopup from '../components/LaunchOfferPopup'
 
 /**
  * B2B / EAP-focused landing.
@@ -24,6 +25,7 @@ const SEGMENTS = [
       'Give your team a private, always-on outlet — before it becomes a crisis.',
     ],
     href: '/corporate?from=companies',
+    accent: 'orange',   // amber / warm
   },
   {
     icon: GraduationCap,
@@ -34,6 +36,7 @@ const SEGMENTS = [
       'Give them confidential support that never appears on their transcript.',
     ],
     href: '/corporate?from=schools',
+    accent: 'violet',   // youth / creativity
   },
   {
     icon: HeartHandshake,
@@ -44,8 +47,16 @@ const SEGMENTS = [
       'Invest in staff wellbeing so your mission stays sustainable.',
     ],
     href: '/corporate?from=ngos',
+    accent: 'rose',     // care / warmth
   },
 ]
+
+// Tailwind can't derive class names dynamically, so a fixed map keeps the JIT happy.
+const ACCENT: Record<string, { bg: string; icon: string; tag: string; link: string; hoverBorder: string }> = {
+  orange: { bg: 'bg-orange-100', icon: 'text-orange-600', tag: 'text-orange-700', link: 'text-orange-700 hover:text-orange-800', hoverBorder: 'hover:border-orange-300' },
+  violet: { bg: 'bg-violet-100', icon: 'text-violet-600', tag: 'text-violet-700', link: 'text-violet-700 hover:text-violet-800', hoverBorder: 'hover:border-violet-300' },
+  rose:   { bg: 'bg-rose-100',   icon: 'text-rose-600',   tag: 'text-rose-700',   link: 'text-rose-700 hover:text-rose-800',     hoverBorder: 'hover:border-rose-300'   },
+}
 
 const HOW_IT_WORKS = [
   { n: 1, title: 'Your HR signs up',           blurb: 'Pick a tier (Small / Medium / Large), enter your team size, and we generate a confidential invite link for your staff.' },
@@ -119,16 +130,22 @@ export default function Landing() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="bg-gradient-to-br from-primary-50 via-white to-teal-50 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-5 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+      <section className="relative overflow-hidden">
+        {/* colourful ambient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-orange-50 to-rose-50" />
+        <div className="absolute -top-24 -right-32 w-[520px] h-[520px] bg-orange-200/40 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -left-20 w-[440px] h-[440px] bg-violet-200/40 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/2 w-[300px] h-[300px] bg-primary-200/30 rounded-full blur-3xl" />
+
+        <div className="relative max-w-6xl mx-auto px-5 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 bg-primary-100 border border-primary-200 text-primary-800 text-xs px-3 py-1.5 rounded-full mb-6 font-medium">
-              🇰🇪 Built for Kenyan employers · MoH-aligned
+            <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-primary-200 text-primary-800 text-xs px-3 py-1.5 rounded-full mb-6 font-semibold shadow-sm">
+              <Sparkles size={13} className="text-orange-500"/> Built for Kenyan employers · MoH-aligned
             </div>
             <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-5 text-gray-900">
               Mental-health support<br/>
               your whole team<br/>
-              <span className="text-primary-700">can actually use.</span>
+              <span className="bg-gradient-to-r from-primary-600 via-teal-500 to-orange-500 bg-clip-text text-transparent">can actually use.</span>
             </h1>
             <p className="text-gray-700 text-base md:text-lg mb-8 leading-relaxed">
               A confidential Employee Assistance Programme for Kenyan
@@ -139,10 +156,14 @@ export default function Landing() {
               HR never sees who.
             </p>
             <div className="flex gap-3 flex-wrap">
-              <Link to="/corporate" className="flex items-center gap-2 px-7 py-3.5 bg-primary-600 hover:bg-primary-700 rounded-xl font-bold text-white transition-colors shadow-lg shadow-primary-900/20">
+              <Link
+                to="/corporate"
+                className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-white shadow-lg shadow-orange-900/25 transition-transform hover:scale-105"
+                style={{ background: 'linear-gradient(135deg, #f97316 0%, #ec4899 100%)' }}
+              >
                 Get EAP pricing <ArrowRight size={18}/>
               </Link>
-              <a href="mailto:sales@afyayako.co.ke?subject=Book%20an%20EAP%20demo" className="px-7 py-3.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-xl font-semibold text-gray-800 transition-colors">
+              <a href="mailto:sales@afyayako.co.ke?subject=Book%20an%20EAP%20demo" className="px-7 py-3.5 bg-white hover:bg-gray-50 border-2 border-primary-600 rounded-xl font-semibold text-primary-700 transition-colors">
                 Book a demo
               </a>
             </div>
@@ -197,7 +218,7 @@ export default function Landing() {
       </section>
 
       {/* ── SEGMENTS ── */}
-      <section id="segments" className="bg-gray-50 py-20 px-5">
+      <section id="segments" className="bg-gradient-to-b from-white via-primary-50/30 to-white py-20 px-5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">Built for organisations that care</h2>
@@ -206,19 +227,22 @@ export default function Landing() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {SEGMENTS.map(({icon: Icon, title, tagline, lines, href}) => (
-              <div key={title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow flex flex-col">
-                <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center mb-5">
-                  <Icon size={24} className="text-primary-700"/>
+            {SEGMENTS.map(({icon: Icon, title, tagline, lines, href, accent}) => {
+              const a = ACCENT[accent]
+              return (
+                <div key={title} className={`bg-white rounded-2xl p-8 border-2 border-transparent ${a.hoverBorder} shadow-sm hover:shadow-xl transition-all flex flex-col`}>
+                  <div className={`w-12 h-12 rounded-xl ${a.bg} flex items-center justify-center mb-5`}>
+                    <Icon size={24} className={a.icon}/>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+                  <div className={`text-xs font-semibold uppercase tracking-wide mb-3 ${a.tag}`}>{tagline}</div>
+                  {lines.map((l,i)=>(<p key={i} className="text-gray-600 text-sm mb-2 leading-relaxed">{l}</p>))}
+                  <Link to={href} className={`mt-4 font-semibold text-sm hover:underline inline-flex items-center gap-1 ${a.link}`}>
+                    See the plan for {title.toLowerCase()} <ArrowRight size={14}/>
+                  </Link>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-                <div className="text-xs text-primary-700 font-semibold uppercase tracking-wide mb-3">{tagline}</div>
-                {lines.map((l,i)=>(<p key={i} className="text-gray-600 text-sm mb-2 leading-relaxed">{l}</p>))}
-                <Link to={href} className="mt-4 text-primary-700 font-semibold text-sm hover:underline inline-flex items-center gap-1">
-                  See the plan for {title.toLowerCase()} <ArrowRight size={14}/>
-                </Link>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -233,7 +257,10 @@ export default function Landing() {
           <ol className="space-y-6">
             {HOW_IT_WORKS.map(({n,title,blurb}) => (
               <li key={n} className="flex gap-5 items-start">
-                <div className="flex-shrink-0 w-11 h-11 rounded-full bg-primary-600 text-white font-bold flex items-center justify-center text-lg">{n}</div>
+                <div
+                  className="flex-shrink-0 w-11 h-11 rounded-full text-white font-bold flex items-center justify-center text-lg shadow-md"
+                  style={{ background: 'linear-gradient(135deg, #0d9488 0%, #f97316 100%)' }}
+                >{n}</div>
                 <div>
                   <h3 className="font-bold text-gray-900 text-lg mb-1">{title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{blurb}</p>
@@ -276,9 +303,17 @@ export default function Landing() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {PRICING.map(({name,band,price,unit,highlight}) => (
-              <div key={name} className={`rounded-2xl p-7 border-2 ${highlight ? 'border-primary-600 shadow-lg relative' : 'border-gray-200'}`}>
+              <div
+                key={name}
+                className={`rounded-2xl p-7 border-2 ${highlight ? 'border-orange-500 shadow-xl relative bg-gradient-to-br from-orange-50 via-white to-primary-50' : 'border-gray-200 bg-white'}`}
+              >
                 {highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Most popular</div>
+                  <div
+                    className="absolute -top-3 left-1/2 -translate-x-1/2 text-white text-xs font-bold px-3 py-1 rounded-full shadow"
+                    style={{ background: 'linear-gradient(135deg, #f97316 0%, #ec4899 100%)' }}
+                  >
+                    ⭐ Most popular
+                  </div>
                 )}
                 <div className="font-bold text-gray-900 text-xl mb-1">{name}</div>
                 <div className="text-xs text-gray-500 mb-4">{band}</div>
@@ -292,7 +327,11 @@ export default function Landing() {
                     </>
                   )}
                 </div>
-                <Link to="/corporate" className="block text-center px-4 py-2.5 rounded-lg font-semibold text-sm bg-primary-600 hover:bg-primary-700 text-white transition-colors">
+                <Link
+                  to="/corporate"
+                  className={`block text-center px-4 py-2.5 rounded-lg font-semibold text-sm text-white transition-transform hover:scale-[1.02] ${highlight ? '' : 'bg-primary-600 hover:bg-primary-700'}`}
+                  style={highlight ? { background: 'linear-gradient(135deg, #f97316 0%, #ec4899 100%)' } : undefined}
+                >
                   Get started
                 </Link>
               </div>
@@ -374,6 +413,9 @@ export default function Landing() {
           © {new Date().getFullYear()} Afya Yako Siri Yako · Nairobi, Kenya
         </div>
       </footer>
+
+      {/* Launch offer popup — 22s time trigger OR 50% scroll, dismissable */}
+      <LaunchOfferPopup />
     </div>
   )
 }
