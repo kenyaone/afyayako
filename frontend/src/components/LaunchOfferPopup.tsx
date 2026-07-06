@@ -14,8 +14,8 @@ import { X, Heart, TrendingUp } from 'lucide-react'
 
 const STORAGE_KEY = 'ay_launch_offer_dismissed_at'
 const REMEMBER_DAYS = 7
-const TIME_TRIGGER_MS = 800         // ~1 second — fires almost immediately
-const SCROLL_TRIGGER_PCT = 0.05     // or basically any scroll (5%)
+const TIME_TRIGGER_MS = 12_000      // 12s — enough time to read the hero
+const SCROLL_TRIGGER_PCT = 0.30     // or after ~30% scroll
 
 function wasDismissedRecently(): boolean {
   try {
@@ -70,16 +70,24 @@ export default function LaunchOfferPopup() {
 
   if (!open) return null
 
+  // Mobile ( < sm ) — anchored to bottom, NO full-screen backdrop, so
+  // the user can still see and interact with the hero above it.
+  // Desktop ( >= sm ) — centered modal with dimmed backdrop (dismisses on click).
   return (
-    <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 transition-opacity"
-      style={{ opacity: ready ? 1 : 0 }}
-      onClick={dismiss}
-    >
+    <>
+      {/* Desktop-only backdrop */}
+      <div
+        className="hidden sm:block fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm transition-opacity"
+        style={{ opacity: ready ? 1 : 0 }}
+        onClick={dismiss}
+      />
+      <div
+        className="fixed z-[61] left-3 right-3 bottom-3 sm:inset-0 sm:left-0 sm:right-0 sm:bottom-auto sm:flex sm:items-center sm:justify-center sm:p-4"
+      >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl transition-transform bg-white"
-        style={{ transform: ready ? 'translateY(0) scale(1)' : 'translateY(20px) scale(.96)' }}
+        className="relative w-full sm:max-w-lg mx-auto rounded-2xl overflow-hidden shadow-2xl transition-transform bg-white max-h-[90vh] overflow-y-auto"
+        style={{ transform: ready ? 'translateY(0) scale(1)' : 'translateY(20px) scale(.98)' }}
       >
         <button
           onClick={dismiss}
@@ -91,20 +99,20 @@ export default function LaunchOfferPopup() {
 
         {/* Coloured header band */}
         <div
-          className="px-8 md:px-10 pt-8 pb-14 text-white relative"
+          className="px-6 md:px-10 pt-5 md:pt-8 pb-10 md:pb-14 text-white relative"
           style={{ background: 'linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #059669 100%)' }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur border border-white/25 text-white text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
-            <Heart size={13} className="text-rose-200"/> Duty of care
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur border border-white/25 text-white text-[10px] md:text-xs px-2.5 py-1 md:px-3 md:py-1.5 rounded-full mb-3 md:mb-4 font-semibold uppercase tracking-wide">
+            <Heart size={12} className="text-rose-200"/> Duty of care
           </div>
-          <h2 className="text-2xl md:text-3xl font-black leading-tight">
-            Your team is<br/>carrying more<br/>
-            <span className="text-yellow-200">than they can say.</span>
+          <h2 className="text-xl md:text-3xl font-black leading-tight">
+            Your team is carrying more
+            <span className="text-yellow-200"> than they can say.</span>
           </h2>
         </div>
 
         {/* Body — stats + mission */}
-        <div className="p-8 md:p-10 -mt-8">
+        <div className="p-6 md:p-10 -mt-6 md:-mt-8">
           <div className="bg-white border border-gray-200 rounded-2xl shadow-lg p-5 mb-6">
             <div className="grid grid-cols-3 divide-x divide-gray-200 text-center">
               <div className="px-2">
@@ -158,6 +166,7 @@ export default function LaunchOfferPopup() {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
