@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import api from '../../api/axios'
-import { Download, Calendar, CheckCircle2, Clock, DollarSign, AlertCircle } from 'lucide-react'
+import { Download, Calendar, CheckCircle2, Clock, DollarSign, AlertCircle, Shield, FileText, Star, XCircle, HelpCircle } from 'lucide-react'
 
 interface Session {
   session_id: number
@@ -12,6 +12,9 @@ interface Session {
   status: string
   cost: number
   payment_status: string
+  attendance_verified?: boolean
+  notes_filed?: boolean
+  feedback_score?: number | null
 }
 
 interface Stats {
@@ -22,6 +25,10 @@ interface Stats {
   total_cost: number
   average_cost_per_session: number
   pending_payments: number
+  attendance_verified_pct?: number
+  notes_filed_pct?: number
+  feedback_avg_rating?: number | null
+  suspicious_count?: number
 }
 
 export default function EapSessionVerification() {
@@ -31,12 +38,13 @@ export default function EapSessionVerification() {
   const [error, setError] = useState('')
   const [statusFilter, setStatusFilter] = useState('completed')
   const [paymentFilter, setPaymentFilter] = useState('all')
+  const [complianceFilter, setComplianceFilter] = useState('all')
   const [monthFilter, setMonthFilter] = useState(new Date().toISOString().slice(0, 7))
   const [monthlyReport, setMonthlyReport] = useState<any>(null)
 
   useEffect(() => {
     fetchSessions()
-  }, [statusFilter, paymentFilter])
+  }, [statusFilter, paymentFilter, complianceFilter])
 
   useEffect(() => {
     fetchMonthlyReport()
@@ -49,6 +57,7 @@ export default function EapSessionVerification() {
       const params = new URLSearchParams()
       if (statusFilter !== 'all') params.append('status', statusFilter)
       if (paymentFilter !== 'all') params.append('payment_status', paymentFilter)
+      if (complianceFilter !== 'all') params.append('compliance', complianceFilter)
 
       const res = await api.get(`/eap/sessions?${params.toString()}`)
       setSessions(res.data.sessions)
@@ -216,9 +225,47 @@ export default function EapSessionVerification() {
         </div>
       )}
 
+      {/* ── Audit compliance banner ─────────────────────────── */}
+      {stats && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <ComplianceCard
+            icon={Shield}
+            label="Attendance verified"
+            value={`${stats.attendance_verified_pct ?? 0}%`}
+            hint="of completed sessions"
+            tone={(stats.attendance_verified_pct ?? 0) >= 90 ? 'good' : (stats.attendance_verified_pct ?? 0) >= 60 ? 'warn' : 'bad'}
+          />
+          <ComplianceCard
+            icon={FileText}
+            label="Clinical notes filed"
+            value={`${stats.notes_filed_pct ?? 0}%`}
+            hint="of completed sessions"
+            tone={(stats.notes_filed_pct ?? 0) >= 90 ? 'good' : (stats.notes_filed_pct ?? 0) >= 60 ? 'warn' : 'bad'}
+          />
+          <ComplianceCard
+            icon={Star}
+            label="Employee satisfaction"
+            value={stats.feedback_avg_rating ? `${stats.feedback_avg_rating.toFixed(1)} / 5` : '—'}
+            hint="from anonymous surveys"
+            tone={(stats.feedback_avg_rating ?? 0) >= 4 ? 'good' : (stats.feedback_avg_rating ?? 0) >= 3 ? 'warn' : 'bad'}
+          />
+          <ComplianceCard
+            icon={AlertCircle}
+            label="Sessions to review"
+            value={String(stats.suspicious_count ?? 0)}
+            hint="missing attendance or notes"
+            tone={(stats.suspicious_count ?? 0) === 0 ? 'good' : (stats.suspicious_count ?? 0) < 3 ? 'warn' : 'bad'}
+            action={{
+              label: 'View flagged',
+              onClick: () => { setStatusFilter('completed'); setComplianceFilter('suspicious') },
+            }}
+          />
+        </div>
+      )}
+
       {/* Filters */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-2">Month</label>
             <input
@@ -255,6 +302,18 @@ export default function EapSessionVerification() {
               <option value="refunded">Refunded</option>
             </select>
           </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">Audit</label>
+            <select
+              value={complianceFilter}
+              onChange={(e) => setComplianceFilter(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+            >
+              <option value="all">All sessions</option>
+              <option value="verified">✓ Fully verified only</option>
+              <option value="suspicious">⚠ Flagged for review</option>
+            </select>
+          </div>
         </div>
         <button
           onClick={downloadCSV}
@@ -285,6 +344,7 @@ export default function EapSessionVerification() {
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">License</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Duration</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Audit</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Cost (KES)</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Payment</th>
                 </tr>
@@ -309,6 +369,18 @@ export default function EapSessionVerification() {
                       >
                         {session.status}
                       </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-1">
+                        <AuditDot ok={session.attendance_verified} label="Attendance verified" icon={Shield}/>
+                        <AuditDot ok={session.notes_filed} label="Clinical notes filed" icon={FileText}/>
+                        <AuditDot
+                          ok={session.feedback_score !== null && session.feedback_score !== undefined && session.feedback_score >= 3}
+                          label={session.feedback_score ? `Feedback ${session.feedback_score}/5` : 'No feedback yet'}
+                          icon={Star}
+                          neutral={session.feedback_score === null || session.feedback_score === undefined}
+                        />
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-sm font-semibold text-gray-900">
                       {session.cost.toLocaleString()}
@@ -341,6 +413,75 @@ export default function EapSessionVerification() {
           <li>✓ Payment status tracking for finance reconciliation</li>
         </ul>
       </div>
+    </div>
+  )
+}
+
+// ── ComplianceCard ────────────────────────────────────────────────
+
+interface ComplianceCardProps {
+  icon: React.ComponentType<any>
+  label: string
+  value: string
+  hint?: string
+  tone: 'good' | 'warn' | 'bad'
+  action?: { label: string; onClick: () => void }
+}
+
+const TONE_BG: Record<string, string> = {
+  good: 'bg-emerald-50 border-emerald-200',
+  warn: 'bg-amber-50 border-amber-200',
+  bad:  'bg-rose-50 border-rose-200',
+}
+const TONE_TEXT: Record<string, string> = {
+  good: 'text-emerald-800',
+  warn: 'text-amber-800',
+  bad:  'text-rose-800',
+}
+const TONE_ICON: Record<string, string> = {
+  good: 'bg-emerald-100 text-emerald-700',
+  warn: 'bg-amber-100 text-amber-700',
+  bad:  'bg-rose-100 text-rose-700',
+}
+
+function ComplianceCard({ icon: Icon, label, value, hint, tone, action }: ComplianceCardProps) {
+  return (
+    <div className={`rounded-xl border p-4 ${TONE_BG[tone]}`}>
+      <div className="flex items-start justify-between mb-3">
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${TONE_ICON[tone]}`}><Icon size={16}/></div>
+        {tone === 'good' && <CheckCircle2 size={16} className="text-emerald-600"/>}
+      </div>
+      <div className={`text-2xl font-black ${TONE_TEXT[tone]}`}>{value}</div>
+      <div className={`text-xs font-semibold mt-0.5 ${TONE_TEXT[tone]}`}>{label}</div>
+      {hint && <div className="text-[11px] text-gray-500 mt-0.5">{hint}</div>}
+      {action && (
+        <button onClick={action.onClick} className="mt-2 text-xs font-semibold underline text-gray-700 hover:text-gray-900">
+          {action.label} →
+        </button>
+      )}
+    </div>
+  )
+}
+
+// Small tri-state pill used inside the sessions table's Audit column
+interface AuditDotProps {
+  ok: boolean | undefined
+  label: string
+  icon: React.ComponentType<any>
+  neutral?: boolean
+}
+
+function AuditDot({ ok, label, icon: Icon, neutral }: AuditDotProps) {
+  const cls = neutral
+    ? 'bg-gray-100 text-gray-400 border-gray-200'
+    : ok
+      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+      : 'bg-rose-50 text-rose-700 border-rose-200'
+  const Symbol = neutral ? HelpCircle : ok ? CheckCircle2 : XCircle
+  return (
+    <div className={`inline-flex items-center gap-1 px-1.5 py-1 rounded border ${cls}`} title={label}>
+      <Icon size={11}/>
+      <Symbol size={11}/>
     </div>
   )
 }

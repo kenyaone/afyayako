@@ -65,6 +65,7 @@ import ParentalConsent from './pages/consultation/ParentalConsent'
 import ClientRiskAssessment from './pages/assessment/ClientRiskAssessment'
 import ClinicalDashboard from './pages/assessment/ClinicalDashboard'
 import JoinEap from './pages/eap/JoinEap'
+import FeedbackSurvey from './pages/consultation/FeedbackSurvey'
 import EapManagement from './pages/corporate/EapManagement'
 import EapSessionVerification from './pages/corporate/EapSessionVerification'
 
@@ -94,6 +95,8 @@ export default function App() {
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
         <Route path="/eap/join/:token" element={<PublicRoute><JoinEap /></PublicRoute>} />
+        {/* Anonymous per-session feedback survey — no auth. */}
+        <Route path="/feedback/:token" element={<FeedbackSurvey />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 

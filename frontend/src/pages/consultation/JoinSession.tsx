@@ -125,14 +125,30 @@ export default function JoinSession() {
 
   const handleEndSession = async () => {
     if (!session) return
+    // Gate: therapist can't complete without >= 30-word notes locally.
+    // Backend enforces the same rule but we surface it before the round-trip.
+    const wc = (notesText || '').trim().split(/\s+/).filter(Boolean).length
+    if (wc < 30) {
+      alert(`Clinical notes are required (min 30 words) before ending the session. You have ${wc} words.`)
+      return
+    }
     setActionLoading('end')
     try {
       await api.post(`/consultations/${session.consultation.id}/end`, {
-        notes: notesText || undefined,
+        clinical_notes: notesText,
+        notes: notesText,
       })
       navigate('/consultations')
-    } catch {
-      alert('Failed to end session. Please try again.')
+    } catch (err: any) {
+      const data = err?.response?.data
+      // Backend returns 422 with structured hints on notes / attendance gates.
+      if (data?.notes_word_count !== undefined) {
+        alert(`${data.error}\n\nYou have ${data.notes_word_count} words; need at least ${data.required_word_count ?? 30}.`)
+      } else if (data?.patient_joined !== undefined) {
+        alert(`${data.error}\n\nEmployee present: ${data.patient_joined ? 'yes' : 'no'}\nTherapist present: ${data.professional_joined ? 'yes' : 'no'}`)
+      } else {
+        alert(data?.error || 'Failed to end session. Please try again.')
+      }
     } finally {
       setActionLoading(null)
     }
@@ -542,22 +558,37 @@ export default function JoinSession() {
       )}
 
       {/* Professional: end session */}
-      {is_professional && !isCompleted && phase === 'joined' && (
-        <div className="card bg-amber-50 border border-amber-200">
-          <h2 className="font-semibold text-amber-900 mb-2">End Session</h2>
-          <p className="text-amber-700 text-sm mb-3">
-            Mark the session as complete. Save notes above first.
-          </p>
-          <button
-            onClick={handleEndSession}
-            disabled={actionLoading === 'end'}
-            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2"
-          >
-            {actionLoading === 'end' ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle size={14} />}
-            End & Complete Session
-          </button>
-        </div>
-      )}
+      {is_professional && !isCompleted && phase === 'joined' && (() => {
+        const wordCount = (notesText || '').trim().split(/\s+/).filter(Boolean).length
+        const notesReady = wordCount >= 30
+        return (
+          <div className="card bg-amber-50 border border-amber-200">
+            <h2 className="font-semibold text-amber-900 mb-2">End & complete session</h2>
+            <p className="text-amber-800 text-sm mb-3">
+              Kenyan MoH tele-mental-health guidelines require clinical notes for
+              every session before it can be marked delivered. Both parties must
+              also have joined the call.
+            </p>
+            <div className={`rounded-lg p-3 mb-3 text-xs font-semibold ${notesReady ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-white text-amber-800 border border-amber-300'}`}>
+              Clinical notes: <span className="font-mono">{wordCount}</span> / 30 words minimum
+              {notesReady ? ' ✓ ready to complete' : ' — add more detail above'}
+            </div>
+            <button
+              onClick={handleEndSession}
+              disabled={actionLoading === 'end' || !notesReady}
+              className={`font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2 text-white transition-colors ${notesReady ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-gray-400 cursor-not-allowed'}`}
+            >
+              {actionLoading === 'end' ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle size={14} />}
+              End & complete session
+            </button>
+            {!notesReady && (
+              <p className="text-xs text-gray-500 mt-2">
+                Button unlocks once notes ≥ 30 words. HR sees only the boolean "notes filed", never the content.
+              </p>
+            )}
+          </div>
+        )
+      })()}
 
       {/* Patient: post-session actions */}
       {!is_professional && phase === 'joined' && (
