@@ -10,6 +10,10 @@ node_modules/
 frontend/dist/
 frontend/build-attempt.log
 
+# Backup / scratch files (kept for local reference only)
+*.bak
+*.tsx.bak
+
 # Legacy separate frontend folder (superseded by frontend/ inside this repo)
 afyayako-frontend/
 
