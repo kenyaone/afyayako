@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import {
   Building2, GraduationCap, HeartHandshake, Shield, Video, Users,
   CheckCircle2, ArrowRight, Award, EyeOff, TrendingUp, FileCheck, Sparkles,
-  Brain, Wind, Wine, Pill, Dice5, Flame, Moon, HeartCrack,
+  Brain, Wind, Wine, Pill, Dice5, Flame, Moon, HeartCrack, AlertCircle,
 } from 'lucide-react'
 import LaunchOfferPopup from '../components/LaunchOfferPopup'
 
