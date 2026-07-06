@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\Models\Company;
 use App\Models\EapSubscription;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 
@@ -24,10 +25,20 @@ class NewCorporateApplication extends Mailable
 
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: "🎯 New EAP application: {$this->company->name} ({$this->tierName})",
-            replyTo: [$this->company->contact_email => $this->company->contact_name],
-        );
+        $subject = "🎯 New EAP application: {$this->company->name} ({$this->tierName})";
+
+        // Only attach a Reply-To if the applicant's email is well-formed.
+        // Otherwise the whole send fails on Symfony's RFC 2822 parser and
+        // we lose the lead. Better to have no Reply-To than no email at all.
+        $email = trim((string) $this->company->contact_email);
+        if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new Envelope(
+                subject: $subject,
+                replyTo: [new Address($email, (string) $this->company->contact_name)],
+            );
+        }
+
+        return new Envelope(subject: $subject);
     }
 
     public function content(): Content
