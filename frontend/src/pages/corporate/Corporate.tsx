@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import api from '../../api/axios'
 import { Building2, CheckCircle, Users, BarChart3, Shield, TrendingDown, Zap, Landmark, FileText, Smartphone, Receipt, Copy } from 'lucide-react'
 
-interface EAPTier { id: number; name: string; min_employees: number; max_employees: number; price_kes_annual: string; sessions_per_employee: number; features: string[] }
+interface EAPTier { id: number; name: string; min_employees: number; max_employees: number; price_kes_annual: string; sessions_per_employee: number; features: string[]; pricing_model?: 'flat_monthly' | 'per_employee_month' | 'custom' }
 type PaymentMethod = 'bank_transfer' | 'cheque' | 'invoice_net30' | 'mpesa'
 interface FormData {
   company_name: string; contact_name: string; contact_email: string; contact_phone: string
@@ -151,9 +151,11 @@ export default function Corporate() {
         <h2 className="font-semibold text-gray-900 mb-3">Select Your Package</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {tiers.map(tier => {
-            const annualPerEmployee = Number(tier.price_kes_annual) || 0
-            const monthlyPerEmployee = annualPerEmployee ? Math.round(annualPerEmployee / 12) : 0
-            const isCustom = annualPerEmployee === 0
+            const annual   = Number(tier.price_kes_annual) || 0
+            const monthly  = annual ? Math.round(annual / 12) : 0
+            const model    = tier.pricing_model || (annual === 0 ? 'custom' : 'per_employee_month')
+            const isCustom = model === 'custom'
+            const isFlat   = model === 'flat_monthly'
             const maxEmpDisplay = tier.max_employees >= 1000 ? `${tier.min_employees}+` : `${tier.min_employees}–${tier.max_employees}`
             return (
               <button
@@ -168,14 +170,24 @@ export default function Corporate() {
                     <div className="text-xl font-bold text-primary-700">Custom pricing</div>
                     <div className="text-xs text-gray-500 mt-1">Tailored to your organization</div>
                   </>
+                ) : isFlat ? (
+                  <>
+                    <div className="text-xl font-bold text-primary-700">
+                      KSh {monthly.toLocaleString()}
+                      <span className="text-sm text-gray-500 font-normal"> flat / month</span>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      Same monthly cost for teams up to {tier.max_employees}
+                    </div>
+                  </>
                 ) : (
                   <>
                     <div className="text-xl font-bold text-primary-700">
-                      KSh {monthlyPerEmployee.toLocaleString()}
+                      KSh {monthly.toLocaleString()}
                       <span className="text-sm text-gray-500 font-normal"> per employee / month</span>
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
-                      ≈ KSh {annualPerEmployee.toLocaleString()} per employee / year
+                      ≈ KSh {annual.toLocaleString()} per employee / year
                     </div>
                   </>
                 )}
@@ -236,18 +248,29 @@ export default function Corporate() {
         </div>
 
         {selectedTier && (() => {
-          const emp = Number(watch('employee_count')) || Number(selectedTier.max_employees) || 0
-          const monthlyPerEmp  = Number(selectedTier.price_kes_annual) / 12
-          const isCustom       = Number(selectedTier.price_kes_annual) === 0
-          const monthlyTotal   = isCustom ? 0 : monthlyPerEmp * emp
-          const annualTotal    = monthlyTotal * 12
+          const emp    = Number(watch('employee_count')) || Number(selectedTier.max_employees) || 0
+          const model  = selectedTier.pricing_model
+                     || (Number(selectedTier.price_kes_annual) === 0 ? 'custom' : 'per_employee_month')
+          const isCustom = model === 'custom'
+          const isFlat   = model === 'flat_monthly'
+
+          const monthlyPerEmp = Number(selectedTier.price_kes_annual) / 12
+          const monthlyTotal  = isCustom ? 0
+                             : isFlat   ? monthlyPerEmp                        // for flat, price_kes_annual/12 IS the monthly total
+                                        : monthlyPerEmp * emp
+          const annualTotal   = monthlyTotal * 12
+
           return (
             <div className="bg-primary-50 border border-primary-200 rounded-xl p-5">
               <div className="font-bold text-primary-900 text-base mb-3">Order summary</div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between text-primary-900">
                   <span>{selectedTier.name} EAP · {emp} employees</span>
-                  <span>{isCustom ? 'Custom' : `KSh ${Math.round(monthlyPerEmp).toLocaleString()}/emp/mo`}</span>
+                  <span>
+                    {isCustom ? 'Custom'
+                     : isFlat  ? `Flat KSh ${Math.round(monthlyTotal).toLocaleString()}/mo`
+                              : `KSh ${Math.round(monthlyPerEmp).toLocaleString()}/emp/mo`}
+                  </span>
                 </div>
                 <div className="flex justify-between text-primary-900">
                   <span>Session allocation</span>
@@ -259,7 +282,11 @@ export default function Corporate() {
                   <span>{isCustom ? 'Contact sales' : `KSh ${Math.round(monthlyTotal).toLocaleString()}`}</span>
                 </div>
                 {!isCustom && (
-                  <div className="text-xs text-primary-700">≈ KSh {Math.round(annualTotal).toLocaleString()} / year · cancel any time</div>
+                  <div className="text-xs text-primary-700">
+                    {isFlat
+                      ? `Flat rate — same monthly bill from 1 up to ${selectedTier.max_employees} employees · cancel any time`
+                      : `≈ KSh ${Math.round(annualTotal).toLocaleString()} / year · cancel any time`}
+                  </div>
                 )}
               </div>
             </div>

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import {
   Building2, GraduationCap, HeartHandshake, Shield, Video, Users,
   CheckCircle2, ArrowRight, Award, EyeOff, TrendingUp, FileCheck, Sparkles,
+  Brain, Wind, Wine, Pill, Dice5, Flame, Moon, HeartCrack,
 } from 'lucide-react'
 import LaunchOfferPopup from '../components/LaunchOfferPopup'
 
@@ -74,9 +75,20 @@ const PRIVACY = [
 ]
 
 const PRICING = [
-  { name: 'Small',  band: '1–50 employees',    price: '490',    unit: 'per employee / month', highlight: false },
-  { name: 'Medium', band: '51–200 employees',  price: '1,000',  unit: 'per employee / month', highlight: true  },
-  { name: 'Large',  band: '200+ employees',    price: 'Custom', unit: 'tailored to your org', highlight: false },
+  { name: 'Small',  band: 'Up to 50 employees', price: '25,000', unit: 'flat / month',          highlight: false, note: 'Same monthly bill from 1 up to 50 people' },
+  { name: 'Medium', band: '51–200 employees',   price: '1,000',  unit: 'per employee / month',  highlight: true,  note: '' },
+  { name: 'Large',  band: '200+ employees',     price: 'Custom', unit: 'tailored to your org',  highlight: false, note: '' },
+]
+
+const WHAT_WE_COVER = [
+  { icon: Brain,     accent: 'from-indigo-500 to-violet-500',   title: 'Depression',          blurb: 'PHQ-9 screening, therapy & medication support.' },
+  { icon: Wind,      accent: 'from-sky-500 to-cyan-500',        title: 'Anxiety & panic',     blurb: 'GAD-7 screening, CBT and skills training.' },
+  { icon: Flame,     accent: 'from-orange-500 to-rose-500',     title: 'Burnout',             blurb: 'Recovery from workplace overload and cynicism.' },
+  { icon: Wine,      accent: 'from-amber-500 to-red-500',       title: 'Alcohol use',         blurb: 'AUDIT screening, motivational and recovery care.' },
+  { icon: Pill,      accent: 'from-fuchsia-500 to-pink-500',    title: 'Substance use',       blurb: 'Confidential support for use of cannabis, khat, opioids and more.' },
+  { icon: Dice5,     accent: 'from-emerald-500 to-teal-500',    title: 'Betting & gambling',  blurb: 'PGSI screening, harm-reduction and recovery.' },
+  { icon: Moon,      accent: 'from-blue-500 to-indigo-500',     title: 'Insomnia',            blurb: 'Sleep hygiene, CBT-I and stress management.' },
+  { icon: HeartCrack,accent: 'from-rose-500 to-pink-500',       title: 'Grief & relationships', blurb: 'Loss, family conflict, and life transitions.' },
 ]
 
 const FAQ = [
@@ -131,21 +143,22 @@ export default function Landing() {
 
       {/* ── HERO ── */}
       <section className="relative overflow-hidden">
-        {/* colourful ambient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-orange-50 to-rose-50" />
-        <div className="absolute -top-24 -right-32 w-[520px] h-[520px] bg-orange-200/40 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 -left-20 w-[440px] h-[440px] bg-violet-200/40 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/2 w-[300px] h-[300px] bg-primary-200/30 rounded-full blur-3xl" />
+        {/* vibrant multi-hue background */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fce7f3 25%, #ede9fe 55%, #d1fae5 100%)' }} />
+        <div className="absolute -top-32 -right-40 w-[600px] h-[600px] bg-orange-300/45 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute -bottom-40 -left-24 w-[520px] h-[520px] bg-violet-300/45 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
+        <div className="absolute top-1/4 left-1/2 w-[380px] h-[380px] bg-teal-300/40 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '12s', animationDelay: '1s' }} />
+        <div className="absolute top-1/2 right-1/3 w-[300px] h-[300px] bg-rose-300/40 rounded-full blur-3xl" />
 
         <div className="relative max-w-6xl mx-auto px-5 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-primary-200 text-primary-800 text-xs px-3 py-1.5 rounded-full mb-6 font-semibold shadow-sm">
               <Sparkles size={13} className="text-orange-500"/> Built for Kenyan employers · MoH-aligned
             </div>
-            <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-5 text-gray-900">
+            <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5 text-gray-900">
               Mental-health support<br/>
               your whole team<br/>
-              <span className="bg-gradient-to-r from-primary-600 via-teal-500 to-orange-500 bg-clip-text text-transparent">can actually use.</span>
+              <span className="bg-gradient-to-r from-orange-500 via-rose-500 to-violet-600 bg-clip-text text-transparent">can actually use.</span>
             </h1>
             <p className="text-gray-700 text-base md:text-lg mb-8 leading-relaxed">
               A confidential Employee Assistance Programme for Kenyan
@@ -218,7 +231,11 @@ export default function Landing() {
       </section>
 
       {/* ── SEGMENTS ── */}
-      <section id="segments" className="bg-gradient-to-b from-white via-primary-50/30 to-white py-20 px-5">
+      <section id="segments" className="relative py-20 px-5 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-rose-50 to-violet-50" />
+        <div className="absolute -left-20 top-1/2 w-72 h-72 bg-orange-200/50 rounded-full blur-3xl" />
+        <div className="absolute -right-20 top-0 w-80 h-80 bg-violet-200/50 rounded-full blur-3xl" />
+        <div className="relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">Built for organisations that care</h2>
@@ -245,10 +262,40 @@ export default function Landing() {
             })}
           </div>
         </div>
+        </div>
+      </section>
+
+      {/* ── WHAT WE COVER ── */}
+      <section id="cover" className="bg-white py-20 px-5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 bg-orange-100 border border-orange-200 text-orange-800 text-xs px-3 py-1.5 rounded-full mb-4 font-semibold uppercase tracking-wide">
+              <Sparkles size={13}/> What we help with
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
+              The stuff nobody talks about at work.
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              A single EAP that covers the whole spectrum — from workplace burnout to alcohol and betting recovery — with KMPDC- and CPB-verified therapists.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {WHAT_WE_COVER.map(({icon: Icon, accent, title, blurb}) => (
+              <div key={title} className="relative bg-white border-2 border-gray-100 hover:border-transparent rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all group overflow-hidden">
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${accent}`} />
+                <div className={`relative w-10 h-10 rounded-lg bg-gradient-to-br ${accent} flex items-center justify-center mb-3 shadow-sm`}>
+                  <Icon size={20} className="text-white"/>
+                </div>
+                <div className="relative font-bold text-gray-900 group-hover:text-white transition-colors">{title}</div>
+                <div className="relative text-xs text-gray-600 group-hover:text-white/90 leading-relaxed mt-1 transition-colors">{blurb}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how" className="bg-white py-20 px-5">
+      <section id="how" className="bg-gradient-to-b from-white to-primary-50/40 py-20 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">How it works</h2>
@@ -302,10 +349,10 @@ export default function Landing() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {PRICING.map(({name,band,price,unit,highlight}) => (
+            {PRICING.map(({name,band,price,unit,highlight,note}) => (
               <div
                 key={name}
-                className={`rounded-2xl p-7 border-2 ${highlight ? 'border-orange-500 shadow-xl relative bg-gradient-to-br from-orange-50 via-white to-primary-50' : 'border-gray-200 bg-white'}`}
+                className={`rounded-2xl p-7 border-2 ${highlight ? 'border-orange-500 shadow-xl relative bg-gradient-to-br from-orange-50 via-white to-primary-50' : 'border-gray-200 bg-white hover:border-primary-300 transition-colors'}`}
               >
                 {highlight && (
                   <div
@@ -321,10 +368,11 @@ export default function Landing() {
                   {price === 'Custom' ? (
                     <div className="text-3xl font-black text-primary-700">Let's talk</div>
                   ) : (
-                    <>
+                    <div>
                       <span className="text-3xl font-black text-gray-900">KSh {price}</span>
                       <span className="text-sm text-gray-500"> {unit}</span>
-                    </>
+                      {note && <div className="text-xs text-primary-700 font-medium mt-1">{note}</div>}
+                    </div>
                   )}
                 </div>
                 <Link

@@ -14,8 +14,8 @@ import { X, Heart, TrendingUp } from 'lucide-react'
 
 const STORAGE_KEY = 'ay_launch_offer_dismissed_at'
 const REMEMBER_DAYS = 7
-const TIME_TRIGGER_MS = 22_000
-const SCROLL_TRIGGER_PCT = 0.5
+const TIME_TRIGGER_MS = 4_000       // fires ~4s after page load
+const SCROLL_TRIGGER_PCT = 0.15     // or when the visitor scrolls 15%
 
 function wasDismissedRecently(): boolean {
   try {
