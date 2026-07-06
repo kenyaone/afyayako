@@ -23,7 +23,7 @@ class EapBroadcastToStaff extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Free confidential therapy — from {$this->company->name}",
+            subject: "Confidential mental-health support from {$this->company->name}",
         );
     }
 

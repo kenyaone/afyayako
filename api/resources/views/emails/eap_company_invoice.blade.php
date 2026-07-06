@@ -9,7 +9,7 @@
 
         <div style="padding: 28px 32px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <div style="font-size: 22px; font-weight: 700; color: #0f766e;">🌿 Afya Yako Siri Yako</div>
+                <div style="font-size: 22px; font-weight: 700; color: #0f766e;">Afya Yako Siri Yako</div>
                 <div style="font-size: 12px; color: #6b7280;">Employee Assistance Programme</div>
             </div>
             <div style="text-align: right;">

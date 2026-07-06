@@ -3,7 +3,7 @@
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f7fa;margin:0;padding:24px;color:#1f2937">
 <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05)">
     <div style="padding:28px;background:linear-gradient(135deg,#0d9488,#7c3aed);color:#fff;text-align:center">
-        <div style="font-size:22px;font-weight:800">You're all set 🎉</div>
+        <div style="font-size:22px;font-weight:800">You're all set</div>
         <div style="font-size:13px;opacity:.9;margin-top:4px">HR access for {{ $company->name }}</div>
     </div>
     <div style="padding:28px">

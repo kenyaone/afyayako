@@ -8,7 +8,7 @@
     <div style="max-width: 560px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.05);">
 
         <div style="background: linear-gradient(135deg, #0d9488, #0f766e); padding: 32px 28px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: 700; margin-bottom: 6px;">🌿 Afya Yako Siri Yako</div>
+            <div style="color: white; font-size: 24px; font-weight: 700; margin-bottom: 6px;">Afya Yako Siri Yako</div>
             <div style="color: rgba(255,255,255,.85); font-size: 14px;">Your Health, Your Secret</div>
         </div>
 

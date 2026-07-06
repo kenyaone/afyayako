@@ -25,7 +25,7 @@ class NewCorporateApplication extends Mailable
 
     public function envelope(): Envelope
     {
-        $subject = "🎯 New EAP application: {$this->company->name} ({$this->tierName})";
+        $subject = "New EAP application from {$this->company->name} ({$this->tierName})";
 
         // Only attach a Reply-To if the applicant's email is well-formed.
         // Otherwise the whole send fails on Symfony's RFC 2822 parser and
