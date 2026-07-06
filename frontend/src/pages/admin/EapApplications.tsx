@@ -186,8 +186,8 @@ export default function EapApplications() {
                   <div>
                     <div className="text-xs text-gray-500 mb-1">Compliance details</div>
                     <div className="text-xs text-gray-700 space-y-0.5">
-                      <div><span className="text-gray-500">Industry:</span> {a.company.industry ?: '—'}</div>
-                      <div><span className="text-gray-500">KRA PIN:</span> {a.company.kra_pin ?: '—'}</div>
+                      <div><span className="text-gray-500">Industry:</span> {a.company.industry ?? '—'}</div>
+                      <div><span className="text-gray-500">KRA PIN:</span> {a.company.kra_pin ?? '—'}</div>
                     </div>
                   </div>
                 </div>
