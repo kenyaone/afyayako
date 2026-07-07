@@ -23,7 +23,7 @@
             </a>
         </div>
         <div style="background:#fef3c7;border-radius:8px;padding:12px 14px;margin:22px 0 0;font-size:12px;color:#78350f;line-height:1.5">
-            <strong>Change your password on first login.</strong> Anyone with this email holds admin access to your programme.
+            <strong>You will be asked to set a new password on first login.</strong> Anyone with this temporary password holds admin access to your programme, so please sign in soon.
         </div>
         <h2 style="font-size:14px;margin:24px 0 8px;color:#0f766e;text-transform:uppercase;letter-spacing:1px">What to do next</h2>
         <ol style="padding-left:20px;margin:0;line-height:1.7;color:#374151;font-size:14px">

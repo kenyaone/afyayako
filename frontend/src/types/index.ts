@@ -4,8 +4,9 @@ export interface User {
   display_name: string
   email?: string
   phone?: string
-  role: 'user' | 'professional' | 'admin'
+  role: 'user' | 'professional' | 'admin' | 'corporate'
   is_anonymous_mode: boolean
+  must_change_password?: boolean
   avatar?: string
   created_at: string
 }

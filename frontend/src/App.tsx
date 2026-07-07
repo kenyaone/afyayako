@@ -57,6 +57,7 @@ import PrivacyPolicy from './pages/legal/PrivacyPolicy'
 import RefundPolicy from './pages/legal/RefundPolicy'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
+import ChangePassword from './pages/auth/ChangePassword'
 import PeerMentors from './pages/community/PeerMentors'
 import MyClaims from './pages/consultation/MyClaims'
 import InstallPwa from './components/InstallPwa'
@@ -72,8 +73,13 @@ import EapSessionVerification from './pages/corporate/EapSessionVerification'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const user = useAuthStore((s) => s.user)
   const location = useLocation()
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" state={{ from: location }} replace />
+  if (!isAuthenticated) return <Navigate to="/login" state={{ from: location }} replace />
+  if (user?.must_change_password && location.pathname !== '/change-password') {
+    return <Navigate to="/change-password" replace />
+  }
+  return <>{children}</>
 }
 
 function PublicRoute({ children }: { children: React.ReactNode }) {
@@ -100,6 +106,7 @@ export default function App() {
         <Route path="/feedback/:token" element={<FeedbackSurvey />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/change-password" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
 
         {/* B2B / EAP marketing routes — no login required. Someone
             evaluating the platform should be able to see plans and

@@ -250,9 +250,16 @@ class AuthController extends Controller
             return response()->json(['error' => 'Current password is incorrect.'], 422);
         }
 
-        $user->update(['password' => $request->new_password]);
+        if (Hash::check($request->new_password, $user->password)) {
+            return response()->json(['error' => 'New password must be different from your current password.'], 422);
+        }
 
-        return response()->json(['message' => 'Password changed successfully.']);
+        $user->update([
+            'password'             => $request->new_password,
+            'must_change_password' => false,
+        ]);
+
+        return response()->json(['message' => 'Password changed successfully.', 'user' => $user->fresh()]);
     }
 
     // ─── Delete Account (Right to Erasure — DPA 2019 s.28) ───────────────────

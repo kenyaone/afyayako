@@ -88,7 +88,7 @@ export default function Profile() {
     if (data.password !== data.confirm) { setPwError('Passwords do not match'); return }
     setPwSaving(true); setPwError('')
     try {
-      await api.post('/auth/change-password', { current_password: data.current_password, password: data.password })
+      await api.post('/auth/change-password', { current_password: data.current_password, new_password: data.password })
       setPwDone(true)
       pwForm.reset()
       setTimeout(() => setPwDone(false), 4000)

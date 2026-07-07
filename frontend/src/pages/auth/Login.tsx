@@ -26,6 +26,10 @@ export default function Login() {
     try {
       const res = await api.post('/auth/login', data)
       setAuth(res.data.user, res.data.access, res.data.refresh)
+      if (res.data.user?.must_change_password) {
+        navigate('/change-password', { replace: true, state: { firstLogin: true } })
+        return
+      }
       navigate(from, { replace: true })
     } catch (err: any) {
       setError(err.response?.data?.error || 'Login failed. Check your credentials.')

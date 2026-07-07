@@ -103,10 +103,12 @@ class EapApplicationController extends Controller
                 'role'                 => $this->roleAcceptsCorporate() ? 'corporate' : 'admin',
                 'is_anonymous_mode'    => false,
                 'anonymity_preference' => 'identified',
+                'must_change_password' => true,
             ]);
             $created = true;
         } else {
             $user->password = bcrypt($tempPassword);
+            $user->must_change_password = true;
             if ($this->roleAcceptsCorporate() && $user->role !== 'admin') {
                 $user->role = 'corporate';
             }

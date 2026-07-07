@@ -19,6 +19,7 @@ class User extends Authenticatable implements JWTSubject
         'role',
         'is_anonymous_mode',
         'password',
+        'must_change_password',
         'avatar',
         'date_of_birth',
     ];
@@ -33,6 +34,7 @@ class User extends Authenticatable implements JWTSubject
         return [
             'password' => 'hashed',
             'is_anonymous_mode' => 'boolean',
+            'must_change_password' => 'boolean',
             'date_of_birth' => 'date',
         ];
     }
