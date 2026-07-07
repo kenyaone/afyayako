@@ -1,58 +1,89 @@
-const CACHE = 'afyayako-v21'
-const OFFLINE_URL = '/offline.html'
+// Bump on every meaningful change — new version strings evict old caches
+// and force clients to install the new worker.
+const VERSION      = 'afyayako-v22'
+const HTML_CACHE   = `${VERSION}-html`
+const ASSET_CACHE  = `${VERSION}-assets`
+const OFFLINE_URL  = '/offline.html'
 
-// Pre-cache shell on install
+// Pre-cache the offline shell so the app works without a network on first visit.
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll([
-      '/',
-      '/offline.html',
-    ])).then(() => self.skipWaiting())
+    caches.open(HTML_CACHE)
+      .then(c => c.addAll(['/', OFFLINE_URL]))
+      .then(() => self.skipWaiting())
   )
 })
 
-// Claim clients on activate
+// On activate: drop every cache from an older VERSION.
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(k => !k.startsWith(VERSION)).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
   )
 })
 
-// Network-first for API, cache-first for static
+// Allow the app to force a waiting SW to take over.
+self.addEventListener('message', e => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting()
+})
+
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url)
 
-  // Skip non-GET and external requests
   if (e.request.method !== 'GET') return
-  if (!url.origin.includes('uberhealth') && !url.origin.includes('mhapke') && url.origin !== self.location.origin) return
-
-  // API: network-first, no cache
+  if (url.origin !== self.location.origin) return
+  // API traffic bypasses the SW entirely — no caching, no interception.
   if (url.pathname.startsWith('/api/') || url.hostname.startsWith('api.')) return
 
+  // Detect an HTML navigation request. The Accept header check catches
+  // link previews and prefetches that don't set mode='navigate'.
+  const isHTML = e.request.mode === 'navigate'
+              || (e.request.headers.get('accept') || '').includes('text/html')
+
+  if (isHTML) {
+    // Network-first for HTML: fresh deploys are visible immediately.
+    // Fall back to the last known HTML only when offline, then to the
+    // offline shell as a last resort.
+    e.respondWith(
+      fetch(e.request)
+        .then(res => {
+          if (res.ok) {
+            const clone = res.clone()
+            caches.open(HTML_CACHE).then(c => c.put(e.request, clone))
+          }
+          return res
+        })
+        .catch(async () => {
+          const cached = await caches.match(e.request)
+          if (cached) return cached
+          const offline = await caches.match(OFFLINE_URL)
+          return offline ?? new Response('Offline', { status: 503 })
+        })
+    )
+    return
+  }
+
+  // Assets (JS/CSS/fonts/images) — cache-first. Vite fingerprints these
+  // filenames on every build, so the URL changes when the file changes;
+  // a stale entry can never mask a new one.
   e.respondWith(
-    fetch(e.request)
-      .then(res => {
+    caches.match(e.request).then(cached => {
+      if (cached) return cached
+      return fetch(e.request).then(res => {
         if (res.ok) {
           const clone = res.clone()
-          caches.open(CACHE).then(c => c.put(e.request, clone))
+          caches.open(ASSET_CACHE).then(c => c.put(e.request, clone))
         }
         return res
-      })
-      .catch(async () => {
-        const cached = await caches.match(e.request)
-        if (cached) return cached
-        // Return offline page for navigation requests
-        if (e.request.mode === 'navigate') {
-          return caches.match(OFFLINE_URL) ?? new Response('Offline', { status: 503 })
-        }
-        return new Response('Network error', { status: 503 })
-      })
+      }).catch(() => new Response('Network error', { status: 503 }))
+    })
   )
 })
 
-// Push notification handler
+// Push notification handler — unchanged behaviour.
 self.addEventListener('push', e => {
   const data = e.data?.json() ?? {}
   e.waitUntil(
