@@ -5,6 +5,7 @@ import api from '../../api/axios'
 import { useAuthStore } from '../../store/authStore'
 import type { Professional } from '../../types'
 import ConsentForm from '../../components/ConsentForm'
+import { loadTriage, clearTriage } from '../../lib/triage'
 
 type BookStep = 'mode' | 'consent' | 'fee' | 'confirm' | 'payment' | 'processing' | 'success'
 type SessionMode = 'virtual' | 'physical'
@@ -74,6 +75,7 @@ export default function BookConsultation() {
     setLoading(true)
     setError('')
     try {
+      const triage = loadTriage()
       // Create consultation with all details
       const res = await api.post('/consultations', {
         professional_id: Number(professionalId),
@@ -83,9 +85,13 @@ export default function BookConsultation() {
         share_assessments: booking.share_assessments,
         consent_accepted: true,
         booking_fee: BOOKING_FEE,
+        triage_snapshot: triage,
       })
 
       setConsultationId(res.data.consultation.consultation_id)
+      // Triage snapshot has now been persisted server-side, so we can clear
+      // the local copy — a follow-up booking should get a fresh check-in.
+      if (triage) clearTriage()
       setStep('payment')
     } catch (err: any) {
       const d = err.response?.data

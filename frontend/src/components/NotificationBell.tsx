@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Bell, AlertTriangle, Calendar, Video, Info, X } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Bell, AlertTriangle, Calendar, Video, Info, X, Inbox } from 'lucide-react'
 import api from '../api/axios'
 
 interface AppNotification {
@@ -17,12 +18,13 @@ const POLL_MS = 10_000
 
 const typeIcon = (type: string) => {
   if (type === 'crisis_alert') return <AlertTriangle size={14} className="text-red-500 shrink-0" />
-  if (type === 'new_booking')   return <Calendar size={14} className="text-blue-500 shrink-0" />
-  if (type === 'session_starting') return <Video size={14} className="text-green-500 shrink-0" />
+  if (type === 'new_booking' || type === 'booking.created') return <Calendar size={14} className="text-blue-500 shrink-0" />
+  if (type === 'session_starting' || type === 'session.starting') return <Video size={14} className="text-green-500 shrink-0" />
   return <Info size={14} className="text-gray-400 shrink-0" />
 }
 
 export default function NotificationBell() {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [notifications, setNotifications] = useState<AppNotification[]>([])
   const [unread, setUnread] = useState(0)
@@ -96,35 +98,53 @@ export default function NotificationBell() {
 
           <div className="max-h-96 overflow-y-auto divide-y divide-gray-50">
             {notifications.length === 0 ? (
-              <div className="text-center text-sm text-gray-400 py-8">No notifications</div>
-            ) : notifications.map(n => (
-              <div
-                key={n.id}
-                className={`px-4 py-3 flex gap-3 items-start group transition-colors
-                  ${!n.read_at ? 'bg-blue-50/40' : 'bg-white'}
-                  ${n.is_urgent ? 'border-l-2 border-red-400' : ''}`}
-              >
-                <div className="mt-0.5">{typeIcon(n.type)}</div>
-                <div className="flex-1 min-w-0">
-                  <div className={`text-xs font-semibold ${n.is_urgent ? 'text-red-700' : 'text-gray-800'}`}>
-                    {n.title}
-                  </div>
-                  {n.body && (
-                    <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{n.body}</div>
-                  )}
-                  <div className="text-[10px] text-gray-400 mt-1">
-                    {new Date(n.created_at).toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' })}
-                  </div>
-                </div>
-                <button
-                  onClick={() => dismiss(n.id)}
-                  className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-gray-500 shrink-0"
-                >
-                  <X size={12} />
-                </button>
+              <div className="text-center text-sm text-gray-400 py-10 flex flex-col items-center gap-2">
+                <Inbox size={20} className="text-gray-300" />
+                No notifications yet
               </div>
-            ))}
+            ) : notifications.slice(0, 8).map(n => {
+              const link = (n.data as any)?.link as string | undefined
+              const Wrapper: any = link ? 'button' : 'div'
+              return (
+                <Wrapper
+                  key={n.id}
+                  type={link ? 'button' : undefined}
+                  onClick={link ? () => { setOpen(false); navigate(link) } : undefined}
+                  className={`w-full text-left px-4 py-3 flex gap-3 items-start group transition-colors
+                    ${!n.read_at ? 'bg-blue-50/40' : 'bg-white'}
+                    ${n.is_urgent ? 'border-l-2 border-red-400' : ''}
+                    ${link ? 'hover:bg-gray-50 cursor-pointer' : ''}`}
+                >
+                  <div className="mt-0.5">{typeIcon(n.type)}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-xs font-semibold ${n.is_urgent ? 'text-red-700' : 'text-gray-800'}`}>
+                      {n.title}
+                    </div>
+                    {n.body && (
+                      <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{n.body}</div>
+                    )}
+                    <div className="text-[10px] text-gray-400 mt-1">
+                      {new Date(n.created_at).toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' })}
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); dismiss(n.id) }}
+                    className="opacity-0 group-hover:opacity-100 text-gray-300 hover:text-gray-500 shrink-0"
+                  >
+                    <X size={12} />
+                  </button>
+                </Wrapper>
+              )
+            })}
           </div>
+
+          <Link
+            to="/notifications"
+            onClick={() => setOpen(false)}
+            className="block text-center text-xs font-semibold text-primary-700 hover:bg-gray-50 px-4 py-2.5 border-t border-gray-100"
+          >
+            See all notifications →
+          </Link>
         </div>
       )}
     </div>

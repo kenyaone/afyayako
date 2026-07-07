@@ -210,6 +210,7 @@ Route::middleware('auth:api')->group(function () {
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
     Route::post('/notifications/read', [NotificationController::class, 'markRead']);
 
     // Clinical receipt

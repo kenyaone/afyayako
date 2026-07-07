@@ -6,6 +6,7 @@ use App\Mail\BookingConfirmation;
 use App\Models\Assessment;
 use App\Models\Consultation;
 use App\Models\MoodLog;
+use App\Models\Notification;
 use App\Models\Professional;
 use App\Models\ProfessionalPayout;
 use Carbon\Carbon;
@@ -42,6 +43,7 @@ class ConsultationController extends Controller
             'share_assessments'  => 'sometimes|boolean',
             'share_mood_logs'    => 'sometimes|boolean',
             'payment_method'     => 'sometimes|string|in:paystack,pesapal,insurance,cash',
+            'triage_snapshot'    => 'sometimes|nullable|array',
         ]);
 
         if ($validator->fails()) {
@@ -101,6 +103,7 @@ class ConsultationController extends Controller
             'jitsi_room'          => $consultationId,
             'share_assessments'   => $request->boolean('share_assessments', false),
             'share_mood_logs'     => $request->boolean('share_mood_logs', false),
+            'triage_snapshot'     => $request->input('triage_snapshot'),
         ]);
 
         $loaded = $consultation->load(['professional.user:id,display_name,email', 'user:id,display_name,email']);
@@ -125,6 +128,36 @@ class ConsultationController extends Controller
             }
         } catch (\Exception $e) {
             // Email failures must not block the booking response
+        }
+
+        // In-app notification for the therapist. Fires-and-forgets so a bell
+        // write failure never blocks the booking response.
+        try {
+            $proUserId = $loaded->professional?->user?->id;
+            if ($proUserId) {
+                $whenLabel  = optional($loaded->scheduled_at)->format('D d M · H:i') ?? 'soon';
+                $patientLbl = $user->is_anonymous_mode
+                    ? 'A new patient'
+                    : ($user->display_name ?: $user->username);
+                $triage     = $loaded->triage_snapshot ?? null;
+                $urgent     = is_array($triage) && (($triage['urgency'] ?? '') === 'crisis' || ($triage['phq9_q9'] ?? 0) >= 2);
+
+                Notification::send(
+                    userId:  $proUserId,
+                    type:    'booking.created',
+                    title:   $urgent ? 'Priority booking — please review' : 'New booking',
+                    body:    "{$patientLbl} booked a {$loaded->duration_minutes}-min {$loaded->mode} session on {$whenLabel}.",
+                    data:    [
+                        'consultation_id'  => $loaded->consultation_id,
+                        'scheduled_at'     => $loaded->scheduled_at,
+                        'link'             => "/session/{$loaded->consultation_id}",
+                        'triage_flagged'   => $urgent,
+                    ],
+                    urgent:  $urgent,
+                );
+            }
+        } catch (\Throwable $e) {
+            \Log::warning('Booking notification failed: '.$e->getMessage());
         }
 
         return response()->json([

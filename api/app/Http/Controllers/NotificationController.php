@@ -35,4 +35,16 @@ class NotificationController extends Controller
 
         return response()->json(['status' => 'ok']);
     }
+
+    // GET /api/notifications/unread-count
+    // Lightweight endpoint the bell polls every 30s.
+    public function unreadCount()
+    {
+        $user  = auth('api')->user();
+        $count = Notification::where('user_id', $user->id)
+            ->whereNull('read_at')
+            ->count();
+
+        return response()->json(['unread_count' => $count]);
+    }
 }

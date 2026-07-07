@@ -11,6 +11,7 @@ import TakeAssessment from './pages/assessments/TakeAssessment'
 import Professionals from './pages/professionals/Professionals'
 import ProfessionalDetail from './pages/professionals/ProfessionalDetail'
 import BookConsultation from './pages/consultation/BookConsultationNew'
+import PreBooking from './pages/consultation/PreBooking'
 import MyConsultations from './pages/consultation/MyConsultations'
 import JoinSession from './pages/consultation/JoinSession'
 import MoodTracker from './pages/phr/MoodTracker'
@@ -70,6 +71,7 @@ import JoinEap from './pages/eap/JoinEap'
 import FeedbackSurvey from './pages/consultation/FeedbackSurvey'
 import EapManagement from './pages/corporate/EapManagement'
 import EapSessionVerification from './pages/corporate/EapSessionVerification'
+import Notifications from './pages/Notifications'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
@@ -120,6 +122,7 @@ export default function App() {
           <Route path="/assessments/:type" element={<TakeAssessment />} />
           <Route path="/burnout-assessment" element={<BurnoutAssessment />} />
           <Route path="/burnout-report/:id" element={<BurnoutReport />} />
+          <Route path="/pre-booking" element={<PreBooking />} />
           <Route path="/professionals" element={<Professionals />} />
           <Route path="/professionals/:id" element={<ProfessionalDetail />} />
           <Route path="/book/:professionalId" element={<BookConsultation />} />
@@ -128,6 +131,7 @@ export default function App() {
           <Route path="/mood" element={<MoodTracker />} />
           <Route path="/sobriety" element={<SobrietyTracker />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/apply" element={<ApplyAsProfessional />} />
           <Route path="/admin" element={<AdminDashboard />} />

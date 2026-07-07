@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState, useRef } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import api from '../../api/axios'
 import type { Professional } from '../../types'
-import { Star, Search, Wifi, AlertCircle, CheckCircle, Filter, X, MapPin, Award, MessageCircle } from 'lucide-react'
+import { Star, Search, Wifi, AlertCircle, CheckCircle, Filter, X, MapPin, Award, MessageCircle, Heart, ShieldAlert, ArrowRight, RefreshCcw } from 'lucide-react'
+import { loadTriage, clearTriage, isCrisisFlagged } from '../../lib/triage'
 
 const PRESENCE_POLL_MS = 30_000
 
@@ -29,6 +30,12 @@ export default function Professionals() {
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [onlineUserIds, setOnlineUserIds] = useState<number[]>([])
   const presenceRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [searchParams] = useSearchParams()
+  const [triage, setTriage] = useState(loadTriage())
+  const crisisMode = useMemo(
+    () => searchParams.get('crisis') === '1' || isCrisisFlagged(triage),
+    [searchParams, triage],
+  )
 
   const fetchPresence = () => {
     api.get('/presence/professionals')
@@ -188,6 +195,57 @@ export default function Professionals() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        {crisisMode ? (
+          <div className="mb-6 rounded-2xl border-2 border-red-300 bg-red-50 p-5">
+            <div className="flex items-start gap-3">
+              <ShieldAlert size={22} className="text-red-700 shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <div className="font-bold text-red-900 mb-1">If you're in danger right now, please reach out first</div>
+                <p className="text-sm text-red-900 leading-relaxed mb-3">
+                  Booking a session is a great next step — but if you're in immediate crisis, a therapist appointment may be hours away. Please contact one of these first, then come back to book.
+                </p>
+                <div className="flex flex-wrap gap-2 text-sm">
+                  <a href="tel:1199" className="px-3 py-2 rounded-lg bg-red-700 text-white font-semibold">Call 1199 · Kenya Emergency</a>
+                  <a href="tel:0800720044" className="px-3 py-2 rounded-lg bg-red-700 text-white font-semibold">Niskize Helpline · 0800 720 044</a>
+                  <a href="mailto:crisis@afyayako.co.ke" className="px-3 py-2 rounded-lg bg-white border border-red-300 text-red-800 font-semibold">Email crisis@afyayako.co.ke</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : !triage ? (
+          <Link
+            to="/pre-booking"
+            className="mb-6 flex items-center gap-3 rounded-2xl border border-teal-200 bg-gradient-to-r from-teal-50 to-violet-50 p-4 hover:from-teal-100 hover:to-violet-100 transition"
+          >
+            <div className="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center text-teal-700 shrink-0">
+              <Heart size={18} />
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-gray-900 text-sm">60-second check-in for better matches</div>
+              <div className="text-xs text-gray-600">Tell us what you're going through and we'll surface therapists who fit.</div>
+            </div>
+            <ArrowRight size={18} className="text-teal-700 shrink-0" />
+          </Link>
+        ) : (
+          <div className="mb-6 flex items-center gap-3 rounded-2xl border border-teal-200 bg-teal-50/60 p-4">
+            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-700 shrink-0">
+              <CheckCircle size={18} />
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-gray-900 text-sm">
+                Matched to your check-in · {triage.concerns.slice(0, 2).join(', ')}{triage.concerns.length > 2 ? ` +${triage.concerns.length - 2}` : ''}
+              </div>
+              <div className="text-xs text-gray-600">Answers stay on this device until you book.</div>
+            </div>
+            <button
+              type="button"
+              onClick={() => { clearTriage(); setTriage(null) }}
+              className="text-xs text-gray-600 hover:text-gray-900 inline-flex items-center gap-1"
+            >
+              <RefreshCcw size={12} /> Redo
+            </button>
+          </div>
+        )}
         <div className="flex gap-6">
           {/* Desktop Sidebar */}
           <div className="hidden lg:block w-80 flex-shrink-0">
