@@ -15,6 +15,7 @@ class Consultation extends Model
         'consultation_id',
         'user_id',
         'professional_id',
+        'eap_subscription_id',
         'scheduled_at',
         'duration_minutes',
         'status',

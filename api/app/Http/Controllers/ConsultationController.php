@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BookingConfirmation;
+use App\Mail\EapSessionBooked;
 use App\Models\Assessment;
 use App\Models\Consultation;
+use App\Models\CorporateEmployee;
+use App\Models\EapSubscription;
 use App\Models\MoodLog;
 use App\Models\Notification;
 use App\Models\Professional;
@@ -89,16 +92,52 @@ class ConsultationController extends Controller
         $consultationId = 'cons-' . bin2hex(random_bytes(4));
         $isCash = $request->input('payment_method') === 'cash';
 
+        // EAP path: employee's company pays; no per-session charge at the patient.
+        // Bookings are confirmed immediately and count against the tier's monthly
+        // per-employee allowance. Hard-block when exhausted.
+        $corporateEmployee = CorporateEmployee::where('user_id', $user->id)->first();
+        $eapSubscription   = null;
+        $eapTier           = null;
+
+        if ($corporateEmployee) {
+            $eapSubscription = EapSubscription::with('eapTier')
+                ->where('company_id', $corporateEmployee->company_id)
+                ->where('status', 'active')
+                ->latest()
+                ->first();
+            $eapTier = $eapSubscription?->eapTier;
+
+            if ($eapSubscription && $eapTier) {
+                $usedThisMonth = Consultation::where('user_id', $user->id)
+                    ->where('eap_subscription_id', $eapSubscription->id)
+                    ->whereYear('created_at', now()->year)
+                    ->whereMonth('created_at', now()->month)
+                    ->count();
+
+                if ($usedThisMonth >= $eapTier->sessions_per_employee) {
+                    return response()->json([
+                        'error'                => "You've used all {$eapTier->sessions_per_employee} EAP sessions available to you this month. Your allowance resets on the 1st.",
+                        'eap_limit_reached'    => true,
+                        'sessions_used'        => $usedThisMonth,
+                        'sessions_allowed'     => $eapTier->sessions_per_employee,
+                    ], 422);
+                }
+            }
+        }
+
+        $isEap = (bool) $eapSubscription;
+
         $consultation = Consultation::create([
             'consultation_id'     => $consultationId,
             'user_id'             => $user->id,
             'professional_id'     => $professional->id,
+            'eap_subscription_id' => $isEap ? $eapSubscription->id : null,
             'scheduled_at'        => $request->scheduled_at,
             'duration_minutes'    => $duration,
             'mode'                => $request->mode,
             'consent_accepted_at' => now(),
-            'status'              => $isCash ? 'confirmed' : 'draft',
-            'booking_fee_paid'    => false,
+            'status'              => ($isEap || $isCash) ? 'confirmed' : 'draft',
+            'booking_fee_paid'    => $isEap ? true : false,
             'amount'              => $amount,
             'jitsi_room'          => $consultationId,
             'share_assessments'   => $request->boolean('share_assessments', false),
@@ -108,10 +147,37 @@ class ConsultationController extends Controller
 
         $loaded = $consultation->load(['professional.user:id,display_name,email', 'user:id,display_name,email']);
 
-        if ($isCash) {
+        if ($isEap) {
+            $message = 'Session confirmed. This is covered by your employer\'s EAP — no payment required.';
+        } elseif ($isCash) {
             $message = 'Session confirmed. Pay at the time of the session.';
         } else {
             $message = 'Booking step 1/4 complete. Next: pay KES 500 booking fee to secure your slot.';
+        }
+
+        // Anonymised HR notification. Never names the patient or therapist.
+        // Fires-and-forgets so mail issues don't block the booking response.
+        if ($isEap) {
+            try {
+                $company = $eapSubscription->company;
+                if ($company && $company->contact_email) {
+                    $usedNow = Consultation::where('user_id', $user->id)
+                        ->where('eap_subscription_id', $eapSubscription->id)
+                        ->whereYear('created_at', now()->year)
+                        ->whereMonth('created_at', now()->month)
+                        ->count();
+
+                    Mail::to($company->contact_email)->send(new EapSessionBooked(
+                        company:                    $company,
+                        consultation:               $loaded,
+                        employeeCode:               $corporateEmployee->employee_code,
+                        sessionsUsedThisMonth:      $usedNow,
+                        sessionsAllowedPerEmployee: $eapTier?->sessions_per_employee ?? 0,
+                    ));
+                }
+            } catch (\Throwable $e) {
+                \Log::warning('EAP HR notification failed: '.$e->getMessage());
+            }
         }
 
         try {
@@ -163,8 +229,9 @@ class ConsultationController extends Controller
         return response()->json([
             'message'         => $message,
             'consultation'    => $loaded,
-            'next_step'       => $isCash ? 'none' : 'booking_fee_payment',
-            'booking_fee_kes' => 500,
+            'next_step'       => ($isEap || $isCash) ? 'none' : 'booking_fee_payment',
+            'booking_fee_kes' => $isEap ? 0 : 500,
+            'is_eap_covered'  => $isEap,
         ], 201);
     }
 

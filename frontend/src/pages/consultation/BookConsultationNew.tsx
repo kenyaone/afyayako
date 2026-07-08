@@ -89,10 +89,10 @@ export default function BookConsultation() {
       })
 
       setConsultationId(res.data.consultation.consultation_id)
-      // Triage snapshot has now been persisted server-side, so we can clear
-      // the local copy — a follow-up booking should get a fresh check-in.
       if (triage) clearTriage()
-      setStep('payment')
+      // Backend signals "no more payment steps" via next_step === 'none'
+      // (EAP-covered bookings, cash bookings). Skip straight to success.
+      setStep(res.data.next_step === 'none' ? 'success' : 'payment')
     } catch (err: any) {
       const d = err.response?.data
       if (d?.requires_parental_consent) {
