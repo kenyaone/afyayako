@@ -9,6 +9,10 @@ export interface User {
   must_change_password?: boolean
   avatar?: string
   created_at: string
+  is_eap_employee?: boolean
+  eap_employee_code?: string
+  eap_sessions_used?: number
+  eap_sessions_allowed?: number
 }
 
 export interface Professional {

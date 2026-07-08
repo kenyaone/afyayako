@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Consultation;
+use App\Models\CorporateEmployee;
+use App\Models\EapSubscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,10 +97,46 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful',
-            'user'    => $user,
+            'user'    => $this->userWithEapStatus($user),
             'access'  => $token,
             'refresh' => $token, // same token; refresh via /auth/refresh
         ]);
+    }
+
+    /**
+     * Enrich the user payload with EAP-membership info so the frontend can
+     * hide payment steps and show session-usage indicators without an extra
+     * round-trip. Returns is_eap_employee=false for non-EAP users; when true,
+     * adds eap_employee_code, eap_sessions_used, eap_sessions_allowed.
+     */
+    private function userWithEapStatus(?User $user): ?array
+    {
+        if (!$user) return null;
+        $data = $user->toArray();
+        $data['is_eap_employee']    = false;
+        $data['eap_sessions_used']  = 0;
+        $data['eap_sessions_allowed'] = 0;
+
+        $ce = CorporateEmployee::where('user_id', $user->id)->first();
+        if ($ce) {
+            $sub = EapSubscription::with('eapTier')
+                ->where('company_id', $ce->company_id)
+                ->where('status', 'active')
+                ->latest()
+                ->first();
+            if ($sub) {
+                $used = Consultation::where('user_id', $user->id)
+                    ->where('eap_subscription_id', $sub->id)
+                    ->whereYear('created_at', now()->year)
+                    ->whereMonth('created_at', now()->month)
+                    ->count();
+                $data['is_eap_employee']      = true;
+                $data['eap_employee_code']    = $ce->employee_code;
+                $data['eap_sessions_used']    = $used;
+                $data['eap_sessions_allowed'] = $sub->eapTier?->sessions_per_employee ?? 0;
+            }
+        }
+        return $data;
     }
 
     public function logout(Request $request)
@@ -113,7 +152,7 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = auth('api')->user();
-        return response()->json(['user' => $user]);
+        return response()->json(['user' => $this->userWithEapStatus($user)]);
     }
 
     public function updateProfile(Request $request)

@@ -41,6 +41,10 @@ export default function BookConsultation() {
   const [phoneNumber, setPhoneNumber] = useState('')
   const BOOKING_FEE = 500 // KES
 
+  const isEap = user?.is_eap_employee ?? false
+  const sessionsUsed = user?.eap_sessions_used ?? 0
+  const sessionsAllowed = user?.eap_sessions_allowed ?? 0
+
   const sessionCost = pro?.session_rate || 0
   const totalCost = sessionCost + BOOKING_FEE
 
@@ -59,7 +63,8 @@ export default function BookConsultation() {
       }
       setStep('consent')
     } else if (step === 'consent') {
-      setStep('fee')
+      // EAP employees never see the paid-fee summary — their employer covers it.
+      setStep(isEap ? 'confirm' : 'fee')
     } else if (step === 'fee') {
       setStep('confirm')
     }
@@ -67,7 +72,7 @@ export default function BookConsultation() {
 
   const handleConsent = (consented: boolean) => {
     if (consented) {
-      setStep('fee')
+      setStep(isEap ? 'confirm' : 'fee')
     }
   }
 
@@ -396,16 +401,26 @@ export default function BookConsultation() {
                   <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   {booking.mode === 'virtual' ? 'Encrypted video call' : 'In-person appointment'}
                 </li>
-                <li className="flex gap-2">
-                  <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" />
-                  Total: KES {totalCost.toFixed(2)}
-                </li>
+                {isEap ? (
+                  <li className="flex gap-2">
+                    <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" />
+                    Covered by your employer's EAP — no payment required
+                    {sessionsAllowed > 0 && (
+                      <span className="text-teal-700 opacity-80"> ({sessionsUsed + 1} of {sessionsAllowed} this month)</span>
+                    )}
+                  </li>
+                ) : (
+                  <li className="flex gap-2">
+                    <CheckCircle size={16} className="text-teal-600 flex-shrink-0 mt-0.5" />
+                    Total: KES {totalCost.toFixed(2)}
+                  </li>
+                )}
               </ul>
             </div>
 
             <div className="mt-8 flex gap-3">
               <button
-                onClick={() => setStep('fee')}
+                onClick={() => setStep(isEap ? 'consent' : 'fee')}
                 disabled={step === 'processing'}
                 className="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50"
               >
@@ -416,7 +431,7 @@ export default function BookConsultation() {
                 disabled={loading || step === 'processing'}
                 className="flex-1 px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white font-semibold rounded-lg flex items-center justify-center gap-2"
               >
-                {step === 'processing' ? 'Creating Booking...' : 'Continue to Payment'}
+                {step === 'processing' ? 'Creating Booking...' : (isEap ? 'Confirm booking' : 'Continue to Payment')}
               </button>
             </div>
           </div>
