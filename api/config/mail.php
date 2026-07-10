@@ -115,4 +115,19 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Business routing addresses
+    |--------------------------------------------------------------------------
+    |
+    | Where sales leads (new corporate applications) and operational alerts
+    | (failed jobs, security events, etc.) get delivered. Kept in config so
+    | it's easy to redirect during testing or if the sales team changes.
+    | Comma-separated allowed — Mail::to() accepts an array.
+    |
+    */
+
+    'sales_address' => env('MAIL_SALES_ADDRESS', 'sales@afyayako.co.ke'),
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', null),
+
 ];

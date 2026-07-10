@@ -79,15 +79,22 @@ class CorporateController extends Controller
             DB::commit();
 
             // ── Gap #1: sales notification (fire-and-forget) ─────
+            // Delivered to config('mail.sales_address') with the admin address
+            // CC'd when set. Both are env-driven so we can route to a person
+            // during rollout without a code change.
             try {
-                \Illuminate\Support\Facades\Mail::to(config('mail.sales_address', 'sales@afyayako.co.ke'))
-                    ->send(new \App\Mail\NewCorporateApplication(
-                        company:       $company,
-                        subscription:  $eapSub,
-                        tierName:      $tier->name,
-                        paymentMethod: $request->input('payment_method'),
-                        billingNotes:  $request->input('billing_notes'),
-                    ));
+                $mail = new \App\Mail\NewCorporateApplication(
+                    company:       $company,
+                    subscription:  $eapSub,
+                    tierName:      $tier->name,
+                    paymentMethod: $request->input('payment_method'),
+                    billingNotes:  $request->input('billing_notes'),
+                );
+                $pending = \Illuminate\Support\Facades\Mail::to(config('mail.sales_address'));
+                if ($cc = config('mail.admin_address')) {
+                    $pending->cc($cc);
+                }
+                $pending->send($mail);
             } catch (\Throwable $e) {
                 \Log::warning('Sales notification failed: '.$e->getMessage());
             }
