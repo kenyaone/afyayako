@@ -12,6 +12,7 @@ use App\Models\MoodLog;
 use App\Models\Notification;
 use App\Models\Professional;
 use App\Models\ProfessionalPayout;
+use App\Services\JaaSTokenService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -289,7 +290,17 @@ class ConsultationController extends Controller
             }
         }
 
-        $jitsiUrl = 'https://meet.ffmuc.net/' . $consultation->jitsi_room;
+        // Video provider: JaaS (authenticated, per-room JWT) when configured,
+        // else the previous public Jitsi mirror. Never let a JaaS-enabled env
+        // silently fall back to public — that would leak PHI.
+        if (config('jaas.enabled')) {
+            $jaas = app(JaaSTokenService::class);
+            $jitsiUrl = $jaas->meetingUrl($user, $consultation, $isProfessional);
+            $videoProvider = 'jaas';
+        } else {
+            $jitsiUrl = 'https://meet.ffmuc.net/' . $consultation->jitsi_room;
+            $videoProvider = 'public-jitsi';
+        }
 
         // Shared data the professional can see
         $sharedData = [];
@@ -313,13 +324,15 @@ class ConsultationController extends Controller
         }
 
         return response()->json([
-            'consultation'  => $consultation,
-            'jitsi_url'     => $jitsiUrl,
-            'room'          => $consultation->jitsi_room,
-            'display_name'  => $user->display_name,
+            'consultation'    => $consultation,
+            'jitsi_url'       => $jitsiUrl,
+            'video_url'       => $jitsiUrl,
+            'video_provider'  => $videoProvider,
+            'room'            => $consultation->jitsi_room,
+            'display_name'    => $user->display_name,
             'is_professional' => $isProfessional,
-            'shared_data'   => $sharedData,
-            'session_info'  => [
+            'shared_data'     => $sharedData,
+            'session_info'    => [
                 'duration_minutes' => $consultation->duration_minutes,
                 'scheduled_at'     => $consultation->scheduled_at,
                 'amount'           => $consultation->amount,

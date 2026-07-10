@@ -39,6 +39,8 @@ interface SharedMood {
 interface SessionData {
   consultation: any
   jitsi_url: string
+  video_url?: string
+  video_provider?: 'jaas' | 'public-jitsi'
   room: string
   display_name: string
   is_professional: boolean
@@ -111,10 +113,14 @@ export default function JoinSession() {
       'config.requireDisplayName=false',
       cameraOff ? 'config.startWithVideoMuted=true' : '',
       videoMode === 'audio' ? 'config.startAudioOnly=true' : '',
+      // Ignored by JaaS (JWT is authoritative there), used by the public fallback.
       `userInfo.displayName=${name}`,
     ].filter(Boolean).join('&')
-    return `https://meet.ffmuc.net/${room}#${cfg}`
-  }, [user, cameraOff, videoMode])
+    // Backend picks the provider and (for JaaS) mints a per-room JWT.
+    // We just append our client-side prefs as a URL fragment.
+    const baseUrl = session?.video_url || `https://meet.ffmuc.net/${room}`
+    return `${baseUrl}#${cfg}`
+  }, [user, cameraOff, videoMode, session])
 
   const handleJoin = useCallback(() => {
     if (!session) return
