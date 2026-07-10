@@ -3,17 +3,23 @@
 namespace App\Mail;
 
 use App\Models\Company;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Sent monthly (1st of each month) to Company.contact_email.
  * Only aggregate stats — utilization %, session count, spend.
  * Numbers rounded for small teams to prevent identity inference.
  */
-class EapMonthlyHrSummary extends Mailable
+class EapMonthlyHrSummary extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
+
     public function __construct(
         public Company $company,
         public string  $monthLabel,       // "July 2026"

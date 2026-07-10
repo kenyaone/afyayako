@@ -4,17 +4,23 @@ namespace App\Mail;
 
 use App\Models\Company;
 use App\Models\EapSubscription;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Sent to sales@ (and CC'd to admin@) when a prospect submits the
  * /corporate/apply form. Ensures no lead ever gets lost in the DB.
  */
-class NewCorporateApplication extends Mailable
+class NewCorporateApplication extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
+
     public function __construct(
         public Company         $company,
         public EapSubscription $subscription,

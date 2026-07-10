@@ -4,9 +4,12 @@ namespace App\Mail;
 
 use App\Models\Company;
 use App\Models\Consultation;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Anonymised HR notification: an employee has booked an EAP session.
@@ -14,8 +17,10 @@ use Illuminate\Mail\Mailables\Envelope;
  * Only the anonymous employee_code, session shape (duration/mode/date),
  * and running usage totals so HR can reconcile the invoice.
  */
-class EapSessionBooked extends Mailable
+class EapSessionBooked extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
     public function __construct(
         public Company      $company,
         public Consultation $consultation,

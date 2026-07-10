@@ -3,17 +3,23 @@
 namespace App\Mail;
 
 use App\Models\CorporateEmployee;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Sent to an employee immediately after they sign up via the invite link.
  * Delivers their EMP-XXXXX code (their anonymous identity within the EAP)
  * and next-step instructions. HR is NEVER copied on this.
  */
-class EapEmployeeJoined extends Mailable
+class EapEmployeeJoined extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
+
     public function __construct(
         public CorporateEmployee $employee,
         public string            $companyName,

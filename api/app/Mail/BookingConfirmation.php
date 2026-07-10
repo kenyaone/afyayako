@@ -3,12 +3,18 @@
 namespace App\Mail;
 
 use App\Models\Consultation;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
-class BookingConfirmation extends Mailable
+class BookingConfirmation extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
+
     public function __construct(
         public Consultation $consultation,
         public string       $recipientName,

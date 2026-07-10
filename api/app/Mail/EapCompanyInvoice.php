@@ -4,17 +4,23 @@ namespace App\Mail;
 
 use App\Models\Company;
 use App\Models\EapSubscription;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Sent to the Company.contact_email when a subscription is created or renewed.
  * Contains billing details for finance: tier, period, employee count, total.
  * Never contains employee identities.
  */
-class EapCompanyInvoice extends Mailable
+class EapCompanyInvoice extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
+
     public function __construct(
         public Company         $company,
         public EapSubscription $subscription,

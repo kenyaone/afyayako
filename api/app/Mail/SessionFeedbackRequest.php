@@ -3,17 +3,23 @@
 namespace App\Mail;
 
 use App\Models\SessionFeedback;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Sent ~24h after a session was marked complete.
  * Recipient is the employee who attended. Contains a per-session token
  * that unlocks a 3-question anonymous survey.
  */
-class SessionFeedbackRequest extends Mailable
+class SessionFeedbackRequest extends Mailable implements ShouldQueue
 {
+    use Queueable, SerializesModels;
+
+
     public function __construct(
         public SessionFeedback $feedback,
         public string          $recipientName,
