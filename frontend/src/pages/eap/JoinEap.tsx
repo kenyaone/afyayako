@@ -11,6 +11,7 @@ interface JoinForm {
   password: string
   password_confirm: string
   date_of_birth: string
+  personal_email?: string
   consent: boolean
 }
 
@@ -48,6 +49,7 @@ export default function JoinEap() {
         password: data.password,
         password_confirm: data.password_confirm,
         date_of_birth: data.date_of_birth,
+        personal_email: data.personal_email?.trim() || undefined,
       })
 
       setCompanyName(res.data.company.name)
@@ -176,6 +178,30 @@ export default function JoinEap() {
             />
             <p className="text-xs text-gray-500 mt-1">Required to verify your age</p>
             {errors.date_of_birth && <p className="text-red-600 text-xs mt-1">{errors.date_of_birth.message}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Personal email <span className="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <input
+              {...register('personal_email', {
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Please enter a valid email address',
+                },
+              })}
+              type="email"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              placeholder="you@personal.com — NOT your work email"
+              disabled={loading}
+              autoComplete="email"
+            />
+            <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+              Used only for session reminders and password recovery.
+              <strong className="text-green-700"> Never shared with HR or your employer.</strong> Use a personal address, not a work one.
+            </p>
+            {errors.personal_email && <p className="text-red-600 text-xs mt-1">{errors.personal_email.message}</p>}
           </div>
 
           <div>
