@@ -43,6 +43,8 @@ class Consultation extends Model
         'user_review',
         'actual_start',
         'actual_end',
+        'reminder_24h_sent_at',
+        'reminder_1h_sent_at',
     ];
 
     protected function casts(): array
@@ -65,6 +67,8 @@ class Consultation extends Model
             'booking_fee_paid' => 'boolean',
             'is_follow_up' => 'boolean',
             'amount' => 'float',
+            'reminder_24h_sent_at' => 'datetime',
+            'reminder_1h_sent_at' => 'datetime',
         ];
     }
 
